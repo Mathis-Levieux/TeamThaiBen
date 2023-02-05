@@ -1,0 +1,71 @@
+@font-face {
+    font-family: 'thailandesa';
+    src: url('../fonts/thailandesa/THAILAND.TTF');
+}
+
+
+body,
+html {
+    margin: 0;
+}
+
+body.lp {
+    background-color: black;
+    background-image: url('../img/newbg2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+}
+
+/* Header */
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+
+nav ul a {
+    color: white;
+    text-shadow: 4px 4px 4px #000000;
+}
+
+
+
+
+h1 {
+    font-family: 'thailandesa';
+    font-size: 3rem;
+    text-align: center;
+    color: white;
+    text-shadow: 4px 4px 4px #000000;
+}
+
+
+.danger {
+    color: rgb(249, 131, 131) !important;
+}
+
+.login-error {
+    position: absolute;
+    top: 3rem;
+    left: 1rem;
+}
+
+
+/* Media Queries */
+
+
+/* @media screen and (max-width: 768px) {
+    body {
+        background-image: url('../img/bgpluspetit.png');
+        background-position: unset;
+        background-size: auto;
+    }
+}
+
+@media screen and (min-width: 2000px) {
+    body {
+        background-image: url('../img/bgplusgrand.png');
+    }
+} */
