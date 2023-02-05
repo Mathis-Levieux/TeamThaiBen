@@ -15,40 +15,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $namesRegex = "/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð-]{1,25}$/u"; // Regex des enfers pour les noms et prénoms
         $passwordRegex = "/^(?!.*\s)(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':\\|,.<>\/?])(?=.*[0-9]).{8,40}$/";
-        // $loginErrors['regexpassword'] = 'Votre mot de passe doit contenir au moins une majuscule, un chiffre, et faire au moins 8 caractères avec au moins un de ces caractères spéciaux : (!, @, #, $, %, ^, &, *)';
+        // $signInErrors['regexpassword'] = 'Votre mot de passe doit contenir au moins une majuscule, un chiffre, et faire au moins 8 caractères avec au moins un de ces caractères spéciaux : (!, @, #, $, %, ^, &, *)';
 
-        $loginErrors = checkEmptyFields($gender, $_POST); // On lance la fonction de vérification des champs vides, et on stocke le résultat dans un tableau
+        $signInErrors = checkEmptyFields($gender, $_POST); // On lance la fonction de vérification des champs vides, et on stocke le résultat dans un tableau
 
-        if (empty($loginErrors)) { // Si le tableau d'erreurs est vide, on vérifie les champs avec des regex
+        if (empty($signInErrors)) { // Si le tableau est vide, c'est qu'il n'y a pas d'erreurs
 
             $regexmessages = getRegexMessagesArray();
 
             if (!preg_match($namesRegex, $lastname)) { // On vérifie si le nom correspond à la regex
-                $loginErrors['lastname'] = $regexmessages['lastname'];
+                $signInErrors['lastname'] = $regexmessages['lastname'];
             }
             if (!preg_match($namesRegex, $firstname)) { // On vérifie si le prénom correspond à la regex
-                $loginErrors['firstname'] = $regexmessages['firstname'];
+                $signInErrors['firstname'] = $regexmessages['firstname'];
             }
             if ($password != $verifypassword) { // On vérifie si les mots de passe correspondent
-                $loginErrors['password'] = '<span class="danger login-error"><i class="bi bi-x-circle-fill"></i> Les mots de passe ne correspondent pas</span>';
-                $loginErrors['verifypassword'] = '<span class="danger login-error"><i class="bi bi-x-circle-fill"></i> Les mots de passe ne correspondent pas</span>';
+                $signInErrors['password'] = '<span class="danger login-error"><i class="bi bi-x-circle-fill"></i> Les mots de passe ne correspondent pas</span>';
+                $signInErrors['verifypassword'] = '<span class="danger login-error"><i class="bi bi-x-circle-fill"></i> Les mots de passe ne correspondent pas</span>';
             }
             if (!preg_match($passwordRegex, $password)) { // On vérifie si le mot de passe correspond à la regex
-                $loginErrors['password'] = $regexmessages['password'];
-                $loginErrors['verifypassword'] = $regexmessages['verifypassword'];
+                $signInErrors['password'] = $regexmessages['password'];
+                $signInErrors['verifypassword'] = $regexmessages['verifypassword'];
             }
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // On vérifie si l'email est valide
-                $loginErrors['email'] = $regexmessages['email'];
+                $signInErrors['email'] = $regexmessages['email'];
             }
 
             if (emailExists($email)) { // On vérifie si l'email existe déjà dans la BDD
-                $loginErrors['email'] = '<span class="danger login-error"><i class="bi bi-x-circle-fill"></i> Cette adresse e-mail est déjà enregistrée</span>';
+                $signInErrors['email'] = '<span class="danger login-error"><i class="bi bi-x-circle-fill"></i> Cette adresse e-mail est déjà enregistrée</span>';
             }
 
             // Si le tableau d'erreurs est toujours vide, on peut insérer les données dans la base de données
 
 
-            if (empty($loginErrors)) {
+            if (empty($signInErrors)) {
 
                 $conn = logInDatabase(); // Appel de la fonction de connexion à la BDD
 
@@ -111,17 +111,17 @@ function rewriteGenderForm($value) // Fonction qui réécrit les valeurs des cha
 
 function checkEmptyFields($gender, $array)
 {
-    $loginErrors = []; // Tableau des erreurs
+    $signInErrors = []; // Tableau des erreurs
     $emptyFields = getEmptyFieldsMessagesArray();
     foreach ($emptyFields as $emptyField => $message) { // On vérifie si les champs obligatoires sont bien remplis
         if (empty($array[$emptyField])) {
-            $loginErrors[$emptyField] = $message;
+            $signInErrors[$emptyField] = $message;
         }
     }
     if ($gender !== "Homme" && $gender !== "Femme") { // On vérifie si le genre est bien renseigné et correspond à un genre existant
-        $loginErrors['gender'] = '<span class="danger login-error"><i class="bi bi-x-circle-fill"></i> Veuillez renseigner votre genre</span>';
+        $signInErrors['gender'] = '<span class="danger login-error"><i class="bi bi-x-circle-fill"></i> Veuillez renseigner votre genre</span>';
     }
-    return $loginErrors;
+    return $signInErrors;
 }
 
 
@@ -137,7 +137,7 @@ function getEmptyFieldsMessagesArray()
     return $emptyFields;
 }
 
-function getRegexMessagesArray()
+function getRegexMessagesArray() 
 {
     $regexmessages = [ // Tableau des messages d'erreurs associés aux regex
         'lastname' => '<span class="danger login-error"><i class="bi bi-x-circle-fill"></i> Votre nom ne doit contenir que des lettres</span>',
@@ -148,3 +148,4 @@ function getRegexMessagesArray()
     ];
     return $regexmessages;
 }
+

@@ -27,29 +27,29 @@
                         <div class="input-group mx-auto mb-5">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-person"></i></span>
                             <input value='<?php rewriteForm('lastname') ?>' type="text" class="form-control rounded" placeholder="Nom" aria-label="Lastname" aria-describedby="basic-addon1" name="lastname">
-                            <?= $loginErrors['lastname'] ?? '' ?>
+                            <?= $signInErrors['lastname'] ?? '' ?>
 
                         </div>
                         <div class="input-group mx-auto mb-5">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-person"></i></span>
                             <input value='<?php rewriteForm('firstname') ?>' type="text" class="form-control rounded" placeholder="Prénom" aria-label="Firstname" aria-describedby="basic-addon1" name="firstname">
-                            <?= $loginErrors['firstname'] ?? '' ?>
+                            <?= $signInErrors['firstname'] ?? '' ?>
                         </div>
                         <div class="input-group mx-auto mb-5">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-key"></i></span>
                             <input value='<?php rewriteForm('password') ?>' type="password" class="form-control rounded" placeholder="Mot de passe" aria-label="Password" aria-describedby="basic-addon1" name="password">
-                            <?= $loginErrors['password'] ?? '' ?>
+                            <?= $signInErrors['password'] ?? '' ?>
                         </div>
                         <div class="input-group mx-auto mb-5">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-key"></i></span>
                             <input value='<?php rewriteForm('verifypassword') ?>' type="password" class="form-control rounded" placeholder="Confirmez le mot de passe" aria-label="Password" aria-describedby="basic-addon1" name="verifypassword">
-                            <?= $loginErrors['verifypassword'] ?? '' ?>
+                            <?= $signInErrors['verifypassword'] ?? '' ?>
 
                         </div>
                         <div class="input-group mx-auto mb-5">
                             <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                             <input value='<?php rewriteForm('email') ?>' type="text" class="form-control rounded" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" name="email">
-                            <?= $loginErrors['email'] ?? '' ?>
+                            <?= $signInErrors['email'] ?? '' ?>
                         </div>
                         <div class="input-group mx-auto mb-5">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-person"></i></span>
@@ -58,7 +58,7 @@
                                 <option <?php rewriteGenderForm('Homme') ?> value="Homme">Un homme</option>
                                 <option <?php rewriteGenderForm('Femme') ?> value="Femme">Une femme</option>
                             </select>
-                            <?= $loginErrors['gender'] ?? '' ?>
+                            <?= $signInErrors['gender'] ?? '' ?>
                         </div>
                     </div>
                     <div>
