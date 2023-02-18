@@ -1,1 +1,2 @@
-database-login.php
+config/env.php
+.gitignore

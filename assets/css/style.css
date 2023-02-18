@@ -9,7 +9,7 @@ html {
     margin: 0;
 }
 
-body.lp {
+.body-home {
     background-color: black;
     background-image: url('../img/newbg2.png');
     background-repeat: no-repeat;
@@ -52,6 +52,20 @@ h1 {
     left: 1rem;
 }
 
+.preview-img img {
+    height: 250px;
+    width: 250px;
+}
+
+.preview-img {
+    position: relative;
+}
+
+.preview-img-delete {
+    position: absolute;
+    bottom: 1%;
+    right: 0%;
+}
 
 /* Media Queries */
 
