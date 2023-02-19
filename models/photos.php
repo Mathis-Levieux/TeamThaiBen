@@ -5,7 +5,8 @@ class Photos
 
     private int $_id;
     private string $_name;
-    private string $_desc;
+    private string $_path;
+    private int $_albumId;
 
     private object $_pdo;
 
@@ -22,25 +23,44 @@ class Photos
     }
 
     // nous avons besoin d'un constructeur pour instancier la connexion à la base de données
-    public function __construct()
+    public function __construct($name, $path, $albumId)
     {
+        $this->_name = $name;
+        $this->_path = $path;
+        $this->_albumId = $albumId;
         $this->_pdo = Database::connect();
     }
 
-    /**
-     * methode pour récupérer la liste de tous les clients
-     *
-     * @return array
-     */
-    public function getAllClients() : array
+    public function uploadPhoto()
     {
         // nous préparons la requête
-        $query = $this->_pdo->prepare('SELECT * FROM clients');
+        $query = $this->_pdo->prepare('INSERT INTO sk_photos (photos_name, photos_path) VALUES (:name, :path)');
 
         // nous executons la requête
-        $query->execute();
+        $query->execute([
+            ':name' => $this->_name,
+            ':path' => $this->_path,
+        ]);
 
-        // nous retournons le resultat de la requête
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        // Nous préparons la requête pour ajouter l'id de la photo dans la table albums_contains_photos
+        $query = $this->_pdo->prepare('INSERT INTO sk_albums_contains_photos (albums_id, photos_id) VALUES (:albumId, :photoId)');
+
+        // nous executons la requête
+        $query->execute([
+            ':albumId' => $this->_albumId,
+            ':photoId' => $this->_pdo->lastInsertId()
+        ]);
+    }
+
+
+    public function deletePhoto()
+    {
+        // nous préparons la requête
+        $query = $this->_pdo->prepare('DELETE FROM sk_photos WHERE id = :id');
+
+        // nous executons la requête
+        $query->execute([
+            ':id' => $this->_id
+        ]);
     }
 }

@@ -1,27 +1,32 @@
 // GESTION DES IMAGES PREVIEW DANS LE DASHBOARD GALERIE
 
-const previewContainer = document.querySelector(".preview-container")
-const inputPhotos = document.querySelector("#inputPhotos")
-
-let imagesArray = []
-
-inputPhotos.addEventListener("change", () => { // Ajoute les images dans le tableau imagesArray
-    const files = inputPhotos.files // Récupère les fichiers
-    for (let i = 0; i < files.length; i++) {
-        imagesArray.push(files[i])
+class ImagePreviewer { // Classe qui permet de prévisualiser les images dans le dashboard galerie
+    constructor(inputSelector, containerSelector) {
+        this.images = []; // Tableau qui contient les images
+        this.input = document.querySelector(inputSelector); // Sélectionne l'input
+        this.container = document.querySelector(containerSelector); // Sélectionne le container
+        this.input.addEventListener("change", this.handleInputChange.bind(this)); // Ecoute l'événement change sur l'input
     }
-    displayImages()
-})
 
+    handleInputChange() { // Quand l'input change
+        const files = this.input.files; // Récupère les fichiers
+        for (let i = 0; i < files.length; i++) { // Pour chaque fichier
+            this.images.push(files[i]); // On l'ajoute au tableau
+        }
+        this.renderImages(); // On affiche les images
+    }
 
-function displayImages() { // Affiche les images dans le container
-    let images = "";
-    imagesArray.forEach((image, index) => { // Pour chaque image, on crée un div avec l'image
-
-        const id = `image_${index}`;
-        images += `<div class="preview-img">
-                  <img src="${URL.createObjectURL(image)}" alt="image">
-                </div>`;
-    });
-    previewContainer.innerHTML = images;
+    renderImages() { // Affiche les images
+        let images = ""; // On initialise la variable qui contiendra les images
+        this.images.forEach((image, index) => { // Pour chaque image
+            const id = `image_${index}`; // On génère un id
+            images += `<div class="preview-img">
+                    <img src="${URL.createObjectURL(image)}" alt="image">
+                  </div>`;
+        });
+        this.container.innerHTML = images; // On affiche les images
+    }
 }
+
+// Utilisation
+const previewer = new ImagePreviewer("#inputPhotos", ".preview-container");
