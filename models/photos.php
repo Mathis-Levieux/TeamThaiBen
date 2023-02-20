@@ -10,6 +10,15 @@ class Photos
 
     private object $_pdo;
 
+    // nous avons besoin d'un constructeur pour instancier la connexion à la base de données
+    public function __construct($name, $path, $albumId)
+    {
+        $this->_name = $name;
+        $this->_path = $path;
+        $this->_albumId = $albumId;
+        $this->_pdo = Database::connect();
+    }
+
     // methode magique pour get les attributs
     public function __get($attribut)
     {
@@ -22,14 +31,7 @@ class Photos
         $this->$attribut = $value;
     }
 
-    // nous avons besoin d'un constructeur pour instancier la connexion à la base de données
-    public function __construct($name, $path, $albumId)
-    {
-        $this->_name = $name;
-        $this->_path = $path;
-        $this->_albumId = $albumId;
-        $this->_pdo = Database::connect();
-    }
+
 
     public function uploadPhoto()
     {
