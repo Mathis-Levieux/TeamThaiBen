@@ -16,6 +16,7 @@ class UploadController
     private $_allowedExtensions = ['jpg', 'jpeg', 'png'];
     private $_maxFileSize = 4000000; // 4 Mo
     private $_destination;
+    private string $_AlbumName;
 
     public function upload() // Création d'une méthode upload
     {
@@ -47,8 +48,11 @@ class UploadController
                     // Gérer l'erreur
                     echo 'Fichier trop volumineux';
                 }
-                // Obtention du chemin de destination
-                $this->_destination = '../uploads/albums/' . $albumId . '/';
+                // Obtention du chemin de destination en utilisant la fonction getAlbumNameById de la classe Albums pour héberger le fichier dans le bon dossier
+                $obj = new Albums();
+                $_AlbumName = $obj->getAlbumNameById($albumId); 
+                $_AlbumName = $_AlbumName['albums_name'];
+                $this->_destination = '../uploads/albums/' . $_AlbumName . '/';
                 // Hébergement du fichier
                 $newFileName = uniqid() . '.' . $fileExtension;
                 $destination = $this->_destination . $newFileName;
@@ -74,7 +78,6 @@ if (isset($_POST['submit'])) {  // Si le bouton submit est cliqué
     $upload->upload(); // On appelle la méthode upload
 }
 
-
 // class AlbumController / 
 // {
 //     public function getAlbumsById($id)
@@ -84,5 +87,6 @@ if (isset($_POST['submit'])) {  // Si le bouton submit est cliqué
 //         return $album;
 //     }
 // }
+
 
 include('../views/dashboard-gallery.php');

@@ -31,41 +31,12 @@ class ImagePreviewer { // Classe qui permet de prévisualiser les images dans le
 // Utilisation
 const previewer = new ImagePreviewer("#inputPhotos", ".preview-container");
 
+// ------------------------------ //
 
-// GESTION DE L'AFFICHAGE DES ALBUMS DYNAMIQUEMENT DANS LE DASHBOARD GALERIE
+// AJAX POUR L'AFFICHAGE DES ALBUMS DANS LE DASHBOARD GALERIE
 
-class AjaxAlbums { // Classe qui permet d'afficher les albums dynamiquement dans le dashboard galerie
-    constructor(containerSelector, url) {
-        this.container = document.querySelector(containerSelector); // Sélectionne le container
-        this.url = url; // Url de la requête ajax
-        this.albums = []; // Tableau qui contient les albums
-        this.renderAlbums(); // Affiche les albums
-    }
-
-    renderAlbums() { // Affiche les albums
-        fetch(this.url) // Requête ajax
-            .then(response => response.json()) // On récupère la réponse au format json
-            .then(albums => { // On récupère les albums
-                this.albums = albums; // On les ajoute au tableau
-                this.render(); // On affiche les albums
-            })
-            .catch(error => console.log(error)); // En cas d'erreur
-    }
-
-    render() { // Affiche les albums
-        let albums = ""; // On initialise la variable qui contiendra les albums
-        this.albums.forEach(album => { // Pour chaque album
-            albums += `<option value="${album.id}">${album.name}</option>`;
-        });
-        this.container.innerHTML = albums; // On affiche les albums
-    }
-}
-
-// Utilisation
-const ajaxAlbums = new AjaxAlbums(".album-container", "../../api/albums");
-
-// eventlistener pour afficher les images d'un album dans le dashboard galerie
+// eventlistener pour le select qui permet de choisir l'album
 document.querySelector("#album-select").addEventListener("change", function () {
-    const albumId = document.querySelector("#album-select").value;
-    
+    // Récupère le nom de l'album
+    const albumName = document.querySelector("#album-select").options[document.querySelector("#album-select").selectedIndex].text;
 });
