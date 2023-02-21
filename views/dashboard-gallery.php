@@ -14,25 +14,40 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <div class="justify-content-center">
-                    <h1>Dashboard - Galerie</h1>
-                    <form method="post" enctype="multipart/form-data">
-                        <input name="photos[]" type="file" class="form-control" id="inputPhotos" multiple="multiple">
-                        <select name="album" class="form-select" aria-label="Default select example">
-                            <option value="1">Saison 2022-2023</option>
-                            <option value="2">Saison 2021-2022</option>
-                            <option value="3">Saison 2020-2022</option>
-                            <option value="4">Saison 2019-2020</option>
-                        </select>
-                        <input type="submit" name="submit" class="btn btn-primary" value="Envoyer">
-                        <div class="preview-container d-flex flex-wrap gap-2"></div>
-                    </form>
+            <div class="col-12 justify-content-center">
 
-                </div>
+                <h1>Dashboard - Galerie</h1>
+                <form method="post" enctype="multipart/form-data">
+                    <input name="photos[]" type="file" class="form-control" id="inputPhotos" multiple="multiple">
+                    <select name="album" class="form-select" aria-label="Default select example">
+                        <option value="1">Saison 2022-2023</option>
+                        <option value="2">Saison 2021-2022</option>
+                        <option value="3">Saison 2020-2022</option>
+                        <option value="4">Saison 2019-2020</option>
+                    </select>
+                    <input type="submit" name="submit" class="btn btn-primary" value="Envoyer">
+                    <div class="preview-container d-flex flex-wrap gap-2"></div>
+                </form>
+
             </div>
         </div>
     </div>
+
+    <!-- <div class="container">
+        <div class="row">
+            <div class="col-12 justify-content-center">
+                <h2>Affichage galerie</h2>
+                <select name="album" id="album-select">
+                    <option selected disabled value="">Sélectionne un album</option>
+                    <option value="1">Saison 2022-2023</option>
+                    <option value="2">Saison 2021-2022</option>
+                    <option value="3">Saison 2020-2022</option>
+                    <option value="4">Saison 2019-2020</option>
+                </select>
+                <div class="album-container d-flex flex-wrap gap-2"></div>
+            </div>
+        </div>
+    </div> -->
 
 
 

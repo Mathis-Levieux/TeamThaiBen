@@ -14,6 +14,7 @@
             <input type="password" name="password" id="password" placeholder="Mot de passe">
             <span class="error"><?= $errors['password'] ?? '' ?></span>
             <input type="submit" value="Se connecter">
+            <span class="error"><?= $errors['empty'] ?? '' ?></span>
         </form>
     </main>
     

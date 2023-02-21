@@ -4,7 +4,11 @@ require('../helpers/Database.php');
 require('../models/albums.php');
 require('../models/photos.php');
 
+session_start();
 
+if (!isset($_SESSION['login'])) {
+    header('Location: controller-login.php');
+}
 
 
 class UploadController
@@ -12,9 +16,11 @@ class UploadController
     private $_allowedExtensions = ['jpg', 'jpeg', 'png'];
     private $_maxFileSize = 4000000; // 4 Mo
     private $_destination = '../uploads/photos/';
-    
+
     public function upload() // Création d'une méthode upload
     {
+
+        
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $files = $_FILES['photos'];
             $fileCount = count($files['name']);
@@ -26,7 +32,7 @@ class UploadController
                 $fileSize = $files['size'][$i];
                 $fileError = $files['error'][$i];
                 $albumId = $_POST['album'];
-                
+
                 // Vérifier l'extension
                 $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
                 if (!in_array(strtolower($fileExtension), $this->_allowedExtensions)) {
@@ -34,14 +40,14 @@ class UploadController
                     // Gérer l'erreur
                     echo 'Extension non autorisée';
                 }
-                
+
                 // Vérifier la taille
                 if ($fileSize > $this->_maxFileSize) {
                     // Fichier trop volumineux
                     // Gérer l'erreur
                     echo 'Fichier trop volumineux';
                 }
-                
+
                 // Héberger le fichier
                 $newFileName = uniqid() . '.' . $fileExtension;
                 $destination = $this->_destination . $newFileName;
@@ -57,8 +63,6 @@ class UploadController
                     // Gérer l'erreur
                     echo 'Erreur lors de l\'hébergement';
                 }
-
-
             }
         }
     }
@@ -70,14 +74,14 @@ if (isset($_POST['submit'])) {  // Si le bouton submit est cliqué
 }
 
 
-
-
-
-
-
-
-
-
-
+class AlbumController
+{
+    public function getAlbumsById($id)
+    {
+        $album = new Albums();
+        $album = $album->getAlbumsById($id);
+        return $album;
+    }
+}
 
 include('../views/dashboard-gallery.php');
