@@ -13,7 +13,7 @@ class UploadController
     private $_maxFileSize = 4000000; // 4 Mo
     private $_destination = '../uploads/photos/';
     
-    public function upload()
+    public function upload() // Création d'une méthode upload
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $files = $_FILES['photos'];
@@ -64,9 +64,9 @@ class UploadController
     }
 }
 
-if (isset($_POST['submit'])) { 
-    $upload = new UploadController();
-    $upload->upload();
+if (isset($_POST['submit'])) {  // Si le bouton submit est cliqué
+    $upload = new UploadController();  // On instancie la classe UploadController
+    $upload->upload(); // On appelle la méthode upload
 }
 
 
