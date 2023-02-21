@@ -6,7 +6,7 @@ class Photos
     private int $_id;
     private string $_name;
     private string $_path;
-    private int $_albumId;
+    private string $_albumId;
 
     private object $_pdo;
 
