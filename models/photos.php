@@ -65,4 +65,6 @@ class Photos
             ':id' => $this->_id
         ]);
     }
+
+    
 }

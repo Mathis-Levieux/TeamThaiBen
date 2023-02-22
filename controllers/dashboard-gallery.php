@@ -162,9 +162,48 @@ function deleteAlbum()  // Fonction pour supprimer un album
         echo 'Album supprimé';
     }
 }
-
+// Utilisation de la fonction deleteAlbum
 if (isset($_POST['submitDeleteAlbum'])) { // Si le bouton submit est cliqué
     deleteAlbum(); // On appelle la fonction deleteAlbum
 }
+
+// Fonction pour afficher toutes les photos d'un album
+function showPhotosInAdminDashboard()
+{
+    if (isset($_POST['submitDisplayAlbum']) && isset($_POST['DisplayAlbum'])) { // Si l'album est sélectionné
+ 
+        $albumId = $_POST['DisplayAlbum']; // Récupération de l'id de l'album
+        $photos = new Albums();
+        $photos = $photos->showPhotosFromAlbum($albumId); // Récupération des photos de l'album grâce à l'id
+        foreach ($photos as $photo) {
+            echo '<div class="col-lg-3">';
+            echo '<div class="card lg-4 shadow-sm">';
+            echo '<img class="card-img-top" src="' . $photo['photos_path'] . '" alt="Card image cap">';
+            echo '<div class="card-body">';
+            echo '<p class="card-text">' . $photo['photos_name'] . '</p>';
+            echo '<div class="d-flex justify-content-between align-items-center">';
+            echo '<div class="btn-group">';
+            echo '<a href="index.php?page=dashboard&album=' . $albumId . '&delete=' . $photo['photos_id'] . '" class="btn btn-sm btn-outline-secondary">Supprimer</a>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        }
+    }
+}
+
+// Utilisation de la fonction showPhotosInAdminDashboard
+// if (isset($_POST['submitDisplayAlbum'])) { // Si le bouton submit est cliqué
+//     showPhotosInAdminDashboard(); // On appelle la fonction showPhotos
+// }
+
+
+
+
+
+
+
+
 
 include('../views/dashboard-gallery.php');

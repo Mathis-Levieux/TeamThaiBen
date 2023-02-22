@@ -89,4 +89,15 @@ class Albums
         $query = $this->_db->prepare($sql);
         $query->execute();
     }
+
+    public function showPhotosFromAlbum($id)
+    {
+        $sql = "SELECT * FROM sk_photos WHERE photos_id IN (SELECT photos_id FROM sk_albums_contains_photos WHERE albums_id = :id)";
+        $query = $this->_db->prepare($sql);
+        $query->execute([
+            'id' => $id
+        ]);
+        $photos = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $photos;
+    }
 }
