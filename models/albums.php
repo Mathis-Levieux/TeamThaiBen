@@ -39,4 +39,28 @@ class Albums
         $albumName = $query->fetch(PDO::FETCH_ASSOC); // On stocke le résultat dans la variable $albumName
         return $albumName; // On retourne le résultat
     }
+
+    public function getAlbumsByName($name) // On crée une méthode qui prend en paramètre $name et qui retourne un tableau associatif
+    {
+        $sql = "SELECT * FROM sk_albums WHERE albums_name = :name";
+        $query = $this->_db->prepare($sql);
+        $query->execute([
+            'name' => $name
+        ]);
+        $album = $query->fetch(PDO::FETCH_ASSOC); // On stocke le résultat dans la variable $album
+        return $album; // On retourne le résultat
+    }
+
+
+
+
+
+    public function createNewAlbum($name)
+    {
+        $sql = "INSERT INTO sk_albums (albums_name) VALUES (:name)";
+        $query = $this->_db->prepare($sql);
+        $query->execute([
+            'name' => $name
+        ]);
+    }
 }

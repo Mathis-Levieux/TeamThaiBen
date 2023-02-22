@@ -11,7 +11,7 @@ if (!isset($_SESSION['login'])) {
 }
 
 
-class UploadController
+class UploadController // Création d'une classe UploadController pour gérer l'upload des photos
 {
     private $_allowedExtensions = ['jpg', 'jpeg', 'png'];
     private $_maxFileSize = 4000000; // 4 Mo
@@ -21,7 +21,7 @@ class UploadController
     public function upload() // Création d'une méthode upload
     {
 
-        
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $files = $_FILES['photos'];
             $fileCount = count($files['name']);
@@ -32,7 +32,7 @@ class UploadController
                 $fileTmpName = $files['tmp_name'][$i];
                 $fileSize = $files['size'][$i];
                 $fileError = $files['error'][$i];
-                $albumId = $_POST['album'];
+                $albumId = $_POST['albumchoice'];
 
                 // Vérifier l'extension
                 $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -50,7 +50,7 @@ class UploadController
                 }
                 // Obtention du chemin de destination en utilisant la fonction getAlbumNameById de la classe Albums pour héberger le fichier dans le bon dossier
                 $obj = new Albums();
-                $_AlbumName = $obj->getAlbumNameById($albumId); 
+                $_AlbumName = $obj->getAlbumNameById($albumId);
                 $_AlbumName = $_AlbumName['albums_name'];
                 $this->_destination = '../uploads/albums/' . $_AlbumName . '/';
                 // Hébergement du fichier
@@ -73,10 +73,48 @@ class UploadController
     }
 }
 
-if (isset($_POST['submit'])) {  // Si le bouton submit est cliqué
+
+// Utilisation de la classe UploadController
+if (isset($_POST['submit']) && isset($_POST['albumchoice'])) {  // Si le bouton submit est cliqué
     $upload = new UploadController();  // On instancie la classe UploadController
     $upload->upload(); // On appelle la méthode upload
 }
+
+// Fonction pour créer un nouvel album
+function createAlbum()
+{
+    if (empty($_POST['NewAlbum'])) {   // Si le champ est vide
+        $errors['NewAlbum'] = 'Le nom d\'album ne doit pas être vide';
+        echo 'Le nom d\'album ne doit pas être vide';
+    } else {
+        if (strlen($_POST['NewAlbum']) > 50) { // Si le nom d'album contient plus de 50 caractères
+            $errors['NewAlbum'] = 'Le nom d\'album ne doit pas dépasser 50 caractères';
+            echo 'Le nom d\'album ne doit pas dépasser 50 caractères';
+        } else {
+            $album = new Albums(); // Vérification de si le nom d'album existe déjà
+            $album = $album->getAlbumsByName($_POST['NewAlbum']);
+            if ($album) {
+                $errors['NewAlbum'] = 'Le nom d\'album est déjà utilisé';
+                echo 'Le nom d\'album est déjà utilisé';
+            } else {
+                // Création du dossier de l'album
+                if (!file_exists('../uploads/albums/' . $_POST['NewAlbum'])) { // Si le dossier n'existe pas
+                    mkdir('../uploads/albums/' . $_POST['NewAlbum']); // On le crée
+                }
+                $album = new Albums();
+                $album->createNewAlbum($_POST['NewAlbum']);
+                echo 'Album créé';
+            }
+        }
+    }
+}   
+
+// Utilisation de la fonction createAlbum
+if (isset($_POST['submit']) && isset($_POST['NewAlbum'])) { // Si le bouton submit est cliqué
+    createAlbum(); // On appelle la fonction createAlbum
+}
+
+
 
 // class AlbumController / 
 // {

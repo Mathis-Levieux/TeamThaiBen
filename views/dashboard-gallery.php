@@ -19,7 +19,7 @@
                 <h1>Dashboard - Galerie</h1>
                 <form method="post" enctype="multipart/form-data">
                     <input name="photos[]" type="file" class="form-control" id="inputPhotos" multiple="multiple">
-                    <select name="album" class="form-select" aria-label="Default select example">
+                    <select name="albumchoice" class="form-select" aria-label="Default select example">
                         <option value="1">Saison 2022-2023</option>
                         <option value="2">Saison 2021-2022</option>
                         <option value="3">Saison 2020-2022</option>
@@ -50,6 +50,19 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-12 justify-content-center">
+
+                <h2>Création d'un album</h2>
+                <form method="post">
+                    <input type="text" name="NewAlbum" class="form-control" placeholder="Nom de l'album">
+                    <input type="submit" name="submit" class="btn btn-primary" value="Envoyer">
+                </form>
+
+            </div>
+        </div>
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
