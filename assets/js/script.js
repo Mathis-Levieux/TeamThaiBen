@@ -31,6 +31,11 @@ class ImagePreviewer { // Classe qui permet de prévisualiser les images dans le
 // Utilisation
 const previewer = new ImagePreviewer("#inputPhotos", ".preview-container");
 
+
+
+
+
+
 // ------------------------------ //
 
 // AJAX POUR L'AFFICHAGE DES ALBUMS DANS LE DASHBOARD GALERIE
@@ -40,3 +45,6 @@ document.querySelector("#album-select").addEventListener("change", function () {
     // Récupère le nom de l'album
     const albumName = document.querySelector("#album-select").options[document.querySelector("#album-select").selectedIndex].text;
 });
+
+
+
