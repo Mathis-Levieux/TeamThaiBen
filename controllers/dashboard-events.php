@@ -51,6 +51,39 @@ class EventsController // Création d'une classe newEventTypeController pour gé
         $deleteEventType = new Events();
         $deleteEventType->deleteEventType($id);
     }
+
+    public function addNewEvent()
+    {
+        if (isset($_POST['submitNewEvent'])) {
+            if (empty($_POST['newEventTitle'])) {
+                var_dump($_POST['newEventTitle']);
+                echo 'Veuillez remplir le champ';
+                $errors['NewEventTitle'] = 'Veuillez remplir le champ';
+            }
+            if (empty($_POST['newEventDesc'])) {
+                echo 'Veuillez remplir le champ';
+                $errors['newEventDesc'] = 'Veuillez remplir le champ';
+            }
+            if (empty($_POST['newEventDate'])) {
+                echo 'Veuillez remplir le champ';
+                $errors['newEventDate'] = 'Veuillez remplir le champ';
+            }
+            if (empty($_POST['newEventHour'])) {
+                echo 'Veuillez remplir le champ';
+                $errors['newEventHour'] = 'Veuillez remplir le champ';
+            }
+            if (empty($_POST['newEventType'])) {
+                echo 'Veuillez remplir le champ';
+                $errors['newEventType'] = 'Veuillez remplir le champ';
+            }
+
+            if (!isset($errors)) {
+                $newEvent = new Events();
+                $newEvent->addNewEvent($_POST['newEventTitle'], $_POST['newEventDesc'], $_POST['newEventDate'], $_POST['newEventHour'], $_POST['newEventType']);
+                $message = 'L\'événement a bien été ajouté';
+            }
+        }
+    }
 }
 
 // Utilisation de la méthode pour ajouter un nouveau type d'événement
@@ -68,6 +101,22 @@ if (isset($_POST['deleteEventType']) && isset($_POST['submitDeleteEventType'])) 
     $deleteEventType->deleteEventType($_POST['deleteEventType']);
     $message = 'Le type d\'événement a bien été supprimé';
 }
+
+// Utilisation de la méthode pour ajouter un nouvel événement
+
+if (isset($_POST['submitNewEvent'])) {
+    $newEvent = new EventsController();
+    $newEvent->addNewEvent();
+}
+
+
+
+
+
+
+
+
+
 
 
 

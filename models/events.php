@@ -36,7 +36,7 @@ class Events
         ]);
     }
 
-    public function getEventTypes()
+    public function getEventTypes() // Récupère les types d'événements
     {
         $sql = "SELECT * FROM sk_events_types";
         $query = $this->db->prepare($sql);
@@ -51,6 +51,19 @@ class Events
         $query = $this->db->prepare($sql);
         $query->execute([
             'id' => $id
+        ]);
+    }
+
+    public function addNewEvent($name, $desc, $date, $hour, $type)
+    {
+        $sql = "INSERT INTO sk_events (events_name, events_desc, events_date, events_hour, events_type_id) VALUES (:name, :desc, :date, :hour, :type)";
+        $query = $this->db->prepare($sql);
+        $query->execute([
+            'name' => $name,
+            'desc' => $desc,
+            'date' => $date,
+            'hour' => $hour,
+            'type' => $type
         ]);
     }
 }
