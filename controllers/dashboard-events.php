@@ -64,9 +64,9 @@ if (isset($_POST['submitNewEventType']) && (isset($_POST['NewEventType']))) {
 // Utilisation de la méthode pour supprimer un type d'événement
 
 if (isset($_POST['deleteEventType']) && isset($_POST['submitDeleteEventType'])) {
-    var_dump($_POST['deleteEventType']);
     $deleteEventType = new EventsController();
     $deleteEventType->deleteEventType($_POST['deleteEventType']);
+    $message = 'Le type d\'événement a bien été supprimé';
 }
 
 

@@ -23,8 +23,8 @@
                     <select name="deleteEventType" class="form-select" aria-label="Default select example">
                         <option selected disabled value="">Sélectionne un album</option>
                         <?php
-                        $newEventType = new EventsController();
-                        $newEventType->showSelectEventType();
+                        $newEventType = new EventsController(); // Création d'un nouvel objet
+                        $newEventType->showSelectEventType(); // Affichage du select des albums
                         ?>
                     </select>
                     <input type="submit" name="submitDeleteEventType" class="btn btn-primary" value="Envoyer">

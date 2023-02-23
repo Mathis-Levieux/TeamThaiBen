@@ -10,6 +10,8 @@ if (!isset($_SESSION['login'])) {
     header('Location: controller-login.php');
 }
 
+
+
 class UploadController // Création d'une classe UploadController pour gérer l'upload des photos
 {
     private $_allowedExtensions = ['jpg', 'jpeg', 'png'];
@@ -171,7 +173,7 @@ if (isset($_POST['submitDeleteAlbum'])) { // Si le bouton submit est cliqué
 function showPhotosInAdminDashboard()
 {
     if (isset($_POST['submitDisplayAlbum']) && isset($_POST['DisplayAlbum'])) { // Si l'album est sélectionné
- 
+
         $albumId = $_POST['DisplayAlbum']; // Récupération de l'id de l'album
         $photos = new Albums();
         $photos = $photos->showPhotosFromAlbum($albumId); // Récupération des photos de l'album grâce à l'id
