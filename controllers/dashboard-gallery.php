@@ -72,7 +72,8 @@ class UploadController // Création d'une classe UploadController pour gérer l'
                     if (move_uploaded_file($fileTmpName, $destination)) {
                         // Fichier hébergé
                         // Enregistrer le fichier en base de données
-                        $photo = new Photos($newFileName, $destination, $albumId);
+                        $photo = new Photos;
+                        $photo->createPhoto($newFileName, $destination, $albumId);
                         $photo->uploadPhoto();
                         echo 'Fichier hébergé';
                         $message = 'Fichier hébergé';
@@ -177,32 +178,56 @@ function showPhotosInAdminDashboard()
         $albumId = $_POST['DisplayAlbum']; // Récupération de l'id de l'album
         $photos = new Albums();
         $photos = $photos->showPhotosFromAlbum($albumId); // Récupération des photos de l'album grâce à l'id
+        echo '<form class="row" action="dashboard-gallery.php" method="post">';
         foreach ($photos as $photo) {
             echo '<div class="col-lg-3">';
             echo '<div class="card lg-4 shadow-sm">';
             echo '<img class="card-img-top" src="' . $photo['photos_path'] . '" alt="Card image cap">';
             echo '<div class="card-body">';
-            echo '<p class="card-text">' . $photo['photos_name'] . '</p>';
             echo '<div class="d-flex justify-content-between align-items-center">';
             echo '<div class="btn-group">';
-            echo '<a href="index.php?page=dashboard&album=' . $albumId . '&delete=' . $photo['photos_id'] . '" class="btn btn-sm btn-outline-secondary">Supprimer</a>';
+            echo '<input type="checkbox" name="photosToDelete[]" value="' . $photo['photos_id'] . '" id="' . $photo['photos_id'] . '" class="btn btn-sm btn-outline-secondary">';
+            echo '<label for="' . $photo['photos_id'] . '" class="ms-2 btn btn-primary">Cocher</label>';
             echo '</div>';
             echo '</div>';
             echo '</div>';
             echo '</div>';
             echo '</div>';
         }
+        echo '<input type="submit" name="submitDeletePhoto" class="col-lg-3 m-auto btn btn-primary" value="Supprimer">';
+        echo '</form>';
     }
 }
 
-// Utilisation de la fonction showPhotosInAdminDashboard
-// if (isset($_POST['submitDisplayAlbum'])) { // Si le bouton submit est cliqué
-//     showPhotosInAdminDashboard(); // On appelle la fonction showPhotos
-// }
+
+function deletePhoto() // Fonction pour supprimer une photo
+{
+    if (isset($_POST['submitDeletePhoto'])) { // Si le bouton submit est cliqué
+        if (empty($_POST['photosToDelete'])) { // Si le champ est vide
+            $errors['photosToDelete'] = 'Veuillez choisir une photo';
+            echo 'Veuillez choisir une photo';
+        } else {
+            $photosToDelete = $_POST['photosToDelete']; // Récupération des photos à supprimer
+            foreach ($photosToDelete as $photoToDelete) { // Boucle pour supprimer les photos
+                $photo = new Photos();
+                $photo = $photo->getPhotoById($photoToDelete); // Récupération des informations de la photo grâce à l'id
+                $photoPath = $photo['photos_path']; // Récupération du chemin de la photo
+                $photo = new Photos();
+                $photo->deletePhoto($photoToDelete); // Suppression de la photo en base de données
+                if (file_exists($photoPath)) { // Si la photo existe
+                    unlink($photoPath); // Suppression de la photo
+                }
+            }
+            echo 'Photo(s) supprimée(s)';
+        }
+    }
+}
 
 
-
-
+// Utilisation de la fonction deletePhoto
+if (isset($_POST['submitDeletePhoto'])) { // Si le bouton submit est cliqué
+    deletePhoto(); // On appelle la fonction deletePhoto
+}
 
 
 

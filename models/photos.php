@@ -10,14 +10,18 @@ class Photos
 
     private object $_pdo;
 
-    // nous avons besoin d'un constructeur pour instancier la connexion à la base de données
-    public function __construct($name, $path, $albumId)
+    public function __construct()
+    {
+        $this->_pdo = Database::connect();
+    }
+
+    public function createPhoto($name, $path, $albumId)
     {
         $this->_name = $name;
         $this->_path = $path;
         $this->_albumId = $albumId;
-        $this->_pdo = Database::connect();
     }
+
 
     // methode magique pour get les attributs
     public function __get($attribut)
@@ -31,6 +35,19 @@ class Photos
         $this->$attribut = $value;
     }
 
+    public function getPhotoById($id)
+    {
+        // nous préparons la requête
+        $query = $this->_pdo->prepare('SELECT * FROM sk_photos WHERE photos_id = :id');
+
+        // nous executons la requête
+        $query->execute([
+            ':id' => $id
+        ]);
+
+        // nous retournons le résultat
+        return $query->fetch();
+    }
 
 
     public function uploadPhoto()
@@ -55,16 +72,23 @@ class Photos
     }
 
 
-    public function deletePhoto()
+    public function deletePhoto($id)
     {
-        // nous préparons la requête
-        $query = $this->_pdo->prepare('DELETE FROM sk_photos WHERE id = :id');
+        // Nous préparons la requête pour supprimer l'id de la photo dans la table albums_contains_photos
+        $query = $this->_pdo->prepare('DELETE FROM sk_albums_contains_photos WHERE photos_id = :id');
 
         // nous executons la requête
         $query->execute([
-            ':id' => $this->_id
+            ':id' => $id
         ]);
-    }
+        
+        // nous préparons la requête
+        $query = $this->_pdo->prepare('DELETE FROM sk_photos WHERE photos_id = :id');
 
-    
+        // nous executons la requête
+        $query->execute([
+            ':id' => $id
+        ]);
+
+    }
 }
