@@ -123,7 +123,7 @@ function createEventModals($event)
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <p> Le ' . ucwords($formatter->format(strtotime($event['events_date']))) . '</p> 
+          <p> Le ' . $formatter->format(strtotime($event['events_date'])) . '</p> 
           <p>' . $event['events_desc'] . '</p>
         </div>
         <div class="modal-footer">
