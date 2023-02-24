@@ -84,6 +84,51 @@ class EventsController // Création d'une classe newEventTypeController pour gé
             }
         }
     }
+
+    public function displayEventList()
+    {
+        $displayEventList = new Events();
+        $displayEventList = $displayEventList->getEvents();
+        echo '<form action="dashboard-events.php" method="post">';
+        echo '<table class="table table-striped table-hover table-bordered">';
+        foreach ($displayEventList as $event) {
+            // obtenir le nom du type d'événement
+            $eventType = new Events();
+            $eventType = $eventType->getEventType($event['events_id']); // on récupère le type d'évènement grâce à l'id de l'évènement
+            echo '<tr>';
+            echo '<td>' . $event['events_name'] . '</td>';
+            echo '<td>' . $event['events_date'] . '</td>';
+            echo '<td>' . $event['events_hour'] . '</td>';
+            echo '<td>' . $eventType[0]['events_type'] . '</td>';
+            echo '<td>';
+            echo '<div class="btn-group">';
+            echo '<input type="checkbox" name="eventsToDelete[]" value="' . $event['events_id'] . '" id="' . $event['events_id'] . '" class="btn btn-sm btn-outline-secondary">';
+            echo '<label for="' . $event['events_id'] . '" class="ms-2 btn btn-primary">Cocher</label>';
+            echo '</div>';
+            echo '</td>';
+            echo '</tr>';
+        }
+
+        echo '</table>';
+        echo '<input type="submit" name="submitDeleteEvents" class="col-lg-3 m-auto btn btn-primary" value="Supprimer">';
+        echo '</form>';
+    }
+
+    public function deleteEvents()
+    {
+        if (isset($_POST['submitDeleteEvents'])) {
+            if (empty($_POST['eventsToDelete'])) {
+                echo 'Veuillez sélectionner au moins un événement';
+                $errors['eventsToDelete'] = 'Veuillez sélectionner au moins un événement';
+            }
+            if (!isset($errors)) {
+                foreach ($_POST['eventsToDelete'] as $eventToDelete) {
+                    $deleteEvent = new Events();
+                    $deleteEvent->deleteEvent($eventToDelete);
+                }
+            }
+        }
+    }
 }
 
 // Utilisation de la méthode pour ajouter un nouveau type d'événement
@@ -109,11 +154,12 @@ if (isset($_POST['submitNewEvent'])) {
     $newEvent->addNewEvent();
 }
 
+// Utilisation de la méthode pour supprimer un ou plusieurs événements
 
-
-
-
-
+if (isset($_POST['submitDeleteEvents'])) {
+    $deleteEvents = new EventsController();
+    $deleteEvents->deleteEvents();
+}
 
 
 

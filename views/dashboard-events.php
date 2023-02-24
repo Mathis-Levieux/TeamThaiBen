@@ -38,14 +38,6 @@
             <div class="col-12 justify-content-center">
                 <h2>Ajout d'un évènement</h2>
                 <form action="dashboard-events.php" method="post">
-                    <label for="typeOfNewEvent">Type d'évènement</label>
-                    <select name="typeOfNewEvent" class="form-select" aria-label="Default select example">
-                        <option selected disabled value="">Sélectionne un album</option>
-                        <?php
-                        $newEventType = new EventsController(); // Création d'un nouvel objet
-                        $newEventType->showSelectEventType(); // Affichage du select des albums
-                        ?>
-                    </select>
                     <label for="newEventTitle">Titre de l'évènement</label>
                     <input type="text" name="newEventTitle" id="newEventTitle" class="form-control" placeholder="Titre de l'évènement">
                     <label for="newEventDate">Date de l'évènement</label>
@@ -65,8 +57,22 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="../assets/js/script.js"></script>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 justify-content-center">
+                <h2>Suppression d'évènements</h2>
+                <?php $displayEventList = new EventsController(); // Création d'un nouvel objet
+                $displayEventList->displayEventList(); // Affichage du select des albums
+                ?>
+            </div>
+        </div>
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="../assets/js/script.js"></script>
 </body>
 
 </html>
