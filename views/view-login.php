@@ -1,3 +1,4 @@
+<html lang="fr">
 <?php include('templates/head.php'); ?>
 
 
@@ -17,8 +18,10 @@
             <span class="error"><?= $errors['empty'] ?? '' ?></span>
         </form>
     </main>
-    
 
-    
+
+
 
 </body>
+
+</html>

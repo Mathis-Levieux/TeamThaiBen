@@ -1,3 +1,4 @@
+<html lang="fr">
 <?php include('templates/head.php'); ?>
 
 <body>
@@ -19,7 +20,7 @@
         <div class="row">
             <div class="col-12 justify-content-center">
                 <h2>Suppression d'un type d'évènement</h2>
-                <form action="dashboard-events.php" method="post">
+                <form action="controller-dashboard-events.php" method="post">
                     <select name="deleteEventType" class="form-select" aria-label="Default select example">
                         <option selected disabled value="">Sélectionne un album</option>
                         <?php
@@ -37,7 +38,7 @@
         <div class="row">
             <div class="col-12 justify-content-center">
                 <h2>Ajout d'un évènement</h2>
-                <form action="dashboard-events.php" method="post">
+                <form action="controller-dashboard-events.php" method="post">
                     <label for="newEventTitle">Titre de l'évènement</label>
                     <input type="text" name="newEventTitle" id="newEventTitle" class="form-control" placeholder="Titre de l'évènement">
                     <label for="newEventDate">Date de l'évènement</label>

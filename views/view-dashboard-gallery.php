@@ -1,3 +1,4 @@
+<html lang="fr">
 <?php include('templates/head.php'); ?>
 
 <body>
@@ -6,7 +7,7 @@
             <div class="col-12 justify-content-center">
 
                 <h1>Dashboard - Galerie</h1>
-                <form action='dashboard-gallery.php' method="post" enctype="multipart/form-data">
+                <form action='controller-dashboard-gallery.php' method="post" enctype="multipart/form-data">
                     <input name="photos[]" type="file" class="form-control" id="inputPhotos" multiple="multiple">
                     <select name="albumchoice" class="form-select">
                         <option selected disabled value="">Sélectionne un album</option>
@@ -28,7 +29,7 @@
             <div class="col-12 justify-content-center">
 
                 <h2>Création d'un album</h2>
-                <form action='dashboard-gallery.php' method="post">
+                <form action='controller-dashboard-gallery.php' method="post">
                     <input type="text" name="NewAlbum" class="form-control" placeholder="Nom de l'album">
                     <input type="submit" name="submitNewAlbum" class="btn btn-primary" value="Envoyer">
                 </form>
@@ -44,7 +45,7 @@
         <div class="row">
             <div class="col-12 justify-content-center">
                 <h2>Suppression d'un album</h2>
-                <form action='dashboard-gallery.php' method="post">
+                <form action='controller-dashboard-gallery.php' method="post">
                     <select name="deleteAlbum" class="form-select" aria-label="Default select example">
                         <option selected disabled value="">Sélectionne un album</option>
                         <?php
@@ -62,7 +63,7 @@
         <div class="row">
             <div class="col-12 justify-content-center">
                 <h2>Affichage galerie</h2>
-                <form action='dashboard-gallery.php' method="post">
+                <form action='controller-dashboard-gallery.php' method="post">
                     <select name="DisplayAlbum" class="form-select" aria-label="Default select example">
                         <option selected disabled value="">Sélectionne un album</option>
                         <?php

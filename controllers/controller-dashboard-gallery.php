@@ -178,7 +178,7 @@ function showPhotosInAdminDashboard()
         $albumId = $_POST['DisplayAlbum']; // Récupération de l'id de l'album
         $photos = new Albums();
         $photos = $photos->showPhotosFromAlbum($albumId); // Récupération des photos de l'album grâce à l'id
-        echo '<form class="row" action="dashboard-gallery.php" method="post">';
+        echo '<form class="row" action="controller-dashboard-gallery.php" method="post">';
         foreach ($photos as $photo) {
             echo '<div class="col-lg-3">';
             echo '<div class="card lg-4 shadow-sm">';
@@ -233,4 +233,4 @@ if (isset($_POST['submitDeletePhoto'])) { // Si le bouton submit est cliqué
 
 
 
-include('../views/dashboard-gallery.php');
+include('../views/view-dashboard-gallery.php');

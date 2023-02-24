@@ -89,7 +89,7 @@ class EventsController // Création d'une classe newEventTypeController pour gé
     {
         $displayEventList = new Events();
         $displayEventList = $displayEventList->getEvents();
-        echo '<form action="dashboard-events.php" method="post">';
+        echo '<form action="controller-dashboard-events.php" method="post">';
         echo '<table class="table table-striped table-hover table-bordered">';
         foreach ($displayEventList as $event) {
             // obtenir le nom du type d'événement
@@ -168,4 +168,4 @@ if (isset($_POST['submitDeleteEvents'])) {
 
 
 
-include('../views/dashboard-events.php');
+include('../views/view-dashboard-events.php');
