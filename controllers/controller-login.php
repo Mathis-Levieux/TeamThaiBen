@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Si la méthode de la requête est
         if ($logUser->success) { // Si la méthode logUser retourne true
 
             $_SESSION['login'] = $login; // On stocke le login dans la session
-            header('Location: dashboard-gallery.php'); // On redirige vers la page dashboard-gallery.php
+            header('Location: controller-dashboard-gallery.php'); // On redirige vers la page dashboard-gallery.php
         } else {
             $errors = $logUser->errors; // On stocke les erreurs dans la variable $errors
         }
@@ -56,4 +56,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Si la méthode de la requête est
 
 
 
-include('../views/login.php');
+include('../views/view-login.php');

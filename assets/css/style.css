@@ -3,39 +3,70 @@
     src: url('../fonts/thailandesa/THAILAND.TTF');
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+/*
+font-family: 'Inter', sans-serif; */
+
 
 body,
 html {
     margin: 0;
 }
 
-.body-home {
+.main-home {
     background-color: black;
-    background-image: url('../img/newbg2.png');
+    background-image: url('../img/newtestbg.png');
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top;
+    min-height: 100vh;
+    background-size: 85%;
+    background-position: top center;
 }
 
-/* .body-login {
-    background-color: black;
-} */
-
 /* Header */
+header {
+    background-color: black;
+    height: 12vh;
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+}
 
 nav ul {
     display: flex;
     justify-content: space-between;
-    color: white;
+    list-style: none;
+    align-items: center;
+    height: 12vh;
+    width: 65%;
+    border-bottom: 1px solid white;
+    padding-left: 5rem !important;
+    padding-right: 5rem;
 }
 
-nav ul a {
+ul li a {
+    color: white !important;
+}
+
+.title-header {
+    font-family: 'thailandesa', sans-serif;
     color: white;
-    text-shadow: 4px 4px 4px #000000;
+    margin-right: 5rem;
+    position: absolute;
+    top: 28%;
+    left: 2%;
 }
 
 
+@media screen and (max-width: 992px) {
+    nav ul {
+        width: 100%;
+        padding-left: 1rem !important;
+        padding-right: 1rem;
+        align-items: baseline;
+        border-bottom: none;
+    }
+}
 
+/* Fin Header */
 
 h1 {
     font-family: 'thailandesa';
@@ -69,6 +100,12 @@ h1 {
     position: absolute;
     bottom: 1%;
     right: 0%;
+}
+
+.logo-main-img {
+    width: 15%;
+    margin-left: 2rem;
+    margin-top: 2rem;
 }
 
 /* Media Queries */
