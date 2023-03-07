@@ -12,11 +12,11 @@ if (!isset($_SESSION['login'])) {
 
 class File
 {
-    private $_destination = '../uploads/files/';
-    private $_errors = [];
-    private $_allowedExtensions = ['pdf'];
-    private $_maxSize = 1000000; // 1Mo
-    private $_success = '';
+    private string $_destination = '../uploads/files/';
+    private array $_errors = [];
+    private array $_allowedExtensions = ['pdf'];
+    private int $_maxSize = 1000000; // 1Mo
+    private string $_success = '';
 
     public function verifyFile(): array
     {
@@ -60,7 +60,6 @@ class File
 
     private function saveFile(string $name): void
     {
-        
     }
 
     public function getSuccessMessage(): string
