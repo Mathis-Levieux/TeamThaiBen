@@ -1,6 +1,7 @@
 <html lang="fr">
 <?php include('templates/head.php'); ?>
 
+
 <body>
     <main>
         <div class="container">
@@ -10,6 +11,18 @@
                     <h1>Dashboard - Fichiers</h1>
 
                     <form action='controller-dashboard-files.php' method="post" enctype="multipart/form-data">
+                        <!-- affichage du résultat de l'upload -->
+                        <?php if (!empty($errors)) : ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?php foreach ($errors as $error) : ?>
+                                    <?= $error ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($file) && !empty($file->getSuccessMessage())) : ?>
+                            <div class="alert alert-success"><?php echo $file->getSuccessMessage(); ?></div>
+                        <?php endif; ?>
+                        <!-- fin affichage du résultat de l'upload -->
                         <input name="inputFile" type="file" class="form-control" id="inputFile">
                         <input type="submit" name="submitFile" class="btn btn-primary" value="Envoyer">
                         <div class="h-100 preview-container d-flex flex-wrap gap-2"></div>
@@ -17,9 +30,6 @@
             </div>
         </div>
     </main>
-
-    <!-- <iframe src="../uploads/manu.pdf" width="100%" height="500px"> </iframe> -->
-
 
 
 

@@ -49,11 +49,20 @@ class PdfPreviewer { // Classe qui permet de prévisualiser les images dans le d
     }
 
     handleInputChange() { // Quand l'input change
+        this.pdf = []; // On vide le tableau
         const files = this.input.files; // Récupère les fichiers
         for (let i = 0; i < files.length; i++) { // Pour chaque fichier
             this.pdf.push(files[i]); // On l'ajoute au tableau
         }
+        this.deleteOldPreview(); // On supprime l'ancienne prévisualisation
         this.renderPdf(); // On affiche les images
+    }
+
+    deleteOldPreview() { // Supprime l'ancienne prévisualisation
+        const oldPreview = document.querySelector(".preview-pdf");
+        if (oldPreview) {
+            oldPreview.remove();
+        }
     }
 
     renderPdf() { // Affiche les images
@@ -65,7 +74,6 @@ class PdfPreviewer { // Classe qui permet de prévisualiser les images dans le d
                   </div>`;
 
         });
-        console.log(html);
         this.container.innerHTML = html; // On affiche les images
 
     }
