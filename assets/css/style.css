@@ -22,51 +22,30 @@ html {
     background-position: top center;
 }
 
-/* Header */
-header {
-    background-color: black;
-    height: 12vh;
-    font-family: 'Inter', sans-serif;
-    text-decoration: none;
+/* Début Header */
+
+.ul-text-light li a {
+    color: #f8f9fa;
 }
 
-nav ul {
-    display: flex;
-    justify-content: space-between;
-    list-style: none;
-    align-items: center;
-    height: 12vh;
-    width: 65%;
-    border-bottom: 1px solid white;
-    padding-left: 5rem !important;
-    padding-right: 5rem;
+.ul-text-light li a:hover {
+    color: #f8f9fa;
+    text-decoration: underline;
 }
 
-ul li a {
-    color: white !important;
-}
-
-.title-header {
+.header-title {
     font-family: 'thailandesa', sans-serif;
-    color: white;
-    margin-right: 5rem;
-    position: absolute;
-    top: 28%;
-    left: 2%;
+    margin-left: 3rem;
+    font-size: 1.8rem;
 }
 
-
-@media screen and (max-width: 992px) {
-    nav ul {
-        width: 100%;
-        padding-left: 1rem !important;
-        padding-right: 1rem;
-        align-items: baseline;
-        border-bottom: none;
+@media screen and (max-width: 450px) {
+    .header-title {
+        font-size: 1.3rem;
     }
 }
 
-/* Fin Header */
+/* Fin header */
 
 h1 {
     font-family: 'thailandesa';
@@ -106,6 +85,18 @@ h1 {
     width: 15%;
     margin-left: 2rem;
     margin-top: 2rem;
+}
+
+main {
+    margin-top: 7vh;
+}
+
+.gap-6 {
+    gap: 4rem;
+}
+
+.gap-7 {
+    gap: 5rem;
 }
 
 /* Media Queries */
