@@ -229,7 +229,40 @@ if (isset($_POST['submitDeletePhoto'])) { // Si le bouton submit est cliqué
     deletePhoto(); // On appelle la fonction deletePhoto
 }
 
+function modifyAlbumName() // Fonction pour modifier le nom d'un album
+{
+    if (empty($_POST['updateAlbum'])) { // Si le champ est vide
+        $errors['updateAlbum'] = 'Veuillez choisir un album';
+        echo 'Veuillez choisir un album';
+    } else {
+        if (strlen($_POST['NewAlbumName']) > 50) { // Si le nom d'album contient plus de 50 caractères
+            $errors['NewAlbumName'] = 'Le nom d\'album ne doit pas dépasser 50 caractères';
+            echo 'Le nom d\'album ne doit pas dépasser 50 caractères';
+            // Regex pour vérifier que le nom d'album ne contient que des lettres, des chiffres, des espaces, des tirets et des underscores
+        } elseif (!preg_match('/^[a-zA-Z0-9]+([a-zA-Z0-9 ]*[a-zA-Z0-9])?$/', $_POST['NewAlbumName'])) {
+            $errors['NewAlbumName'] = 'Le nom d\'album ne doit contenir que des lettres, des chiffres, des espaces, des tirets et des underscores';
+            echo 'Le nom d\'album ne doit contenir que des lettres, des chiffres, des espaces, des tirets et des underscores';
+        } else {
+            $albumName = new Albums();
+            $albumId = $_POST['updateAlbum']; // Récupération de l'id de l'album
+            $albumName = $albumName->getAlbumNameById($albumId); // Récupération du nom de l'album grâce à l'id
+            $albumName = $albumName['albums_name']; // Récupération du nom de l'album dans le tableau
+            $newAlbumName = $_POST['NewAlbumName']; // Récupération du nouveau nom de l'album
+            $modifyAlbumName = new Albums();
+            $modifyAlbumName->modifyAlbumName($newAlbumName, $albumId); // Modification du nom de l'album en base de données
 
+            if (file_exists('../uploads/albums/' . $albumName)) { // Si le dossier existe
+                rename('../uploads/albums/' . $albumName, '../uploads/albums/' . $newAlbumName); // Modification du nom du dossier
+            }
+            echo 'Nom d\'album modifié';
+        }
+    }
+}
+
+// Utilisation de la fonction modifyAlbumName
+if (isset($_POST['submitModifyAlbumName']) && isset($_POST['NewAlbumName']) && isset($_POST['updateAlbum'])) { // Si le bouton submit est cliqué
+    modifyAlbumName(); // On appelle la fonction modifyAlbumName
+}
 
 
 

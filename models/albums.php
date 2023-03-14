@@ -100,4 +100,14 @@ class Albums
         $photos = $query->fetchAll(PDO::FETCH_ASSOC);
         return $photos;
     }
+
+    public function modifyAlbumName($name, $id)
+    {
+        $sql = "UPDATE sk_albums SET albums_name = :name WHERE albums_id = :id";
+        $query = $this->_db->prepare($sql);
+        $query->execute([
+            'name' => $name,
+            'id' => $id
+        ]);
+    }
 }

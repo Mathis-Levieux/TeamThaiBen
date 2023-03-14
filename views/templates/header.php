@@ -1,7 +1,7 @@
 <header>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-dark navbar-expand-lg bg-black fixed-top py-4 border-bottom">
+    <nav class="navbar navbar-dark navbar-expand-lg bg-black py-4 border-bottom">
         <div class="container-fluid">
             <h2 class="mb-0 navbar-brand text-light header-title">TEAM THAI BEN</h2>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
