@@ -1,6 +1,5 @@
 // GESTION DES IMAGES PREVIEW DANS LE DASHBOARD GALERIE
 
-console.log("Script chargé");
 
 class ImagePreviewer { // Classe qui permet de prévisualiser les images dans le dashboard galerie
     constructor(inputSelector, containerSelector) {
