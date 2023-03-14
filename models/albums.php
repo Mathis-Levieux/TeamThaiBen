@@ -92,7 +92,7 @@ class Albums
 
     public function showPhotosFromAlbum($id)
     {
-        $sql = "SELECT * FROM sk_photos WHERE photos_id IN (SELECT photos_id FROM sk_albums_contains_photos WHERE albums_id = :id)";
+        $sql = "SELECT sk_photos.photos_id, sk_photos.photos_name, sk_albums.albums_name, sk_albums.albums_id FROM sk_photos INNER JOIN sk_albums_contains_photos ON sk_albums_contains_photos.photos_id = sk_photos.photos_id INNER JOIN sk_albums ON sk_albums_contains_photos.albums_id = sk_albums.albums_id WHERE sk_photos.photos_id IN (SELECT sk_photos.photos_id FROM sk_albums_contains_photos WHERE albums_id = :id);";
         $query = $this->_db->prepare($sql);
         $query->execute([
             'id' => $id

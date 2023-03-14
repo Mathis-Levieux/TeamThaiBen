@@ -179,10 +179,12 @@ function showPhotosInAdminDashboard()
         $photos = new Albums();
         $photos = $photos->showPhotosFromAlbum($albumId); // Récupération des photos de l'album grâce à l'id
         echo '<form class="row" action="controller-dashboard-gallery.php" method="post">';
+        $count = 1; // Compteur pour le nom de la photo
         foreach ($photos as $photo) {
+            $photoPath = '../uploads/albums/' . $photo['albums_name'] . '/' . $photo['photos_name'] . '';
             echo '<div class="col-lg-3">';
             echo '<div class="card lg-4 shadow-sm">';
-            echo '<img class="card-img-top" src="' . $photo['photos_path'] . '" alt="Card image cap">';
+            echo '<img class="card-img-top" src="' . $photoPath . '" alt="Club de Boxe Thai de l\'Album ' . $photo['albums_name'] . '">';
             echo '<div class="card-body">';
             echo '<div class="d-flex justify-content-between align-items-center">';
             echo '<div class="btn-group">';
