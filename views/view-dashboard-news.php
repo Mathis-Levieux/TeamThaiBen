@@ -12,26 +12,31 @@
     <script src="../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script type="text/javascript">
         tinymce.init({
-            selector: '#mytitlearea',
+            selector: '#newsTitle',
             height: 200,
             plugins: [
                 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
                 'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                'insertdatetime', 'media', 'help', 'wordcount'
             ],
             toolbar: 'undo redo | blocks | ' +
                 'bold italic backcolor | alignleft aligncenter ' +
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+            setup: function(editor) {
+                editor.on('init', function(e) {
+                    editor.setContent('<h2></h2>');
+                });
+            }
         });
         tinymce.init({
-            selector: '#mytextarea',
+            selector: '#newsContent',
             height: 500,
             plugins: [
                 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
                 'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                'insertdatetime', 'media', 'help', 'wordcount'
             ],
             toolbar: 'undo redo | blocks | ' +
                 'bold italic backcolor | alignleft aligncenter ' +
@@ -52,11 +57,26 @@
                     <h1>Dashboard - News</h1>
 
                     <!-- Formulaire d'article -->
+                    <h2>Ajouter une news</h2>
                     <form method="post">
-                        <h2>Titre</h2>
-                        <textarea name="mytitlearea" id="mytitlearea"></textarea>
-                        <h2>Contenu</h2>
-                        <textarea name="mytextarea" id="mytextarea"></textarea>
+                        <h3>Type de news</h3>
+
+                        <!-- Affichage du select -->
+                        <select name="newsType" id="newsType">
+                            <?php if (empty($newsTypes)) : ?>
+                                <option value="">Aucun type de news</option>
+                            <?php endif; ?>
+
+                            <?php foreach ($newsTypes as $newsType) : ?>
+                                <option value="<?= $newsType['news_type_id'] ?>"><?= $newsType['news_type'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <!-- Fin affichage du select -->
+
+                        <h3>Titre</h3>
+                        <textarea name="newsTitle" id="newsTitle"></textarea>
+                        <h3>Contenu</h3>
+                        <textarea name="newsContent" id="newsContent"></textarea>
                         <input type="submit" name="submitNews" class="btn btn-primary" value="Envoyer">
                     </form>
 
@@ -64,6 +84,73 @@
             </div>
         </div>
 
+        <div class="container">
+            <div class="row h-100">
+                <div class="col-12 justify-content-center">
+
+                    <h1>Dashboard - Ajouter un type de news</h1>
+                    <!-- Affichage des erreurs -->
+                    <?php if (!empty($_POST) && isset($newNewsType) && !empty($newNewsType->getErrorsMessages())) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php foreach ($newNewsType->getErrorsMessages() as $error) : ?>
+                                <?= $error ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    <!-- Fin affichage des erreurs -->
+
+                    <!-- Affichage des messages de succès -->
+                    <?php if (!empty($_POST) && isset($newNewsType) && !empty($newNewsType->getSuccessMessage())) : ?>
+                        <div class="alert alert-success"><?php echo $newNewsType->getSuccessMessage(); ?></div>
+                    <?php endif; ?>
+                    <!-- Fin affichage des messages de succès -->
+
+                    <!-- Formulaire de type de news -->
+                    <form method="post">
+                        <input type="text" name="inputNewsType" id="inputNewsType" placeholder="Nom du type de news">
+                        <input type="submit" name="submitNewsType" class="btn btn-primary" value="Envoyer">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row h-100">
+                <div class="col-12 justify-content-center">
+                    <h1>Dashboard - Supprimer un type de news</h1>
+
+                    <!-- Affichage des erreurs -->
+                    <?php if (!empty($_POST) && isset($deleteNews) && !empty($deleteNews->getErrorsMessages())) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php foreach ($deleteNews->getErrorsMessages() as $error) : ?>
+                                <?= $error ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    <!-- Fin affichage des erreurs -->
+
+                    <!-- Affichage des messages de succès -->
+                    <?php if (!empty($_POST) && isset($deleteNews) && !empty($deleteNews->getSuccessMessage())) : ?>
+                        <div class="alert alert-success"><?php echo $deleteNews->getSuccessMessage(); ?></div>
+                    <?php endif; ?>
+                    <!-- Fin affichage des messages de succès -->
+
+                    <!-- Liste des types de news dans un select -->
+                    <form method="post">
+                        <select name="selectNewsType" id="selectNewsType">
+                            <?php if (empty($newsTypes)) : ?>
+                                <option value="">Aucun type de news</option>
+                            <?php endif; ?>
+
+                            <?php foreach ($newsTypes as $newsType) : ?>
+                                <option value="<?= $newsType['news_type_id'] ?>"><?= $newsType['news_type'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <input type="submit" name="submitDeleteNewsType" class="btn btn-danger" value="Supprimer">
+
+                </div>
+            </div>
 
     </main>
 
