@@ -54,6 +54,13 @@ class NewsController
         return $newsTypes;
     }
 
+    public static function showNews(): array
+    {
+        $news = new News();
+        $news = $news->getNews();
+        return $news;
+    }
+
     public function deleteNewsType(int $id): void
     {
         $deleteNews = new News();
@@ -134,6 +141,20 @@ class NewsController
         }
         return $this->_errors;
     }
+
+    public function deleteNews(int $id): void
+    {
+        // On vérifie que la news existe
+        $news = new News();
+        $news = $news->getNewsById($id);
+        if (empty($news)) {
+            $this->_errors[] = 'La news n\'existe pas';
+        } else {
+            $news = new News();
+            $news->deleteNews($id);
+            $this->_success = 'La news a bien été supprimée';
+        }
+    }
 }
 
 // Création d'un nouveau type de news
@@ -157,8 +178,17 @@ if (isset($_POST['submitDeleteNewsType'])) {
     $deleteNews->deleteNewsType($_POST['selectNewsType']);
 }
 
+// Suppression d'une news
+
+if (isset($_GET['delete']) && !empty($_GET['delete']) && is_numeric($_GET['delete'])) {
+    $deleteNews = new NewsController();
+    $deleteNews->deleteNews($_GET['delete']);
+}
+
+
 // Récupère tous les types de news pour les afficher dans la vue
 $newsTypes = NewsController::showNewsTypes();
+$newsList = NewsController::showNews();
 
 
 

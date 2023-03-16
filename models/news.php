@@ -44,4 +44,30 @@ class News
 
         ]);
     }
+
+    public function getNews(): array
+    {
+        $query = $this->_db->prepare('SELECT * FROM sk_news');
+        $query->execute();
+        $news = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $news;
+    }
+
+    public function getNewsById(int $id): array | bool
+    {
+        $query = $this->_db->prepare('SELECT * FROM sk_news WHERE news_id = :id');
+        $query->execute([
+            'id' => $id
+        ]);
+        $news = $query->fetch(PDO::FETCH_ASSOC);
+        return $news;
+    }
+
+    public function deleteNews(int $id): void
+    {
+        $query = $this->_db->prepare('DELETE FROM sk_news WHERE news_id = :id');
+        $query->execute([
+            'id' => $id
+        ]);
+    }
 }

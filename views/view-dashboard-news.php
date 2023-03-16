@@ -82,7 +82,7 @@
             <div class="row h-100">
                 <div class="col-12 justify-content-center">
 
-                    <h1>Dashboard - Ajouter un type de news</h1>
+                    <h2>Dashboard - Ajouter un type de news</h2>
                     <!-- Affichage des erreurs -->
                     <?php if (!empty($_POST) && isset($newNewsType) && !empty($newNewsType->getErrorsMessages())) : ?>
                         <div class="alert alert-danger" role="alert">
@@ -112,7 +112,7 @@
         <div class="container">
             <div class="row h-100">
                 <div class="col-12 justify-content-center">
-                    <h1>Dashboard - Supprimer un type de news</h1>
+                    <h2>Dashboard - Supprimer un type de news</h2>
 
                     <!-- Affichage des erreurs -->
                     <?php if (!empty($_POST) && isset($deleteNews) && !empty($deleteNews->getErrorsMessages())) : ?>
@@ -145,6 +145,54 @@
 
                 </div>
             </div>
+        </div>
+        <div class="container">
+            <div class="row h-100">
+                <div class="col-12 justify-content-center">
+                    <h2>Modifier ou supprimer un article</h2>
+
+                    <!-- Affichage des erreurs -->
+                    <?php if (!empty($_GET) && isset($deleteNews) && !empty($deleteNews->getErrorsMessages())) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php foreach ($deleteNews->getErrorsMessages() as $error) : ?>
+                                <?= $error ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    <!-- Fin affichage des erreurs -->
+
+                    <!-- Affichage des messages de succès -->
+                    <?php if (!empty($_GET) && isset($deleteNews) && !empty($deleteNews->getSuccessMessage())) : ?>
+                        <div class="alert alert-success"><?php echo $deleteNews->getSuccessMessage(); ?></div>
+                    <?php endif; ?>
+                    <!-- Fin affichage des messages de succès -->
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nom de l'article</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <!-- Affichage des fichiers -->
+                            <?php foreach ($newsList as $news) : ?>
+                                <tr>
+                                    <td><?= $news['news_title'] ?></td>
+                                    <td>
+                                        <a href="controller-dashboard-news.php?delete=<?= $news['news_id'] ?>" class="btn btn-danger">Supprimer</a>
+                                        <a href="controller-dashboard-modify.php?id=<?= $news['news_id'] ?>" class="btn btn-success">Modifier</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <!-- Fin affichage des fichiers -->
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
     </main>
 
