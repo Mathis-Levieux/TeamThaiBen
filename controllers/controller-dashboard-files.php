@@ -48,23 +48,123 @@ class File
     {
         if (empty($this->_errors)) { // si il n'y a pas d'erreurs
             $file = $_FILES['inputFile']; // récupère le fichier envoyé par le formulaire
-            $name = uniqid() . '.' . pathinfo($file['name'], PATHINFO_EXTENSION); // génère un nom unique pour le fichier
+            $name = uniqid() . '_' . $file['name'];  // Ajoute un uniqid en plus du nom du fichier pour éviter les doublons
+            $name = str_replace(' ', '_', $name);   // supprime les espaces dans le nom du fichier en les remplaçant par des underscores
             if (move_uploaded_file($file['tmp_name'], $this->_destination . $name)) { // déplace le fichier dans le dossier de destination
                 $this->_success = 'Fichier envoyé avec succès';
-                $this->saveFile($name); // on enregistre le fichier dans la base de données
+                $this->saveFileInDatabase($name); // on enregistre le fichier dans la base de données
             } else { // si le fichier n'a pas pu être déplacé
                 $this->_errors[] = 'Erreur lors de l\'enregistrement';
             }
         }
     }
 
-    private function saveFile(string $name): void
+    private function saveFileInDatabase(string $name): void
     {
+        $file = new Files();
+        $file->uploadFile($name);
     }
 
     public function getSuccessMessage(): string
     {
         return $this->_success;
+    }
+
+    public function getErrorsMessage(): array
+    {
+        return $this->_errors;
+    }
+
+    public function showFiles(): array
+    {
+        $file = new Files();
+        return $file->getAllFiles();
+    }
+
+    public function deleteFile($id): void // Supprime un fichier
+    {
+        if (empty($_GET['delete'])) { // si l'identifiant n'est pas renseigné
+            $this->_errors[] = 'Aucun fichier sélectionné';
+        } else if (!is_numeric($_GET['delete'])) { // si l'identifiant n'est pas un nombre
+            $this->_errors[] = 'Identifiant invalide';
+        } else if (empty($this->getFileById($_GET['delete']))) { // si le fichier n'existe pas
+            $this->_errors[] = 'Aucun fichier trouvé';
+        } else { // si tout est ok
+            $file = $this->getFileById($_GET['delete']);
+            if (unlink($this->_destination . $file['files_name'])) { // on supprime le fichier
+                $this->_success = 'Fichier supprimé avec succès';
+                $file = new Files();
+                $file->deleteFile($id);
+            } else {
+                $this->_errors[] = 'Erreur lors de la suppression';
+            }
+        }
+    }
+
+    public function getFileById($id)
+    {
+        $file = new Files();
+        return $file->getFileById($id);
+    }
+
+    public function changeFileBoolean($id, $boolean): void
+    {
+        // Vérification des paramètres
+        if (empty($id)) {
+            $this->_errors[] = 'Aucun fichier sélectionné';
+        } elseif (!is_numeric($id)) {
+            $this->_errors[] = 'Identifiant invalide';
+        } elseif ($boolean !== 0 && $boolean !== 1) {
+            $this->_errors[] = 'Valeur invalide';
+        }
+
+        // Vérification de l'existence du fichier
+        if (empty($this->_errors)) {
+            $file = $this->getFileById($id);
+            if (empty($file)) {
+                $this->_errors[] = 'Aucun fichier trouvé';
+            }
+        }
+
+        // Modification de la valeur du boolean
+        if (empty($this->_errors)) {
+            $file = new Files();
+            $file->changeFileBoolean($id, $boolean);
+            $this->_success = 'Fichier modifié avec succès';
+        }
+    }
+
+    public function downloadFile($id): void
+    {
+        // Vérification des paramètres
+        if (empty($id)) {
+            $this->_errors[] = 'Aucun fichier sélectionné';
+        } elseif (!is_numeric($id)) {
+            $this->_errors[] = 'Identifiant invalide';
+        }
+
+        // Vérification de l'existence du fichier
+        if (empty($this->_errors)) {
+            $file = $this->getFileById($id);
+            if (empty($file)) {
+                $this->_errors[] = 'Aucun fichier trouvé';
+            }
+        }
+
+        // Téléchargement du fichier
+        if (empty($this->_errors)) {
+            $file = $this->getFileById($id);
+            $file = $this->_destination . $file['files_name'];
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        }
     }
 }
 
@@ -79,15 +179,29 @@ if (isset($_POST['submitFile'])) { // si le formulaire a été envoyé
     }
 }
 
+// Utilisation de la classe File pour supprimer un fichier
 
+if (isset($_GET['delete'])) { // si l'id du fichier à supprimer est envoyé
+    $file = new File();
+    $file->deleteFile($_GET['delete']); // on supprime le fichier
+}
 
+if (isset($_GET['show'])) { // si l'id du fichier à montrer est envoyé
+    $file = new File();
+    $file->changeFileBoolean($_GET['show'], 1); // on montre le fichier
+}
 
+if (isset($_GET['hide'])) { // si l'id du fichier à caché est envoyé
+    $file = new File();
+    $file->changeFileBoolean($_GET['hide'], 0); // on cache le fichier
+}
 
+// Utilisation de la classe File pour télécharger un fichier
 
-
-
-
-
+if (isset($_GET['download'])) { // si l'id du fichier à télécharger est envoyé
+    $file = new File();
+    $file->downloadFile($_GET['download']); // on télécharge le fichier
+}
 
 
 
