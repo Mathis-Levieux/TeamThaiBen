@@ -13,12 +13,6 @@ if (!isset($_SESSION['login'])) {
 
 
 
-if (isset($_POST['submitNews'])) {
-var_dump($_POST);
-}
-
-
-
 
 
 
