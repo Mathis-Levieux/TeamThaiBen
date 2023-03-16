@@ -32,4 +32,16 @@ class News
             'id' => $id
         ]);
     }
+
+    public function addNews(string $title, string $content, int $type, string $date): void
+    {
+        $query = $this->_db->prepare('INSERT INTO sk_news (news_title, news_content, news_type_id, news_date) VALUES (:title, :content, :type, :date)');
+        $query->execute([
+            'title' => $title,
+            'content' => $content,
+            'type' => $type,
+            'date' => $date
+
+        ]);
+    }
 }

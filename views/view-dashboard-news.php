@@ -12,25 +12,6 @@
     <script src="../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script type="text/javascript">
         tinymce.init({
-            selector: '#newsTitle',
-            height: 200,
-            plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'help', 'wordcount'
-            ],
-            toolbar: 'undo redo | blocks | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
-            setup: function(editor) {
-                editor.on('init', function(e) {
-                    editor.setContent('<h2></h2>');
-                });
-            }
-        });
-        tinymce.init({
             selector: '#newsContent',
             height: 500,
             plugins: [
@@ -42,7 +23,8 @@
                 'bold italic backcolor | alignleft aligncenter ' +
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+            language: 'fr_FR',
         });
     </script>
     <title>Team Thai Ben</title>
@@ -58,15 +40,27 @@
 
                     <!-- Formulaire d'article -->
                     <h2>Ajouter une news</h2>
+                    <!-- Affichage des erreurs -->
+                    <?php if (!empty($_POST) && isset($newNews) && !empty($newNews->getErrorsMessages())) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php foreach ($newNews->getErrorsMessages() as $error) : ?>
+                                <?= $error . ' <br> ' ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    <!-- Fin affichage des erreurs -->
+
+                    <!-- Affichage des messages de succès -->
+                    <?php if (!empty($_POST) && isset($newNews) && !empty($newNews->getSuccessMessage())) : ?>
+                        <div class="alert alert-success"><?php echo $newNews->getSuccessMessage(); ?></div>
+                    <?php endif; ?>
+                    <!-- Fin affichage des messages de succès -->
                     <form method="post">
                         <h3>Type de news</h3>
 
                         <!-- Affichage du select -->
-                        <select name="newsType" id="newsType">
-                            <?php if (empty($newsTypes)) : ?>
-                                <option value="">Aucun type de news</option>
-                            <?php endif; ?>
-
+                        <select class="col-lg-3" name="newsType" id="newsType">
+                            <option selected disabled>Choisissez un type de news</option>
                             <?php foreach ($newsTypes as $newsType) : ?>
                                 <option value="<?= $newsType['news_type_id'] ?>"><?= $newsType['news_type'] ?></option>
                             <?php endforeach; ?>
@@ -74,7 +68,7 @@
                         <!-- Fin affichage du select -->
 
                         <h3>Titre</h3>
-                        <textarea name="newsTitle" id="newsTitle"></textarea>
+                        <input class="col-lg-3" type="text" name="newsTitle" id="newsTitle"></input>
                         <h3>Contenu</h3>
                         <textarea name="newsContent" id="newsContent"></textarea>
                         <input type="submit" name="submitNews" class="btn btn-primary" value="Envoyer">

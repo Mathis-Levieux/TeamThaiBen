@@ -14,7 +14,6 @@ class NewsController
     private array $_errors = [];
     private string $_success = '';
 
-
     public function createNewsType(string $name): void
     {
 
@@ -71,6 +70,70 @@ class NewsController
     {
         return $this->_success;
     }
+
+    public function createNews(): void
+    {
+        if (isset($_POST['newsTitle']) && isset($_POST['newsContent']) && isset($_POST['newsType'])) {
+            $title = $_POST['newsTitle'];
+            $content = $_POST['newsContent'];
+            $type = $_POST['newsType'];
+
+            $this->verifyTitle($title);
+            $this->verifyContent($content);
+            $this->verifyType($type);
+
+            $date = date('Y-m-d'); // On récupère la date et l'heure actuelle
+
+            if (empty($this->_errors)) {
+                $news = new News();
+                $news->addNews($title, $content, $type, $date);
+                $this->_success = 'La news a bien été créée';
+            }
+        } else {
+            $this->_errors[] = 'Veuillez remplir tous les champs';
+        }
+    }
+
+    private function verifyTitle(string $title): array
+    {
+        // On vérifie que le titre n'est pas vide
+        if (empty($title)) {
+            $this->_errors[] = 'Le titre de la news ne peut pas être vide';
+        } else if (strlen($title) > 300) { // On vérifie que le titre n'est pas trop long
+            $this->_errors[] = 'Le titre de la news ne peut pas dépasser 100 caractères';
+        } else {
+            $title = htmlspecialchars(ucfirst(trim($title))); // On supprime les espaces en début et fin de chaîne, on met la première lettre en majuscule et on convertit les caractères spéciaux en entités HTML
+        }
+        return $this->_errors;
+    }
+
+    private function verifyContent(string $content): array
+    {
+        // On vérifie que le contenu n'est pas vide
+        if (empty($content)) {
+            $this->_errors[] = 'Le contenu de la news ne peut pas être vide';
+        } else if (strlen($content) > 3000) { // On vérifie que le contenu n'est pas trop long
+            $this->_errors[] = 'Le contenu de la news ne peut pas dépasser 10000 caractères';
+        } else {
+            $content = trim($content); // On supprime les espaces en début et fin de chaîne
+        }
+        return $this->_errors;
+    }
+
+    private function verifyType(int $type): array
+    {
+        // On vérifie que le type de news existe
+        $newsTypes = new News();
+        $newsTypes = $newsTypes->getNewsTypes();
+        $newsTypesArray = [];
+        foreach ($newsTypes as $newsType) {
+            $newsTypesArray[] = $newsType['news_type_id'];
+        }
+        if (!in_array($type, $newsTypesArray)) {
+            $this->_errors[] = 'Le type de news n\'existe pas';
+        }
+        return $this->_errors;
+    }
 }
 
 // Création d'un nouveau type de news
@@ -82,11 +145,10 @@ if (isset($_POST['submitNewsType'])) {
 
 // Création d'une news
 
-// if (isset($_POST['submitNews'])) {
-//     $newNews = new NewsController();
-//     $newNews->createNews($_POST['inputNewsTitle'], $_POST['inputNewsContent'], $_POST['selectNewsType']);
-//     var_dump($_POST);
-// }
+if (isset($_POST['submitNews'])) {
+    $newNews = new NewsController();
+    $newNews->createNews();
+}
 
 // Suppression d'un type de news
 
