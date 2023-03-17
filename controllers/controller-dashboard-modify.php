@@ -11,44 +11,10 @@ if (!isset($_SESSION['login'])) { // On vérifie que l'utilisateur est connecté
 
 
 
-
 class NewsController
 {
     private array $_errors = [];
     private string $_success = '';
-
-    public function createNewsType(string $name): void
-    {
-
-        if (empty($name)) { // On vérifie que le nom n'est pas vide
-            $this->_errors[] = 'Le nom du type de news ne peut pas être vide';
-        } else if (strlen($name) > 50) {  // On vérifie que le nom n'est pas trop long et ne contient pas de caractères spéciaux
-            $this->_errors[] = 'Le nom du type de news ne peut pas dépasser 50 caractères';
-        } else if (!preg_match('/^[a-zA-Z0-9_ ]+$/', $name)) { // On vérifie que le nom ne contient que des lettres, des chiffres, des underscores et des espaces
-            $this->_errors[] = 'Le nom du type de news ne peut contenir que des lettres, des chiffres et des underscores';
-        }
-
-        // Si il n'y a pas d'erreurs, on vérifie que le type de news n'existe pas déjà
-
-        if (empty($this->_errors)) {
-            $news = new News();
-            $news = $news->getNewsTypes();
-            foreach ($news as $newsType) {
-                if ($newsType['news_type'] == $name) {
-                    $this->_errors[] = 'Ce type de news existe déjà';
-                }
-            }
-        }
-
-        // Si il n'y a pas d'erreurs, on valide la création du type de news
-
-        if (empty($this->_errors)) {
-            $name = trim($name); // On supprime les espaces en début et fin de chaîne
-            $news = new News();
-            $news->addNewsType($name);
-            $this->_success = 'Le type de news a bien été créé';
-        }
-    }
 
     public static function showNewsTypes(): array
     {
@@ -64,11 +30,11 @@ class NewsController
         return $news;
     }
 
-    public function deleteNewsType(int $id): void
+    public static function showNewsById(int $id): array | bool
     {
-        $deleteNews = new News();
-        $deleteNews->deleteNewsType($id);
-        $this->_success = 'Le type de news a bien été supprimé';
+        $news = new News();
+        $news = $news->getNewsById($id);
+        return $news;
     }
 
     public function getErrorsMessages(): array
@@ -81,7 +47,7 @@ class NewsController
         return $this->_success;
     }
 
-    public function createNews(): void
+    public function modifyNews(int $id): void
     {
         if (isset($_POST['newsTitle']) && isset($_POST['newsContent']) && isset($_POST['newsType'])) {
             $title = $_POST['newsTitle'];
@@ -96,8 +62,8 @@ class NewsController
 
             if (empty($this->_errors)) {
                 $news = new News();
-                $news->addNews($title, $content, $type, $date);
-                $this->_success = 'La news a bien été créée';
+                $news->modifyNews($id, $title, $content, $type);
+                $this->_success = 'La news a bien été modifiée';
             }
         } else {
             $this->_errors[] = 'Veuillez remplir tous les champs';
@@ -122,8 +88,6 @@ class NewsController
         // On vérifie que le contenu n'est pas vide
         if (empty($content)) {
             $this->_errors[] = 'Le contenu de la news ne peut pas être vide';
-        } else if (strlen($content) > 3000) { // On vérifie que le contenu n'est pas trop long
-            $this->_errors[] = 'Le contenu de la news ne peut pas dépasser 3000 caractères';
         } else {
             $content = trim($content); // On supprime les espaces en début et fin de chaîne
         }
@@ -160,25 +124,12 @@ class NewsController
     }
 }
 
-// Création d'un nouveau type de news
 
-if (isset($_POST['submitNewsType'])) {
-    $newNewsType = new NewsController();
-    $newNewsType->createNewsType($_POST['inputNewsType']);
-}
+// Modification d'un type de news
 
-// Création d'une news
-
-if (isset($_POST['submitNews'])) {
-    $newNews = new NewsController();
-    $newNews->createNews();
-}
-
-// Suppression d'un type de news
-
-if (isset($_POST['submitDeleteNewsType'])) {
-    $deleteNews = new NewsController();
-    $deleteNews->deleteNewsType($_POST['selectNewsType']);
+if (isset($_POST['submitModifyNews'])) {
+    $modifyNews = new NewsController();
+    $modifyNews->modifyNews($_GET['id']);
 }
 
 // Suppression d'une news
@@ -194,6 +145,17 @@ $newsTypes = NewsController::showNewsTypes();
 $newsList = NewsController::showNews();
 
 
+// Si l'id de la news est correctement défini, on récupère les informations de la news, 
+// sinon on redirige vers la page d'accueil
+
+if (isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])) {
+    $news = NewsController::showNewsById($_GET['id']);
+    if (empty($news)) {
+        header('Location: controller-dashboard-news.php');
+    }
+} else {
+    header('Location: controller-dashboard-news.php');
+}
 
 
 
@@ -209,9 +171,4 @@ $newsList = NewsController::showNews();
 
 
 
-
-
-
-
-
-include('../views/view-dashboard-news.php');
+include('../views/view-dashboard-modify.php');

@@ -53,6 +53,14 @@ class News
         return $news;
     }
 
+
+    /**
+     * fonction permettant de récupérer une news grâce à son id
+     * 
+     * @param int $id
+     * @return array|bool
+     */
+
     public function getNewsById(int $id): array | bool
     {
         $query = $this->_db->prepare('SELECT * FROM sk_news WHERE news_id = :id');
@@ -68,6 +76,17 @@ class News
         $query = $this->_db->prepare('DELETE FROM sk_news WHERE news_id = :id');
         $query->execute([
             'id' => $id
+        ]);
+    }
+
+    public function modifyNews(int $id, string $title, string $content, int $type): void
+    {
+        $query = $this->_db->prepare('UPDATE sk_news SET news_title = :title, news_content = :content, news_type_id = :type WHERE news_id = :id');
+        $query->execute([
+            'id' => $id,
+            'title' => $title,
+            'content' => $content,
+            'type' => $type
         ]);
     }
 }
