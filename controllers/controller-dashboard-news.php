@@ -81,6 +81,8 @@ class NewsController
         return $this->_success;
     }
 
+
+
     public function createNews(): void
     {
         if (isset($_POST['newsTitle']) && isset($_POST['newsContent']) && isset($_POST['newsType'])) {

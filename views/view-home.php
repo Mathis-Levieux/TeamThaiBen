@@ -14,8 +14,15 @@
 <body class="body-home">
     <?php include('templates/header.php'); ?>
     <main class="main-home">
-        <div class="logo-main-container">
-            <img class="logo-main-img" src="../assets/img/LOGOBEN.png" alt="logo">
+        <div class="main-home-background-container">
+            <div class="logo-home-container">
+                <img class="logo-home-img" src="../assets/img/logobentitleless.png" alt="logo">
+            </div>
+        </div>
+        <div>
+            <article>
+                <h1 class="text-center">Lorem ipsum</h1>
+            </article>
         </div>
     </main>
 

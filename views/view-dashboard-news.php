@@ -196,7 +196,7 @@
                     <?php if (!empty($_GET) && isset($deleteNews) && !empty($deleteNews->getErrorsMessages())) : ?>
                         <div class="alert alert-danger" role="alert">
                             <?php foreach ($deleteNews->getErrorsMessages() as $error) : ?>
-                                <?= $error ?>
+                                <?= $error . ' <br> ' ?>
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>

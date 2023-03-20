@@ -1,6 +1,4 @@
-<html lang="fr">
 <?php include('templates/head.php'); ?>
-
 
 <body>
     <main>
@@ -14,7 +12,7 @@
                         <?php if (!empty($_POST) && !empty($errors)) : ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php foreach ($errors as $error) : ?>
-                                    <?= $error ?>
+                                    <?= $error . ' <br> ' ?>
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
@@ -42,7 +40,7 @@
                     <?php if (!empty($_GET) && isset($file) && !empty($file->getErrorsMessage())) : ?>
                         <div class="alert alert-danger" role="alert">
                             <?php foreach ($file->getErrorsMessage() as $error) : ?>
-                                <?= $error ?>
+                                <?= $error . ' <br> ' ?>
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>

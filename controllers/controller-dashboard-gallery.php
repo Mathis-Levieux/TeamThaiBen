@@ -1,4 +1,5 @@
 <?php
+
 require('../config/env.php');
 require('../helpers/Database.php');
 require('../models/albums.php');

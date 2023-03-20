@@ -13,7 +13,9 @@ html {
     margin: 0;
 }
 
-.main-home {
+/* Début landing page */
+
+.main-home-background-container {
     background-color: black;
     background-image: url('../img/newtestbg.png');
     background-repeat: no-repeat;
@@ -21,6 +23,25 @@ html {
     background-size: 85%;
     background-position: top center;
 }
+
+.logo-home-img {
+    width: 17%;
+    margin-left: 2rem;
+    margin-top: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+    .main-home-background-container {
+        background-size: cover;
+    }
+
+    .logo-home-container {
+        display: none;
+    }
+}
+
+/* Fin landing page */
+
 
 /* Début Header */
 
@@ -82,11 +103,7 @@ h1 {
     right: 0%;
 }
 
-.logo-main-img {
-    width: 15%;
-    margin-left: 2rem;
-    margin-top: 2rem;
-}
+
 
 .gap-6 {
     gap: 4rem;
