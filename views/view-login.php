@@ -1,33 +1,41 @@
-<?php include('templates/head.php'); ?>
+<!DOCTYPE html>
+<html lang="fr">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/bootstrap-5.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <title><?= $title ?></title>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+            document.getElementById("my-form").submit();
+        }
+    </script>
+</head>
 
 <body class="body-login">
     <?php include('templates/header.php'); ?>
 
+
     <main>
 
-        <!-- Formulaire de connexion -->
-
-        <!-- <form method="POST">
-            <label for="login">Login</label>
-            <input type="text" name="login" id="login" placeholder="Login">
-            <span class="error"><?= $errors['login'] ?? '' ?></span>
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" id="password" placeholder="Mot de passe">
-            <span class="error"><?= $errors['password'] ?? '' ?></span>
-            <input type="submit" value="Se connecter">
-        </form> -->
-
         <!-- Affichage des erreurs -->
+
         <?php if (!empty($_POST) && isset($login) && !empty($login->getErrorsMessages())) : ?>
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger text-center" role="alert">
                 <?php foreach ($login->getErrorsMessages() as $error) : ?>
                     <?= $error . ' <br> ' ?>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
 
-        <form method="POST" class=" mt-5 w-25 m-auto">
+        <!-- Formulaire de connexion -->
+
+        <form id="my-form" method="POST" class="mt-5 w-25 m-auto">
             <div class="mb-3">
                 <label for="login" class="form-label col-lg-6">Login</label>
                 <input name="login" type="login" class="form-control" id="login" aria-describedby="emailHelp">
@@ -36,7 +44,8 @@
                 <label for="password" class="form-label">Mot de passe</label>
                 <input name="password" type="password" class="form-control" id="exampleInputPassword1">
             </div>
-            <button type="submit" class="btn btn-primary">Se connecter</button>
+
+            <button data-callback='onSubmit' data-action='submit' data-sitekey="6Ld8vxglAAAAAK6vmsqMrz4RDQnuIQi4CefZLoYb" class="g-recaptcha btn btn-primary">Se connecter</button>
         </form>
     </main>
 

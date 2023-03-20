@@ -4,30 +4,35 @@
 class Login
 {
     private object $db;
-    public array $errors = [];
-    public $success = false;
-    public function __construct()
+    private $login;
+    private $password;
+
+    public function __construct($login, $password)
     {
+        $this->login = $login;
+        $this->password = $password;
         $this->db = Database::connect();
     }
 
-    public function login($login, $password)
+
+    /**
+     * Fonction qui vérifie si les identifiants sont corrects
+     * @param $login
+     * @param $password
+     * @return bool
+     */
+
+    public function checkCredentials()
     {
-        $sql = "SELECT * FROM sk_admin WHERE admin_login = :login";
-        $query = $this->db->prepare($sql);
-        $query->execute([
-            'login' => $login
-        ]);
+        $query = "SELECT * FROM sk_admin WHERE admin_login = ?";
+        $query = $this->db->prepare($query);
+        $query->execute([$this->login]);
         $user = $query->fetch(PDO::FETCH_ASSOC);
 
-        if ($user) {
-            if (password_verify($password, $user['password'])) {
-                $this->success = true;
-            } else {
-                $this->errors[] = 'Mot de passe incorrect';
-            }
-        } else {
-            $this->errors[] = 'Utilisateur incorrect';
+        if ($user && password_verify($this->password, $user['password'])) {
+            return $user;
         }
+
+        return false;
     }
 }

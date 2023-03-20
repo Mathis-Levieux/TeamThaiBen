@@ -12,44 +12,83 @@ if (isset($_SESSION['login'])) { // Si l'utilisateur est connecté
 
 $title = 'Connexion'; // On définit le titre de la page
 
-class LogUser extends Login // Création d'une classe LogUser qui hérite de la classe Login
+class UserController
 {
-    public function __construct() // Création d'un constructeur
+    public array $errors = [];
+    public string $success = '';
+
+    public function logIn() // Fonction qui permet de se connecter
     {
-        parent::__construct(); // On appelle le constructeur de la classe parente
-    }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $login = $_POST['login'];
+            $password = $_POST['password'];
 
-    public function logUser($login, $password) // Création d'une méthode logUser qui prend en paramètre $login et $password
-    {
-        $this->login($login, $password); // On appelle la méthode login de la classe parente
-    }
-}
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Si la méthode de la requête est POST
-    if (empty($_POST['login']) || empty($_POST['password'])) { // Si les champs login et password sont vides
-        $errors = ['empty' => 'Veuillez remplir tous les champs'];
-    } else
-    if (isset($_POST['login']) && isset($_POST['password'])) { // Si les champs login et password sont remplis
-        $login = $_POST['login'];
-        $password = $_POST['password'];
+            if (empty($login) || empty($password)) {
+                $this->errors['empty'] = 'Veuillez remplir tous les champs';
+            } else {
 
-        $logUser = new LogUser(); // On instancie la classe LogUser
-        $logUser->logUser($login, $password); // On appelle la méthode logUser
+                $this->verifyCaptcha();   // On vérifie le captcha est coché
 
-        if ($logUser->success) { // Si la méthode logUser retourne true
+                if (empty($this->errors)) { // Si le captcha est coché, on vérifie les identifiants
 
-            $_SESSION['login'] = $login; // On stocke le login dans la session
-            header('Location: controller-dashboard-gallery.php'); // On redirige vers la page dashboard-gallery.php
-        } else {
-            $errors = $logUser->errors; // On stocke les erreurs dans la variable $errors
+                    $login = new Login($login, $password);
+                    $user = $login->checkCredentials();
+
+                    if ($user) {
+                        // Si les identifiants sont corrects, on stocke l'utilisateur dans la session
+                        $_SESSION['login'] = $user['admin_login'];
+                        header('Location: controller-dashboard-news.php');
+                        exit;
+                    } else {
+                        // Sinon on affiche un message d'erreur
+                        $this->errors['login'] = 'Identifiants incorrects';
+                    }
+                }
+            }
         }
     }
+
+    public function verifyCaptcha()
+    {
+        if (isset($_POST['g-recaptcha-response'])) {
+            $captcha = $_POST['g-recaptcha-response'];
+            $secretKey = "6Ld8vxglAAAAAM02yGCAhm-242S7BGd3k1CKSFyx";
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $captcha . "&remoteip=" . $ip);
+            $responseKeys = json_decode($response, true);
+            var_dump($responseKeys);
+            if (intval($responseKeys["success"]) !== 1) {
+                $this->errors = 'Veuillez cocher la case "Je ne suis pas un robot"';
+            } else {
+                $this->success = 'Vous êtes un humain';
+            }
+        } else {
+            $this->errors = 'Veuillez cocher la case "Je ne suis pas un robot"';
+        }
+    }
+
+    public function getErrorsMessages()
+    {
+        return $this->errors;
+    }
+
+    public function getSuccessMessage()
+    {
+        return $this->success;
+    }
 }
 
+// On vérifie si le formulaire a été soumis
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) && isset($_POST['password'])) {
+    $login = new UserController();
+    $login->logIn();
+}
+
+// API Google reCAPTCHA
 
 
-
-
+var_dump($_POST);
 
 
 
