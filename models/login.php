@@ -19,15 +19,15 @@ class Login
             'login' => $login
         ]);
         $user = $query->fetch(PDO::FETCH_ASSOC);
-        
+
         if ($user) {
             if (password_verify($password, $user['password'])) {
                 $this->success = true;
             } else {
-                $this->errors['password'] = 'Mot de passe incorrect';
+                $this->errors[] = 'Mot de passe incorrect';
             }
         } else {
-            $this->errors['login'] = 'Utilisateur inexistant';
+            $this->errors[] = 'Utilisateur incorrect';
         }
     }
 }

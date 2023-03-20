@@ -16,9 +16,9 @@
 </body>
 
 </html>
-<?php include('views/templates/header.php'); ?>
 
 <body>
+    <?php include('views/templates/header.php'); ?>
     <main>
         <div class="container col-lg-3">
             <div class="row">

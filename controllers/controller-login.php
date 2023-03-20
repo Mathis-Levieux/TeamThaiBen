@@ -6,6 +6,12 @@ require('../models/login.php');
 
 session_start(); // On démarre la session
 
+if (isset($_SESSION['login'])) { // Si l'utilisateur est connecté
+    header('Location: controller-dashboard-news.php'); // On le redirige vers la page d'accueil
+}
+
+$title = 'Connexion'; // On définit le titre de la page
+
 class LogUser extends Login // Création d'une classe LogUser qui hérite de la classe Login
 {
     public function __construct() // Création d'un constructeur
