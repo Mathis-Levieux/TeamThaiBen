@@ -10,7 +10,7 @@ if (!isset($_SESSION['login'])) {
     header('Location: controller-login.php');
 }
 
-
+$title = 'Administration - Calendrier des événements';
 
 class EventsController // Création d'une classe newEventTypeController pour gérer l'ajout d'un nouveau type d'événement
 {

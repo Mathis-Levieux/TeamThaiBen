@@ -68,7 +68,7 @@
             },
         });
     </script>
-    <title>Team Thai Ben</title>
+    <title>Administration - Modifier un article</title>
 </head>
 
 

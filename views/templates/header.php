@@ -13,7 +13,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body me-0 pe-0 pe-xl-5 me-xl-5">
-                    <ul class="gap-5 navbar-nav justify-content-center flex-grow-1 me-0 pe-0 pe-xl-5 me-xl-5 ul-text-light">
+                    <ul class="gap-lg-5 navbar-nav justify-content-center flex-grow-1 me-0 pe-0 pe-xl-5 me-xl-5 ul-text-light">
                         <li class="nav-item">
                             <a class="nav-link" href="view-gallery.php">Accueil</a>
                         </li>

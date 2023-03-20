@@ -10,7 +10,7 @@ if (!isset($_SESSION['login'])) {
     header('Location: controller-login.php');
 }
 
-
+$title = 'Administration - Galerie';
 
 class UploadController // Création d'une classe UploadController pour gérer l'upload des photos
 {

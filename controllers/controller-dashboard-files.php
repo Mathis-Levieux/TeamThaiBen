@@ -10,6 +10,8 @@ if (!isset($_SESSION['login'])) {
     header('Location: controller-login.php');
 }
 
+$title = 'Administration - Fichiers';
+
 class File
 {
     private string $_destination = '../uploads/files/';

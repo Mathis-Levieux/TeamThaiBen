@@ -26,6 +26,7 @@ html {
 
 .ul-text-light li a {
     color: #f8f9fa;
+    font-family: 'Inter', sans-serif;
 }
 
 .ul-text-light li a:hover {
