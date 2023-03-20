@@ -25,7 +25,7 @@ class UserController
 
 
             if (empty($login) || empty($password)) {
-                $this->errors['empty'] = 'Veuillez remplir tous les champs';
+                $this->errors[] = 'Veuillez remplir tous les champs';
             } else {
 
                 $this->verifyCaptcha();   // On vérifie le captcha est coché
@@ -42,7 +42,7 @@ class UserController
                         exit;
                     } else {
                         // Sinon on affiche un message d'erreur
-                        $this->errors['login'] = 'Identifiants incorrects';
+                        $this->errors[] = 'Identifiants incorrects';
                     }
                 }
             }
@@ -57,9 +57,11 @@ class UserController
             $ip = $_SERVER['REMOTE_ADDR'];
             $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $captcha . "&remoteip=" . $ip);
             $responseKeys = json_decode($response, true);
-            var_dump($responseKeys);
+            if ($responseKeys['score'] < 0.5) {
+                $this->errors[] = 'Veuillez cocher la case "Je ne suis pas un robot"';
+            }
             if (intval($responseKeys["success"]) !== 1) {
-                $this->errors = 'Veuillez cocher la case "Je ne suis pas un robot"';
+                $this->errors[] = 'Veuillez cocher la case "Je ne suis pas un robot"';
             } else {
                 $this->success = 'Vous êtes un humain';
             }
@@ -85,10 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) && isset($_PO
     $login->logIn();
 }
 
-// API Google reCAPTCHA
 
 
-var_dump($_POST);
 
 
 
