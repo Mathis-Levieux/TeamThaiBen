@@ -3,9 +3,10 @@
     src: url('../fonts/thailandesa/THAILAND.TTF');
 }
 
+/* font-family: 'thailandesa', sans-serif; */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-/*
-font-family: 'Inter', sans-serif; */
+/* font-family: 'Inter', sans-serif; */
 
 
 body,
@@ -19,20 +20,21 @@ html {
     background-color: black;
     background-image: url('../img/newtestbg.png');
     background-repeat: no-repeat;
-    min-height: 100vh;
+    min-height: 90vh;
     background-size: 85%;
     background-position: top center;
 }
 
 .logo-home-img {
-    width: 17%;
-    margin-left: 2rem;
+    width: 10%;
+    margin-left: 4rem;
     margin-top: 2rem;
 }
 
 @media screen and (max-width: 768px) {
     .main-home-background-container {
         background-size: cover;
+        min-height: 50vh;
     }
 
     .logo-home-container {
@@ -113,19 +115,53 @@ h1 {
     gap: 5rem;
 }
 
-/* Media Queries */
+/* DASHBOARD TEMPLATE */
 
-
-/* @media screen and (max-width: 768px) {
-    body {
-        background-image: url('../img/bgpluspetit.png');
-        background-position: unset;
-        background-size: auto;
-    }
+.header-dashboard {
+    min-height: 100vh;
 }
 
-@media screen and (min-width: 2000px) {
-    body {
-        background-image: url('../img/bgplusgrand.png');
-    }
-} */
+.h2-dashboard {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.navbar-dashboard {
+    border-top: 1px solid yellow;
+    border-bottom: 1px solid yellow;
+    padding: 3rem 0;
+}
+
+.title-dashboard a {
+    text-decoration: none;
+    color: #f8f9fa;
+    /* text-light */
+}
+
+.title-dashboard a:hover {
+    color: rgb(209, 209, 0);
+    transition: 0.3s;
+}
+
+
+.navbar-dashboard a {
+    color: #f8f9fa;
+    /* text-light */
+}
+
+.navbar-dashboard a:hover {
+    background-color: #000000;
+    transition: 0.1s;
+    color: #f8f9fa;
+}
+
+/* FIN DASHBOARD TEMPLATE */
+
+/* DASHBOARD */
+
+.div-dashboard {
+    height: 85vh;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
