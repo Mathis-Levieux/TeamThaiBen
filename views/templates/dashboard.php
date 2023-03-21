@@ -9,7 +9,7 @@
             </h2>
         </a>
     </div>
-    <nav class="navbar-dashboard mt-5">
+    <nav class="navbar-dashboard mt-5 m-3">
         <ul class="nav flex-column ps-5 ms-5">
             <li class="nav-item">
                 <a class="nav-link" href="controller-dashboard-gallery.php">Galerie</a>

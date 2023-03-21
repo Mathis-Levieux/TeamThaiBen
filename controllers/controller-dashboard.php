@@ -1,6 +1,8 @@
 <?php
-$title = 'Tableau de bord';
 
+session_start();
+$title = 'Tableau de bord';
+$user = $_SESSION['login'];
 
 
 

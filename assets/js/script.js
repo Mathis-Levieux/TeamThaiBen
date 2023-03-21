@@ -1,3 +1,4 @@
+console.log("script.js chargé");
 // GESTION DES IMAGES PREVIEW DANS LE DASHBOARD GALERIE
 
 
@@ -14,6 +15,7 @@ class ImagePreviewer { // Classe qui permet de prévisualiser les images dans le
         for (let i = 0; i < files.length; i++) { // Pour chaque fichier
             this.images.push(files[i]); // On l'ajoute au tableau
         }
+        this.deleteOldPreview(); // On supprime l'ancienne prévisualisation
         this.renderImages(); // On affiche les images
     }
 
@@ -26,6 +28,17 @@ class ImagePreviewer { // Classe qui permet de prévisualiser les images dans le
                   </div>`;
         });
         this.container.innerHTML = images; // On affiche les images
+        this.images = []; // On vide le tableau
+    }
+
+    deleteOldPreview() { // Supprime l'ancienne prévisualisation
+        const oldPreview = document.querySelector(".preview-img");
+        const oldPreviews = document.querySelectorAll(".preview-img");
+        if (oldPreview) {
+            oldPreviews.forEach(oldPreview => {
+                console.log(this.images);
+            });
+        }
     }
 }
 
@@ -81,6 +94,4 @@ if (document.querySelector("#inputFile")) {
     // Utilisation du previewer d'images dans le dashboard fichier
     const previewer2 = new PdfPreviewer("#inputFile", ".preview-container");
 }
-
-
 

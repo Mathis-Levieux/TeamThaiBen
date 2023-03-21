@@ -1,11 +1,28 @@
 <?php include('templates/head.php'); ?>
 
 <body>
-    <main class="main-dashboard bg-body-secondary d-flex">
+    <main class="main-dashboard bg-body-secondary d-lg-flex">
         <?php include('templates/dashboard.php'); ?>
 
-        <div class="div-dashboard col-lg-8 m-auto bg-light">
+        <div class="container div-dashboard col-lg-8 m-auto bg-light">
+            <!-- Top dashboard -->
+            <div class="div-top-dashboard ms-3 me-3 mt-1 border-bottom border-1 border-dark">
+                <div class="col-lg-12 fs-3">
+                    <span class="">Bienvenue <?= $user ?></span>
+                </div>
+            </div>
+            <!-- Fin du top dashboard -->
 
+            <!-- Début du contenu du dashboard -->
+            <div class="row justify-content-center align-items-center h-100 pb-5">
+            </div>
+
+
+
+
+
+
+            <!-- Fin du contenu du dashboard -->
         </div>
 
 

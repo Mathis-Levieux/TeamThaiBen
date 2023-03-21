@@ -91,8 +91,8 @@ h1 {
 }
 
 .preview-img img {
-    height: 250px;
-    width: 250px;
+    height: 125px;
+    width: 125px;
 }
 
 .preview-img {
@@ -161,6 +161,7 @@ h1 {
 /* DASHBOARD */
 
 .div-dashboard {
+    font-family: 'Inter', sans-serif;
     height: 85vh;
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;

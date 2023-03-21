@@ -2,7 +2,7 @@
 
 <body>
     <h1>Dashboard - Galerie</h1>
-    <div class="container">
+    <!-- <div class="container">
         <div class="row">
             <div class="col-12 justify-content-center">
                 <h2>Upload de photos</h2>
@@ -20,7 +20,7 @@
 
             </div>
         </div>
-    </div>
+    </div> -->
 
 
     <div class="container">
@@ -75,7 +75,6 @@
                     <?php if (isset($_POST['submitDisplayAlbum'])) { // Si le bouton submit est cliqué
                         showPhotosInAdminDashboard();
                     } ?>
-                    </form>
                 </div>
             </div>
         </div>
@@ -94,10 +93,70 @@
                     </select>
                     <input type="text" name="NewAlbumName" class="form-control" placeholder="Nouveau nom de l'album">
                     <input type="submit" name="submitModifyAlbumName" class="btn btn-primary" value="Envoyer">
-
+                </form>
             </div>
         </div>
 
+
+
+
+
+
+
+        <main class="main-dashboard bg-body-secondary d-lg-flex">
+            <?php include('templates/dashboard.php'); ?>
+
+            <div class="container div-dashboard col-lg-8 m-auto bg-light">
+                <!-- Top dashboard -->
+                <div class="div-top-dashboard ms-3 me-3 mt-1 border-bottom border-1 border-dark">
+                    <div class="col-lg-12 fs-3">
+                        <span class="border-bottom border-2 border-warning-subtle">GALERIE</span>
+                    </div>
+                    <div class="col-lg-12">
+                        <ul class="nav-item d-flex p-0 mt-2 gap-5">
+                            <li class="nav-link">AJOUT DE PHOTOS</li>
+                            <li class="nav-link">SUPPRESSION DE PHOTOS</li>
+                            <li class="nav-link text-uppercase">gérer les albums</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Fin du top dashboard -->
+
+                <!-- Début du contenu du dashboard -->
+
+                <div id="addPhoto" class="container">
+                    <div class="row">
+                        <div class="col-12 justify-content-center">
+                            <h2>Upload de photos</h2>
+                            <form action='controller-dashboard-gallery.php' method="post" enctype="multipart/form-data">
+                                <input name="photos[]" type="file" class="form-control" id="inputPhotos" multiple="multiple">
+                                <select name="albumchoice" class="form-select">
+                                    <option selected disabled value="">Sélectionne un album</option>
+                                    <?php
+                                    showSelectAlbums(); // Affichage du select des albums
+                                    ?>
+                                </select>
+                                <input type="submit" name="submitPhotos" class="btn btn-primary" value="Envoyer">
+                                <div class="preview-container d-flex flex-wrap gap-2"></div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+                <!-- Fin du contenu du dashboard -->
+            </div>
+
+
+
+        </main>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
         <script src="../assets/js/script.js"></script>
 </body>
