@@ -19,20 +19,19 @@ class UploadController // Création d'une classe UploadController pour gérer l'
     private $_maxFileSize = 4000000; // 4 Mo
     private $_destination;
     private string $_AlbumName;
+    public array $errors = [];
+    public string $success = '';
 
     public function upload() // Création d'une méthode upload
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Vérifier si les champs sont remplis
+            if ($_FILES['photos']['error'][0] == 4) {
+                $this->errors[] = 'Veuillez choisir une photo';
+            }
             if (empty($_POST['albumchoice'])) {
-                // Gérer l'erreur
-                echo 'Veuillez choisir un album';
-                $errors['albumchoice'] = 'Veuillez choisir un album';
-            } elseif (empty($_FILES['photos'])) {
-                // Gérer l'erreur
-                echo 'Veuillez choisir au moins une photo';
-                $errors['photos'] = 'Veuillez choisir au moins une photo';
-            } else {
+                $this->errors[] = 'Veuillez choisir un album';
+            } elseif (empty($this->errors)) {
 
                 $files = $_FILES['photos'];
                 $fileCount = count($files['name']);
@@ -50,16 +49,14 @@ class UploadController // Création d'une classe UploadController pour gérer l'
                     if (!in_array(strtolower($fileExtension), $this->_allowedExtensions)) {
                         // Extension non autorisée
                         // Gérer l'erreur
-                        echo 'Extension non autorisée';
-                        $errors['photos'] = 'Extension non autorisée';
+                        $this->errors[] = 'Extension non autorisée';
                     }
 
                     // Vérifier la taille
                     if ($fileSize > $this->_maxFileSize) {
                         // Fichier trop volumineux
                         // Gérer l'erreur
-                        echo 'Fichier trop volumineux';
-                        $errors['photos'] = 'Fichier trop volumineux';
+                        $this->errors[] = 'Fichier trop volumineux';
                     }
                     // Obtention du chemin de destination en utilisant la fonction getAlbumNameById de la classe Albums pour héberger le fichier dans le bon dossier
                     $obj = new Albums();
@@ -76,17 +73,25 @@ class UploadController // Création d'une classe UploadController pour gérer l'
                         $photo = new Photos;
                         $photo->createPhoto($newFileName, $destination, $albumId);
                         $photo->uploadPhoto();
-                        echo 'Fichier hébergé';
-                        $message = 'Fichier hébergé';
+                        $this->success = 'Fichier hébergé';
                     } else {
                         // Erreur lors de l'hébergement
                         // Gérer l'erreur
-                        echo 'Erreur lors de l\'hébergement';
-                        $errors['photos'] = 'Erreur lors de l\'hébergement';
+                        $this->errors[] = 'Erreur lors de l\'hébergement';
                     }
                 }
             }
         }
+    }
+
+    public function getErrorsMessages()
+    {
+        return $this->errors;
+    }
+
+    public function getSuccessMessage()
+    {
+        return $this->success;
     }
 }
 
@@ -170,45 +175,50 @@ function deleteAlbum()  // Fonction pour supprimer un album
 if (isset($_POST['submitDeleteAlbum'])) { // Si le bouton submit est cliqué
     deleteAlbum(); // On appelle la fonction deleteAlbum
 }
-
 // Fonction pour afficher toutes les photos d'un album
 function showPhotosInAdminDashboard()
 {
-    if (isset($_POST['submitDisplayAlbum']) && isset($_POST['DisplayAlbum'])) { // Si l'album est sélectionné
-
-        $albumId = $_POST['DisplayAlbum']; // Récupération de l'id de l'album
-        $photos = new Albums();
-        $photos = $photos->showPhotosFromAlbum($albumId); // Récupération des photos de l'album grâce à l'id
-        echo '<form class="row" action="controller-dashboard-gallery.php" method="post">';
-        $count = 1; // Compteur pour le nom de la photo
-        foreach ($photos as $photo) {
-            $photoPath = '../uploads/albums/' . $photo['albums_name'] . '/' . $photo['photos_name'] . '';
-            echo '<div class="col-lg-3">';
-            echo '<div class="card lg-4 shadow-sm">';
-            echo '<img class="card-img-top" src="' . $photoPath . '" alt="Club de Boxe Thai de l\'Album ' . $photo['albums_name'] . '">';
-            echo '<div class="card-body">';
-            echo '<div class="d-flex justify-content-between align-items-center">';
-            echo '<div class="btn-group">';
-            echo '<input type="checkbox" name="photosToDelete[]" value="' . $photo['photos_id'] . '" id="' . $photo['photos_id'] . '" class="btn btn-sm btn-outline-secondary">';
-            echo '<label for="' . $photo['photos_id'] . '" class="ms-2 btn btn-primary">Cocher</label>';
+    if (isset($_POST['submitDisplayAlbum'])) { // Si l'album est sélectionné
+        if (!isset($_POST['DisplayAlbum'])) { // Si le champ est vide
+            echo '<div class="alert alert-danger" role="alert">Veuillez choisir un album</div>';
+        } else {
+            $albumId = $_POST['DisplayAlbum']; // Récupération de l'id de l'album
+            $photos = new Albums();
+            $photos = $photos->showPhotosFromAlbum($albumId); // Récupération des photos de l'album grâce à l'id
+            echo '<form class="row" action="controller-dashboard-gallery.php" method="post">';
+            $count = 1; // Compteur pour le nom de la photo
+            foreach ($photos as $photo) {
+                $photoPath = '../uploads/albums/' . $photo['albums_name'] . '/' . $photo['photos_name'] . '';
+                echo '<div class="col-lg-3 mb-3">';
+                echo '<div class="card lg-4 shadow-sm">';
+                echo '<img class="card-img-top" src="' . $photoPath . '" alt="Club de Boxe Thai de l\'Album ' . $photo['albums_name'] . '">';
+                echo '<div class="card-body">';
+                echo '<div class="d-flex justify-content-between align-items-center">';
+                echo '<div class="btn-group">';
+                echo '<input type="checkbox" name="photosToDelete[]" value="' . $photo['photos_id'] . '" id="' . $photo['photos_id'] . '" class="btn btn-sm btn-outline-secondary">';
+                echo '<label for="' . $photo['photos_id'] . '" class="btn btn-outline-dark rounded border-1 fw-bold ms-2">Cocher</label>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
+            echo '<div class="col-lg-12 text-center">';
+            echo '<input type="submit" name="submitDeletePhoto" class="col-lg-3 mb-3 m-auto btn btn-danger" value="Supprimer">';
             echo '</div>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
+            echo '</form>';
         }
-        echo '<input type="submit" name="submitDeletePhoto" class="col-lg-3 m-auto btn btn-primary" value="Supprimer">';
-        echo '</form>';
     }
 }
 
-
 function deletePhoto() // Fonction pour supprimer une photo
 {
+    $errors['photosToDelete'] = [];
+    $deleteSuccessMessage = '';
     if (isset($_POST['submitDeletePhoto'])) { // Si le bouton submit est cliqué
         if (empty($_POST['photosToDelete'])) { // Si le champ est vide
             $errors['photosToDelete'] = 'Veuillez choisir une photo';
-            echo 'Veuillez choisir une photo';
+            return $errors['photosToDelete'];
         } else {
             $photosToDelete = $_POST['photosToDelete']; // Récupération des photos à supprimer
             foreach ($photosToDelete as $photoToDelete) { // Boucle pour supprimer les photos
@@ -219,9 +229,10 @@ function deletePhoto() // Fonction pour supprimer une photo
                 $photo->deletePhoto($photoToDelete); // Suppression de la photo en base de données
                 if (file_exists($photoPath)) { // Si la photo existe
                     unlink($photoPath); // Suppression de la photo
+                    $deleteSuccessMessage = 'Photo(s) supprimée(s)';
+                    return $deleteSuccessMessage;
                 }
             }
-            echo 'Photo(s) supprimée(s)';
         }
     }
 }

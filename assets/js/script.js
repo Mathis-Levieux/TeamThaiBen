@@ -95,3 +95,41 @@ if (document.querySelector("#inputFile")) {
     const previewer2 = new PdfPreviewer("#inputFile", ".preview-container");
 }
 
+
+
+
+// Gestion du dashboard dynamique
+
+/////// GALERIE ////////
+
+const addPhoto = document.getElementById('addPhoto');
+const addPhotoContent = document.getElementById('addPhotoContent');
+
+const deletePhoto = document.getElementById('deletePhoto');
+const deletePhotoContent = document.getElementById('deletePhotoContent');
+const deletePhotoButton = document.getElementById('deletePhotoButton');
+
+const editAlbum = document.getElementById('editAlbum');
+const editAlbumContent = document.getElementById('editAlbumContent');
+
+deletePhoto.addEventListener('click', function () {
+    addPhotoContent.classList.add('d-none');
+    deletePhotoContent.classList.remove('d-none');
+});
+
+deletePhotoButton.addEventListener('click', function () {
+    // On ajoute dans le localstorage l'onglet actif pour le recharger après
+    localStorage.setItem('ongletActif', 'deletePhoto');
+})
+
+if (localStorage.getItem('ongletActif') == 'deletePhoto') {
+    deletePhotoContent.classList.remove('d-none');
+    addPhotoContent.classList.add('d-none');
+    localStorage.setItem('ongletActif', '');
+}
+
+addPhoto.addEventListener('click', function () {
+    deletePhotoContent.classList.add('d-none');
+    addPhotoContent.classList.remove('d-none');
+    localStorage.setItem('ongletActif', 'addPhoto');
+});

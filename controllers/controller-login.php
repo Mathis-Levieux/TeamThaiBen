@@ -38,7 +38,7 @@ class UserController
                     if ($user) {
                         // Si les identifiants sont corrects, on stocke l'utilisateur dans la session
                         $_SESSION['login'] = $user['admin_login'];
-                        header('Location: controller-dashboard-news.php');
+                        header('Location: controller-dashboard.php');
                         exit;
                     } else {
                         // Sinon on affiche un message d'erreur
