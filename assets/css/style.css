@@ -184,3 +184,14 @@ h1 {
 .dashboard-tabs {
     padding: 0.5rem 1rem;
 }
+
+@media screen and (max-width: 400px) {
+    .dashboard-tabs {
+        padding: 0.5rem 0rem;
+    }
+}
+
+/* .logout-button {
+    position: absolute;
+    left: 86%;
+} */

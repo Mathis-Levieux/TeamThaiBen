@@ -56,7 +56,6 @@ class EventsController // Création d'une classe newEventTypeController pour gé
     {
         if (isset($_POST['submitNewEvent'])) {
             if (empty($_POST['newEventTitle'])) {
-                var_dump($_POST['newEventTitle']);
                 echo 'Veuillez remplir le champ';
                 $errors['NewEventTitle'] = 'Veuillez remplir le champ';
             }

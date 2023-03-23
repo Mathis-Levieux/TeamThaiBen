@@ -33,6 +33,12 @@
             </div>
         <?php endif; ?>
 
+        <?php if (isset($_SESSION['message'])) :  ?>
+            <div class="alert alert-success text-center" role="alert">
+                <?= $_SESSION['message'] ?>
+            </div>
+            <?php unset($_SESSION['message']) ?>
+        <?php endif; ?>
         <!-- Formulaire de connexion -->
 
         <form id="my-form" method="POST" class="mt-5 w-25 m-auto">

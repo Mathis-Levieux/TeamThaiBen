@@ -29,7 +29,7 @@ class UploadController // Création d'une classe UploadController pour gérer l'
             if ($_FILES['photos']['error'][0] == 4) {
                 $this->errors[] = 'Veuillez choisir une photo';
             }
-            if (empty($_POST['albumchoice'])) {
+            if (empty($_POST['AlbumSelect'])) {
                 $this->errors[] = 'Veuillez choisir un album';
             } elseif (empty($this->errors)) {
 
@@ -42,7 +42,7 @@ class UploadController // Création d'une classe UploadController pour gérer l'
                     $fileTmpName = $files['tmp_name'][$i];
                     $fileSize = $files['size'][$i];
                     $fileError = $files['error'][$i];
-                    $albumId = $_POST['albumchoice'];
+                    $albumId = $_POST['AlbumSelect'];
 
                     // Vérifier l'extension
                     $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -118,11 +118,11 @@ class UploadController // Création d'une classe UploadController pour gérer l'
 
     public function deleteAlbum()  // Fonction pour supprimer un album
     {
-        if (empty($_POST['deleteAlbum'])) { // Si le champ est vide
+        if (empty($_POST['AlbumSelect'])) { // Si le champ est vide
             $this->errors[] = 'Veuillez choisir un album à supprimer';
         } else {
             $albumName = new Albums();
-            $albumId = $_POST['deleteAlbum']; // Récupération de l'id de l'album
+            $albumId = $_POST['AlbumSelect']; // Récupération de l'id de l'album
             $albumName = $albumName->getAlbumNameById($albumId); // Récupération du nom de l'album grâce à l'id
             $albumName = $albumName['albums_name']; // Récupération du nom de l'album dans le tableau
             $deleteAlbum = new Albums();
@@ -142,9 +142,10 @@ class UploadController // Création d'une classe UploadController pour gérer l'
 
     public function modifyAlbumName() // Fonction pour modifier le nom d'un album
     {
-        if (empty($_POST['updateAlbum'])) { // Si le champ est vide
+        if (empty($_POST['AlbumSelect'])) { // Si le champ est vide
             $this->errors[] = 'Veuillez choisir un album à modifier';
-        } else if (empty($_POST['NewAlbumName'])) { // Si le champ est vide
+        }
+        if (empty($_POST['NewAlbumName'])) { // Si le champ est vide
             $this->errors[] = 'Veuillez choisir un nouveau nom pour l\'album';
         } else {
             if (strlen($_POST['NewAlbumName']) > 50) { // Si le nom d'album contient plus de 50 caractères
@@ -154,7 +155,7 @@ class UploadController // Création d'une classe UploadController pour gérer l'
                 $this->errors[] = 'Le nom d\'album est déjà utilisé';
             } else {
                 $albumName = new Albums();
-                $albumId = $_POST['updateAlbum']; // Récupération de l'id de l'album
+                $albumId = $_POST['AlbumSelect']; // Récupération de l'id de l'album
                 $albumName = $albumName->getAlbumNameById($albumId); // Récupération du nom de l'album grâce à l'id
                 $albumName = $albumName['albums_name']; // Récupération du nom de l'album dans le tableau
                 $newAlbumName = $_POST['NewAlbumName']; // Récupération du nouveau nom de l'album
@@ -168,7 +169,39 @@ class UploadController // Création d'une classe UploadController pour gérer l'
             }
         }
     }
+
+    public function createAlbum()
+    {
+        if (empty($_POST['NewAlbum'])) {   // Si le champ est vide
+            $this->errors[] = 'Veuillez choisir un nom pour l\'album';
+        }
+        if (strlen($_POST['NewAlbum']) > 50) { // Si le nom d'album contient plus de 50 caractères
+            $this->errors[] = 'Le nom d\'album ne doit pas dépasser 50 caractères';
+        }
+        // On vérifie que l'album ne contient pas de caractères spéciaux
+        if (empty($this->errors)) {
+
+            if (!preg_match('/^[a-zA-Z0-9_ ]+$/', $_POST['NewAlbum'])) {
+                $this->errors[] = 'Le nom d\'album ne doit pas contenir de caractères spéciaux';
+            } else {
+                $album = new Albums(); // Vérification de si le nom d'album existe déjà
+                $album = $album->getAlbumsByName($_POST['NewAlbum']);
+                if ($album) {
+                    $this->errors[] = 'Le nom d\'album est déjà utilisé';
+                } else {
+                    // Création du dossier de l'album
+                    if (!file_exists('../uploads/albums/' . $_POST['NewAlbum'])) { // Si le dossier n'existe pas
+                        mkdir('../uploads/albums/' . $_POST['NewAlbum']); // On le crée
+                    }
+                    $album = new Albums();
+                    $album->createNewAlbum($_POST['NewAlbum']);
+                    $this->success = 'Album créé';
+                }
+            }
+        }
+    }
 }
+
 
 // Utilisation de la classe UploadController
 if (isset($_POST['submitPhotos'])) {  // Si le bouton submit est cliqué
@@ -176,41 +209,10 @@ if (isset($_POST['submitPhotos'])) {  // Si le bouton submit est cliqué
     $upload->upload(); // On appelle la méthode upload
 }
 
-// Fonction pour créer un nouvel album
-function createAlbum()
-{
-    if (empty($_POST['NewAlbum'])) {   // Si le champ est vide
-        $errors['NewAlbum'] = 'Le nom d\'album ne doit pas être vide';
-        echo 'Le nom d\'album ne doit pas être vide';
-    } else {
-        if (strlen($_POST['NewAlbum']) > 50) { // Si le nom d'album contient plus de 50 caractères
-            $errors['NewAlbum'] = 'Le nom d\'album ne doit pas dépasser 50 caractères';
-            echo 'Le nom d\'album ne doit pas dépasser 50 caractères';
-        } else if (!preg_match('/^[a-zA-Z0-9_]+$/', $_POST['NewAlbum'])) {
-            $errors['NewAlbum'] = 'Le nom d\'album ne doit pas contenir de caractères spéciaux';
-            echo 'Le nom d\'album ne doit pas contenir de caractères spéciaux';
-        } else {
-            $album = new Albums(); // Vérification de si le nom d'album existe déjà
-            $album = $album->getAlbumsByName($_POST['NewAlbum']);
-            if ($album) {
-                $errors['NewAlbum'] = 'Le nom d\'album est déjà utilisé';
-                echo 'Le nom d\'album est déjà utilisé';
-            } else {
-                // Création du dossier de l'album
-                if (!file_exists('../uploads/albums/' . $_POST['NewAlbum'])) { // Si le dossier n'existe pas
-                    mkdir('../uploads/albums/' . $_POST['NewAlbum']); // On le crée
-                }
-                $album = new Albums();
-                $album->createNewAlbum($_POST['NewAlbum']);
-                echo 'Album créé';
-            }
-        }
-    }
-}
-
 // Utilisation de la fonction createAlbum
 if (isset($_POST['submitNewAlbum']) && isset($_POST['NewAlbum'])) { // Si le bouton submit est cliqué
-    createAlbum(); // On appelle la fonction createAlbum
+    $createAlbum = new UploadController();
+    $createAlbum->createAlbum(); // On appelle la fonction createAlbum
 }
 
 
@@ -219,11 +221,13 @@ function showSelectAlbums()
 {
     $albums = new Albums();
     $albums = $albums->getAlbums();
+    echo ' <select name="AlbumSelect" class="mt-3 form-select">
+    <option selected disabled value="">Sélectionne un album</option>';
     foreach ($albums as $album) {
-        echo '<option value="' . $album['albums_id'] . '">' . $album['albums_name'] . '</option>';
+        echo '<option value="' . $album['albums_id'] . '"' . ((isset($_POST['AlbumSelect']) && $_POST['AlbumSelect'] == $album['albums_id']) ? ' selected' : '') . '>' . $album['albums_name'] . '</option>';
     }
+    echo '</select>';
 }
-var_dump($_POST);
 
 
 
@@ -236,34 +240,38 @@ if (isset($_POST['submitDeleteAlbum'])) { // Si le bouton submit est cliqué
 function showPhotosInAdminDashboard()
 {
     if (isset($_POST['submitDisplayAlbum'])) { // Si l'album est sélectionné
-        if (!isset($_POST['DisplayAlbum'])) { // Si le champ est vide
+        if (!isset($_POST['AlbumSelect'])) { // Si le champ est vide
             echo '<div class="alert alert-danger" role="alert">Veuillez choisir un album</div>';
         } else {
-            $albumId = $_POST['DisplayAlbum']; // Récupération de l'id de l'album
+            $albumId = $_POST['AlbumSelect']; // Récupération de l'id de l'album
             $photos = new Albums();
             $photos = $photos->showPhotosFromAlbum($albumId); // Récupération des photos de l'album grâce à l'id
             echo '<form class="row" action="controller-dashboard-gallery.php" method="post">';
             $count = 1; // Compteur pour le nom de la photo
-            foreach ($photos as $photo) {
-                $photoPath = '../uploads/albums/' . $photo['albums_name'] . '/' . $photo['photos_name'] . '';
-                echo '<div class="col-lg-3 col-sm-6 col-12 mb-3">';
-                echo '<div class="card lg-4 shadow-sm">';
-                echo '<img style="height: 200px" class="card-img-top" src="' . $photoPath . '" alt="Club de Boxe Thai de l\'Album ' . $photo['albums_name'] . '">';
-                echo '<div class="card-body">';
-                echo '<div class="d-flex justify-content-between align-items-center">';
-                echo '<div class="btn-group">';
-                echo '<input type="checkbox" name="photosToDelete[]" value="' . $photo['photos_id'] . '" id="' . $photo['photos_id'] . '" class="btn btn-sm btn-outline-secondary">';
-                echo '<label for="' . $photo['photos_id'] . '" class="btn btn-outline-dark rounded border-1 fw-bold ms-2">Cocher</label>';
+            if (empty($photos)) { // Si l'album est vide
+                echo '<div class="alert alert-danger" role="alert">L\'album ne contient pas de photos</div>';
+            } else {
+                foreach ($photos as $photo) {
+                    $photoPath = '../uploads/albums/' . $photo['albums_name'] . '/' . $photo['photos_name'] . '';
+                    echo '<div class="col-lg-3 col-sm-6 col-12 mb-3">';
+                    echo '<div class="card lg-4 shadow-sm">';
+                    echo '<img style="height: 200px" class="card-img-top" src="' . $photoPath . '" alt="Club de Boxe Thai de l\'Album ' . $photo['albums_name'] . '">';
+                    echo '<div class="card-body">';
+                    echo '<div class="d-flex justify-content-between align-items-center">';
+                    echo '<div class="btn-group">';
+                    echo '<input type="checkbox" name="photosToDelete[]" value="' . $photo['photos_id'] . '" id="' . $photo['photos_id'] . '" class="btn btn-sm btn-outline-secondary">';
+                    echo '<label for="' . $photo['photos_id'] . '" class="btn btn-outline-dark rounded border-1 fw-bold ms-2">Cocher</label>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+                echo '<div class="col-lg-12 text-center">';
+                echo '<input id="deletePhotoButton2" type="submit" name="submitDeletePhoto" class="col-lg-3 mb-3 m-auto btn btn-danger" value="Supprimer">';
                 echo '</div>';
-                echo '</div>';
-                echo '</div>';
-                echo '</div>';
-                echo '</div>';
+                echo '</form>';
             }
-            echo '<div class="col-lg-12 text-center">';
-            echo '<input id="deletePhotoButton2" type="submit" name="submitDeletePhoto" class="col-lg-3 mb-3 m-auto btn btn-danger" value="Supprimer">';
-            echo '</div>';
-            echo '</form>';
         }
     }
 }

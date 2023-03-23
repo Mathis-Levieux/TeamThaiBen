@@ -4,18 +4,18 @@
     <main class="main-dashboard bg-dark d-lg-flex">
         <?php include('templates/dashboard.php'); ?>
 
-        <div class="container rounded-3 div-dashboard col-lg-8 mt-5 m-auto bg-light">
+        <div class="container rounded-3 div-dashboard col-lg-8 mt-5 mb-5 m-auto bg-light">
             <!-- Top dashboard -->
-            <div class="div-top-dashboard ms-3 me-3 mt-1 border-bottom border-1 border-dark">
-                <div class="col-lg-12 fs-3">
+            <div class="div-top-dashboard mt-1 border-bottom border-1 border-dark">
+                <div class="col-lg-12 fs-1 text-center position-relative">
                     <span class="">Bienvenue <?= $user ?></span>
+                    <a href="controller-login.php?logout"><img src="../assets/img/icon-logout.png" alt="logo" class="position-absolute top-0 end-0 logout-button"></a>
                 </div>
             </div>
             <!-- Fin du top dashboard -->
 
             <!-- Début du contenu du dashboard -->
-            <div class="row justify-content-center align-items-center h-100 pb-5">
-            </div>
+
 
 
 

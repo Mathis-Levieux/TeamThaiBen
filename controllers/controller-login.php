@@ -6,8 +6,17 @@ require('../models/login.php');
 
 session_start(); // On démarre la session
 
+// Déconnexion
+if (isset($_GET['logout'])) { // Si l'utilisateur clique sur le lien de déconnexion, on détruit la session et on le redirige vers la page de connexion
+    session_unset();
+    session_destroy();
+    session_start();
+    $_SESSION['message'] = 'Vous avez bien été déconnecté';
+}
+
+
 if (isset($_SESSION['login'])) { // Si l'utilisateur est connecté
-    header('Location: controller-dashboard-news.php'); // On le redirige vers la page d'accueil
+    header('Location: controller-dashboard.php'); // On le redirige vers la page d'accueil
 }
 
 $title = 'Connexion'; // On définit le titre de la page
@@ -22,7 +31,6 @@ class UserController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $login = $_POST['login'];
             $password = $_POST['password'];
-
 
             if (empty($login) || empty($password)) {
                 $this->errors[] = 'Veuillez remplir tous les champs';
@@ -39,7 +47,6 @@ class UserController
                         // Si les identifiants sont corrects, on stocke l'utilisateur dans la session
                         $_SESSION['login'] = $user['admin_login'];
                         header('Location: controller-dashboard.php');
-                        exit;
                     } else {
                         // Sinon on affiche un message d'erreur
                         $this->errors[] = 'Identifiants incorrects';
