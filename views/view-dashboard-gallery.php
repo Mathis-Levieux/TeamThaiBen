@@ -31,6 +31,7 @@
                 <div class="row">
                     <div class="col-12 justify-content-center">
                         <form action='controller-dashboard-gallery.php' method="post" enctype="multipart/form-data">
+                            <p class="mt-3 text-center">Formats acceptés : jpg, jpeg, png</p>
                             <input name="photos[]" type="file" class="mt-3 form-control" id="inputPhotos" multiple="multiple">
                             <?php
                             showSelectAlbums(); // Affichage du select des albums
