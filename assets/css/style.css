@@ -183,6 +183,7 @@ h1 {
 
 .dashboard-tabs {
     padding: 0.5rem 1rem;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 400px) {

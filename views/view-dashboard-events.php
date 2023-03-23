@@ -1,14 +1,48 @@
 <?php include('templates/head.php'); ?>
 
 <body>
+    <main class="main-dashboard bg-dark d-lg-flex">
+        <?php include('templates/dashboard.php'); ?>
+
+        <div class="container rounded-3 div-dashboard col-lg-8 mt-5 mb-5 m-auto bg-light">
+            <!-- Top dashboard -->
+            <div class="div-top-dashboard mt-1 border-bottom border-1 border-dark">
+                <div class="col-lg-12 fs-1 text-center position-relative">
+                    <span class="border-bottom border-2 border-warning-subtle thai-font">GALERIE</span>
+                    <a href="controller-login.php?logout"><img src="../assets/img/icon-logout.png" alt="logo" class="position-absolute top-0 end-0 logout-button"></a>
+                </div>
+                <div class="col-lg-12">
+                    <ul class="nav-item d-flex p-0 mt-2 gap-5 fw-bold text-center justify-content-center fs-7">
+                        <li id="addPhoto" class="dashboard-tabs active-tab d-flex align-items-center">AJOUT DE PHOTOS</li>
+                        <li id="deletePhoto" class="dashboard-tabs d-flex align-items-center">SUPPRESSION DE PHOTOS</li>
+                        <li id="editAlbum" class="dashboard-tabs text-uppercase d-flex align-items-center">gérer les albums</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Fin du top dashboard -->
+
+            <!-- Début du contenu du dashboard -->
+
+
+            <!-- Fin du contenu du dashboard -->
+        </div>
+    </main>
+
+
+
+
+
+
+
+
     <div class="container">
         <div class="row">
             <div class="col-12 justify-content-center">
 
-                <h1>Dashboard - Events</h1>
+                <h2>Ajout d'un type d'event</h2>
                 <form method="post">
                     <input type="text" name="NewEventType" class="form-control" placeholder="Type d'évènement">
-                    <input type="submit" name="submitNewEventType" class="btn btn-primary" value="Envoyer">
+                    <input type="submit" name="submitNewEventType" class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
                     <div class="preview-container d-flex flex-wrap gap-2"></div>
                 </form>
             </div>
@@ -27,7 +61,7 @@
                         $newEventType->showSelectEventType(); // Affichage du select des albums
                         ?>
                     </select>
-                    <input type="submit" name="submitDeleteEventType" class="btn btn-primary" value="Envoyer">
+                    <input type="submit" name="submitDeleteEventType" class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
                 </form>
             </div>
         </div>
@@ -52,7 +86,7 @@
                         $newEventType = new EventsController(); // Création d'un nouvel objet
                         $newEventType->showSelectEventType(); // Affichage du select des albums
                         ?>
-                        <input type="submit" name="submitNewEvent" class="btn btn-primary" value="Envoyer">
+                        <input type="submit" name="submitNewEvent" class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
                 </form>
             </div>
         </div>

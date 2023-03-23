@@ -101,7 +101,6 @@
 
             <!-- Gestion des albums -->
             <div id="editAlbumContent" class="container d-none">
-
                 <div>
                     <div class="row">
                         <div class="col-12 justify-content-center">
@@ -109,7 +108,7 @@
                             <h3 class="mt-3">Créer un album</h3>
                             <form action='controller-dashboard-gallery.php' method="post">
                                 <input type="text" name="NewAlbum" class="mt-3 form-control" placeholder="Nom de l'album">
-                                <input id="editAlbumButton" type="submit" name="submitNewAlbum" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
+                                <input id="editAlbumButton" type="submit" name="submitNewAlbum" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Créer">
                             </form>
 
                             <!-- Affichage des erreurs -->
@@ -142,7 +141,7 @@
                                 <?php
                                 showSelectAlbums(); // Affichage du select des albums
                                 ?>
-                                <input id="editAlbumButton2" type="submit" name="submitDeleteAlbum" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
+                                <input id="editAlbumButton2" type="submit" name="submitDeleteAlbum" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Supprimer">
                             </form>
 
                             <!-- Affichage des erreurs -->
@@ -175,7 +174,7 @@
                                 showSelectAlbums(); // Affichage du select des albums
                                 ?>
                                 <input type="text" name="NewAlbumName" class="mt-3 form-control" placeholder="Nouveau nom de l'album">
-                                <input id="editAlbumButton3" type="submit" name="submitModifyAlbumName" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
+                                <input id="editAlbumButton3" type="submit" name="submitModifyAlbumName" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Modifier">
                             </form>
 
                             <!-- Affichage des erreurs -->
