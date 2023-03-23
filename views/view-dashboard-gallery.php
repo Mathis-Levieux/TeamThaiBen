@@ -7,7 +7,7 @@
     <main class="main-dashboard bg-dark d-lg-flex">
         <?php include('templates/dashboard.php'); ?>
 
-        <div class="container rounded-3 div-dashboard col-lg-8 mt-5 m-auto bg-light">
+        <div class="container rounded-3 div-dashboard col-lg-8 mt-5 mb-5 m-auto bg-light">
             <!-- Top dashboard -->
             <div class="div-top-dashboard ms-3 me-3 mt-1 border-bottom border-1 border-dark">
                 <div class="col-lg-12 fs-1 text-center">
@@ -15,15 +15,16 @@
                 </div>
                 <div class="col-lg-12">
                     <ul class="nav-item d-flex p-0 mt-2 gap-5 fw-bold text-center justify-content-center fs-7">
-                        <li id="addPhoto" class="nav-link">AJOUT DE PHOTOS</li>
-                        <li id="deletePhoto" class="nav-link d-flex align-items-center">SUPPRESSION DE PHOTOS</li>
-                        <li id="editAlbum" class="nav-link text-uppercase">gérer les albums</li>
+                        <li id="addPhoto" class="dashboard-tabs active-tab d-flex align-items-center">AJOUT DE PHOTOS</li>
+                        <li id="deletePhoto" class="dashboard-tabs d-flex align-items-center">SUPPRESSION DE PHOTOS</li>
+                        <li id="editAlbum" class="dashboard-tabs text-uppercase d-flex align-items-center">gérer les albums</li>
                     </ul>
                 </div>
             </div>
             <!-- Fin du top dashboard -->
 
             <!-- Début du contenu du dashboard -->
+            <!-- Ajout de photos -->
 
             <div id="addPhotoContent" class="container">
                 <div class="row">
@@ -62,7 +63,7 @@
                 </div>
             </div>
 
-            <!-- Affichage des photos -->
+            <!-- Suppression des photos -->
 
             <div id="deletePhotoContent" class="d-none container">
                 <div class="row">
@@ -81,12 +82,117 @@
                                 showPhotosInAdminDashboard();
                             } ?>
                         </div>
+
+                        <!-- Affichage des erreurs -->
+                        <?php if (!empty($_POST) && isset($_POST['submitDeletePhoto']) && !empty($deletePhoto->getErrorsMessages())) : ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?php foreach ($deletePhoto->getErrorsMessages() as $error) : ?>
+                                    <?= $error . ' <br> ' ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        <!-- Fin affichage des erreurs -->
+
+                        <!-- Affichage des messages de succès -->
+                        <?php if (!empty($_POST) && isset($_POST['submitDeletePhoto']) && !empty($deletePhoto->getSuccessMessage())) : ?>
+                            <div class="alert alert-success"><?php echo $deletePhoto->getSuccessMessage(); ?></div>
+                        <?php endif; ?>
+                        <!-- Fin affichage des messages de succès -->
+
                     </div>
                 </div>
             </div>
 
+            <!-- Gestion des albums -->
+            <div id="editAlbumContent" class="container d-none">
+                <div class="container">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 justify-content-center">
+
+                                <h3 class="mt-3">Créer un album</h3>
+                                <form action='controller-dashboard-gallery.php' method="post">
+                                    <input type="text" name="NewAlbum" class="mt-3 form-control" placeholder="Nom de l'album">
+                                    <input id="editAlbumButton" type="submit" name="submitNewAlbum" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
 
 
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 justify-content-center">
+                                <h3 class="mt-3">Supprimer un album</h3>
+                                <form action='controller-dashboard-gallery.php' method="post">
+                                    <select name="deleteAlbum" class="mt-3 form-select" aria-label="Default select example">
+                                        <option selected disabled value="">Sélectionne un album</option>
+                                        <?php
+                                        showSelectAlbums();
+                                        ?>
+                                    </select>
+                                    <input id="editAlbumButton2" type="submit" name="submitDeleteAlbum" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
+                                </form>
+
+                                <!-- Affichage des erreurs -->
+                                <?php if (!empty($_POST) && isset($_POST['submitDeleteAlbum']) && !empty($deleteAlbum->getErrorsMessages())) : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <?php foreach ($deleteAlbum->getErrorsMessages() as $error) : ?>
+                                            <?= $error . ' <br> ' ?>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                                <!-- Fin affichage des erreurs -->
+
+                                <!-- Affichage des messages de succès -->
+                                <?php if (!empty($_POST) && isset($_POST['submitDeleteAlbum']) && !empty($deleteAlbum->getSuccessMessage())) : ?>
+                                    <div class="alert alert-success"><?php echo $deleteAlbum->getSuccessMessage(); ?></div>
+                                <?php endif; ?>
+                                <!-- Fin affichage des messages de succès -->
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 justify-content-center">
+                                <h3 class="mt-3">Modifier le nom d'un album</h3>
+                                <form action='controller-dashboard-gallery.php' method="post">
+                                    <select name="updateAlbum" class="mt-3 form-select" aria-label="album Select">
+                                        <option selected disabled value="">Sélectionne un album</option>
+                                        <?php
+                                        showSelectAlbums();
+                                        ?>
+                                    </select>
+                                    <input type="text" name="NewAlbumName" class="mt-3 form-control" placeholder="Nouveau nom de l'album">
+                                    <input id="editAlbumButton3" type="submit" name="submitModifyAlbumName" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
+                                </form>
+
+                                <!-- Affichage des erreurs -->
+                                <?php if (!empty($_POST) && isset($_POST['submitModifyAlbumName']) && !empty($modifyAlbumName->getErrorsMessages())) : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <?php foreach ($modifyAlbumName->getErrorsMessages() as $error) : ?>
+                                            <?= $error . ' <br> ' ?>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                                <!-- Fin affichage des erreurs -->
+
+                                <!-- Affichage des messages de succès -->
+                                <?php if (!empty($_POST) && isset($_POST['submitModifyAlbumName']) && !empty($modifyAlbumName->getSuccessMessage())) : ?>
+                                    <div class="alert alert-success"><?php echo $modifyAlbumName->getSuccessMessage(); ?></div>
+                                <?php endif; ?>
+                                <!-- Fin affichage des messages de succès -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Fin du contenu du dashboard -->
         </div>
@@ -94,62 +200,8 @@
 
 
 
-    <h1>Dashboard - Galerie</h1>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12 justify-content-center">
-
-                <h2>Création d'un album</h2>
-                <form action='controller-dashboard-gallery.php' method="post">
-                    <input type="text" name="NewAlbum" class="form-control" placeholder="Nom de l'album">
-                    <input type="submit" name="submitNewAlbum" class="btn btn-primary" value="Envoyer">
-                </form>
-
-            </div>
-        </div>
-    </div>
 
 
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12 justify-content-center">
-                <h2>Suppression d'un album</h2>
-                <form action='controller-dashboard-gallery.php' method="post">
-                    <select name="deleteAlbum" class="form-select" aria-label="Default select example">
-                        <option selected disabled value="">Sélectionne un album</option>
-                        <?php
-                        showSelectAlbums();
-                        ?>
-                    </select>
-                    <input type="submit" name="submitDeleteAlbum" class="btn btn-primary" value="Envoyer">
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12 justify-content-center">
-                <h2>Modifier le nom d'un album</h2>
-                <form action='controller-dashboard-gallery.php' method="post">
-                    <select name="updateAlbum" class="form-select" aria-label="Default select example">
-                        <option selected disabled value="">Sélectionne un album</option>
-                        <?php
-                        showSelectAlbums();
-                        ?>
-                    </select>
-                    <input type="text" name="NewAlbumName" class="form-control" placeholder="Nouveau nom de l'album">
-                    <input type="submit" name="submitModifyAlbumName" class="btn btn-primary" value="Envoyer">
-                </form>
-            </div>
-        </div>
-    </div>
 
 
 

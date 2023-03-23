@@ -122,7 +122,7 @@ h1 {
 
 /* DASHBOARD TEMPLATE */
 
-.header-dashboard {
+.main-dashboard {
     min-height: 100vh;
 }
 
@@ -174,4 +174,13 @@ h1 {
 
 .fs-7 {
     font-size: 0.8rem;
+}
+
+.active-tab {
+    background-color: #000000;
+    color: #f8f9fa;
+}
+
+.dashboard-tabs {
+    padding: 0.5rem 1rem;
 }

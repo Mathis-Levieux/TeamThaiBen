@@ -73,7 +73,7 @@ class UploadController // Création d'une classe UploadController pour gérer l'
                         $photo = new Photos;
                         $photo->createPhoto($newFileName, $destination, $albumId);
                         $photo->uploadPhoto();
-                        $this->success = 'Fichier hébergé';
+                        $this->success = 'Photo(s) hébergée(s)';
                     } else {
                         // Erreur lors de l'hébergement
                         // Gérer l'erreur
@@ -93,6 +93,81 @@ class UploadController // Création d'une classe UploadController pour gérer l'
     {
         return $this->success;
     }
+
+    public function deletePhoto() // Fonction pour supprimer une photo
+    {
+        if (isset($_POST['submitDeletePhoto'])) { // Si le bouton submit est cliqué
+            if (empty($_POST['photosToDelete'])) { // Si le champ est vide
+                $this->errors[] = 'Veuillez choisir une photo à supprimer';
+            } else {
+                $photosToDelete = $_POST['photosToDelete']; // Récupération des photos à supprimer
+                foreach ($photosToDelete as $photoToDelete) { // Boucle pour supprimer les photos
+                    $photo = new Photos();
+                    $photo = $photo->getPhotoById($photoToDelete); // Récupération des informations de la photo grâce à l'id
+                    $photoPath = $photo['photos_path']; // Récupération du chemin de la photo
+                    $photo = new Photos();
+                    $photo->deletePhoto($photoToDelete); // Suppression de la photo en base de données
+                    if (file_exists($photoPath)) { // Si la photo existe
+                        unlink($photoPath); // Suppression de la photo
+                        $this->success = 'Photo(s) supprimée(s)';
+                    }
+                }
+            }
+        }
+    }
+
+    public function deleteAlbum()  // Fonction pour supprimer un album
+    {
+        if (empty($_POST['deleteAlbum'])) { // Si le champ est vide
+            $this->errors[] = 'Veuillez choisir un album à supprimer';
+        } else {
+            $albumName = new Albums();
+            $albumId = $_POST['deleteAlbum']; // Récupération de l'id de l'album
+            $albumName = $albumName->getAlbumNameById($albumId); // Récupération du nom de l'album grâce à l'id
+            $albumName = $albumName['albums_name']; // Récupération du nom de l'album dans le tableau
+            $deleteAlbum = new Albums();
+            $deleteAlbum->deleteAlbum($albumId); // Suppression de l'album en base de données
+            if (file_exists('../uploads/albums/' . $albumName)) { // Si le dossier existe
+                // Récupère les photos dans le dossier
+                $files = glob('../uploads/albums/' . $albumName . '/*');
+                // Boucle pour supprimer les photos
+                foreach ($files as $file) {
+                    unlink($file);
+                }
+                rmdir('../uploads/albums/' . $albumName); // Suppression du dossier
+            }
+            $this->success = 'Album supprimé';
+        }
+    }
+
+    public function modifyAlbumName() // Fonction pour modifier le nom d'un album
+    {
+        if (empty($_POST['updateAlbum'])) { // Si le champ est vide
+            $this->errors[] = 'Veuillez choisir un album à modifier';
+        } else if (empty($_POST['NewAlbumName'])) { // Si le champ est vide
+            $this->errors[] = 'Veuillez choisir un nouveau nom pour l\'album';
+        } else {
+            if (strlen($_POST['NewAlbumName']) > 50) { // Si le nom d'album contient plus de 50 caractères
+                $this->errors[] = 'Le nom d\'album ne doit pas dépasser 50 caractères';
+            } else if // On vérifie que le nom d'album n'est pas déjà utilisé
+            (file_exists('../uploads/albums/' . $_POST['NewAlbumName'])) {
+                $this->errors[] = 'Le nom d\'album est déjà utilisé';
+            } else {
+                $albumName = new Albums();
+                $albumId = $_POST['updateAlbum']; // Récupération de l'id de l'album
+                $albumName = $albumName->getAlbumNameById($albumId); // Récupération du nom de l'album grâce à l'id
+                $albumName = $albumName['albums_name']; // Récupération du nom de l'album dans le tableau
+                $newAlbumName = $_POST['NewAlbumName']; // Récupération du nouveau nom de l'album
+                $modifyAlbumName = new Albums();
+                $modifyAlbumName->modifyAlbumName($newAlbumName, $albumId); // Modification du nom de l'album en base de données
+
+                if (file_exists('../uploads/albums/' . $albumName)) { // Si le dossier existe
+                    rename('../uploads/albums/' . $albumName, '../uploads/albums/' . $newAlbumName); // Modification du nom du dossier
+                }
+                $this->success = 'Nom d\'album modifié';
+            }
+        }
+    }
 }
 
 // Utilisation de la classe UploadController
@@ -111,6 +186,9 @@ function createAlbum()
         if (strlen($_POST['NewAlbum']) > 50) { // Si le nom d'album contient plus de 50 caractères
             $errors['NewAlbum'] = 'Le nom d\'album ne doit pas dépasser 50 caractères';
             echo 'Le nom d\'album ne doit pas dépasser 50 caractères';
+        } else if (!preg_match('/^[a-zA-Z0-9_]+$/', $_POST['NewAlbum'])) {
+            $errors['NewAlbum'] = 'Le nom d\'album ne doit pas contenir de caractères spéciaux';
+            echo 'Le nom d\'album ne doit pas contenir de caractères spéciaux';
         } else {
             $album = new Albums(); // Vérification de si le nom d'album existe déjà
             $album = $album->getAlbumsByName($_POST['NewAlbum']);
@@ -145,35 +223,14 @@ function showSelectAlbums()
         echo '<option value="' . $album['albums_id'] . '">' . $album['albums_name'] . '</option>';
     }
 }
+var_dump($_POST);
 
 
-function deleteAlbum()  // Fonction pour supprimer un album
-{
-    if (empty($_POST['deleteAlbum'])) { // Si le champ est vide
-        $errors['deleteAlbum'] = 'Veuillez choisir un album';
-        echo 'Veuillez choisir un album';
-    } else {
-        $albumName = new Albums();
-        $albumId = $_POST['deleteAlbum']; // Récupération de l'id de l'album
-        $albumName = $albumName->getAlbumNameById($albumId); // Récupération du nom de l'album grâce à l'id
-        $albumName = $albumName['albums_name']; // Récupération du nom de l'album dans le tableau
-        $deleteAlbum = new Albums();
-        $deleteAlbum->deleteAlbum($albumId); // Suppression de l'album en base de données
-        if (file_exists('../uploads/albums/' . $albumName)) { // Si le dossier existe
-            // Récupère les photos dans le dossier
-            $files = glob('../uploads/albums/' . $albumName . '/*');
-            // Boucle pour supprimer les photos
-            foreach ($files as $file) {
-                unlink($file);
-            }
-            rmdir('../uploads/albums/' . $albumName); // Suppression du dossier
-        }
-        echo 'Album supprimé';
-    }
-}
+
 // Utilisation de la fonction deleteAlbum
 if (isset($_POST['submitDeleteAlbum'])) { // Si le bouton submit est cliqué
-    deleteAlbum(); // On appelle la fonction deleteAlbum
+    $deleteAlbum = new UploadController();
+    $deleteAlbum->deleteAlbum(); // On appelle la fonction deleteAlbum
 }
 // Fonction pour afficher toutes les photos d'un album
 function showPhotosInAdminDashboard()
@@ -189,9 +246,9 @@ function showPhotosInAdminDashboard()
             $count = 1; // Compteur pour le nom de la photo
             foreach ($photos as $photo) {
                 $photoPath = '../uploads/albums/' . $photo['albums_name'] . '/' . $photo['photos_name'] . '';
-                echo '<div class="col-lg-3 mb-3">';
+                echo '<div class="col-lg-3 col-sm-6 col-12 mb-3">';
                 echo '<div class="card lg-4 shadow-sm">';
-                echo '<img class="card-img-top" src="' . $photoPath . '" alt="Club de Boxe Thai de l\'Album ' . $photo['albums_name'] . '">';
+                echo '<img style="height: 200px" class="card-img-top" src="' . $photoPath . '" alt="Club de Boxe Thai de l\'Album ' . $photo['albums_name'] . '">';
                 echo '<div class="card-body">';
                 echo '<div class="d-flex justify-content-between align-items-center">';
                 echo '<div class="btn-group">';
@@ -204,78 +261,26 @@ function showPhotosInAdminDashboard()
                 echo '</div>';
             }
             echo '<div class="col-lg-12 text-center">';
-            echo '<input type="submit" name="submitDeletePhoto" class="col-lg-3 mb-3 m-auto btn btn-danger" value="Supprimer">';
+            echo '<input id="deletePhotoButton2" type="submit" name="submitDeletePhoto" class="col-lg-3 mb-3 m-auto btn btn-danger" value="Supprimer">';
             echo '</div>';
             echo '</form>';
         }
     }
 }
 
-function deletePhoto() // Fonction pour supprimer une photo
-{
-    $errors['photosToDelete'] = [];
-    $deleteSuccessMessage = '';
-    if (isset($_POST['submitDeletePhoto'])) { // Si le bouton submit est cliqué
-        if (empty($_POST['photosToDelete'])) { // Si le champ est vide
-            $errors['photosToDelete'] = 'Veuillez choisir une photo';
-            return $errors['photosToDelete'];
-        } else {
-            $photosToDelete = $_POST['photosToDelete']; // Récupération des photos à supprimer
-            foreach ($photosToDelete as $photoToDelete) { // Boucle pour supprimer les photos
-                $photo = new Photos();
-                $photo = $photo->getPhotoById($photoToDelete); // Récupération des informations de la photo grâce à l'id
-                $photoPath = $photo['photos_path']; // Récupération du chemin de la photo
-                $photo = new Photos();
-                $photo->deletePhoto($photoToDelete); // Suppression de la photo en base de données
-                if (file_exists($photoPath)) { // Si la photo existe
-                    unlink($photoPath); // Suppression de la photo
-                    $deleteSuccessMessage = 'Photo(s) supprimée(s)';
-                    return $deleteSuccessMessage;
-                }
-            }
-        }
-    }
-}
 
 
 // Utilisation de la fonction deletePhoto
 if (isset($_POST['submitDeletePhoto'])) { // Si le bouton submit est cliqué
-    deletePhoto(); // On appelle la fonction deletePhoto
+    $deletePhoto = new UploadController();
+    $deletePhoto->deletePhoto(); // On appelle la fonction deletePhoto
 }
 
-function modifyAlbumName() // Fonction pour modifier le nom d'un album
-{
-    if (empty($_POST['updateAlbum'])) { // Si le champ est vide
-        $errors['updateAlbum'] = 'Veuillez choisir un album';
-        echo 'Veuillez choisir un album';
-    } else {
-        if (strlen($_POST['NewAlbumName']) > 50) { // Si le nom d'album contient plus de 50 caractères
-            $errors['NewAlbumName'] = 'Le nom d\'album ne doit pas dépasser 50 caractères';
-            echo 'Le nom d\'album ne doit pas dépasser 50 caractères';
-            // Regex pour vérifier que le nom d'album ne contient que des lettres, des chiffres, des espaces, des tirets et des underscores
-        } elseif (!preg_match('/^[a-zA-Z0-9]+([a-zA-Z0-9 ]*[a-zA-Z0-9])?$/', $_POST['NewAlbumName'])) {
-            $errors['NewAlbumName'] = 'Le nom d\'album ne doit contenir que des lettres, des chiffres, des espaces, des tirets et des underscores';
-            echo 'Le nom d\'album ne doit contenir que des lettres, des chiffres, des espaces, des tirets et des underscores';
-        } else {
-            $albumName = new Albums();
-            $albumId = $_POST['updateAlbum']; // Récupération de l'id de l'album
-            $albumName = $albumName->getAlbumNameById($albumId); // Récupération du nom de l'album grâce à l'id
-            $albumName = $albumName['albums_name']; // Récupération du nom de l'album dans le tableau
-            $newAlbumName = $_POST['NewAlbumName']; // Récupération du nouveau nom de l'album
-            $modifyAlbumName = new Albums();
-            $modifyAlbumName->modifyAlbumName($newAlbumName, $albumId); // Modification du nom de l'album en base de données
-
-            if (file_exists('../uploads/albums/' . $albumName)) { // Si le dossier existe
-                rename('../uploads/albums/' . $albumName, '../uploads/albums/' . $newAlbumName); // Modification du nom du dossier
-            }
-            echo 'Nom d\'album modifié';
-        }
-    }
-}
 
 // Utilisation de la fonction modifyAlbumName
-if (isset($_POST['submitModifyAlbumName']) && isset($_POST['NewAlbumName']) && isset($_POST['updateAlbum'])) { // Si le bouton submit est cliqué
-    modifyAlbumName(); // On appelle la fonction modifyAlbumName
+if (isset($_POST['submitModifyAlbumName']) && isset($_POST['NewAlbumName'])) { // Si le bouton submit est cliqué
+    $modifyAlbumName = new UploadController();
+    $modifyAlbumName->modifyAlbumName(); // On appelle la fonction modifyAlbumName
 }
 
 

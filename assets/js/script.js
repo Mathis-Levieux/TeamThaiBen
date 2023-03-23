@@ -108,28 +108,97 @@ const addPhotoContent = document.getElementById('addPhotoContent');
 const deletePhoto = document.getElementById('deletePhoto');
 const deletePhotoContent = document.getElementById('deletePhotoContent');
 const deletePhotoButton = document.getElementById('deletePhotoButton');
+const deletePhotoButton2 = document.getElementById('deletePhotoButton2');
 
 const editAlbum = document.getElementById('editAlbum');
 const editAlbumContent = document.getElementById('editAlbumContent');
+const editAlbumButton = document.getElementById('editAlbumButton');
+const editAlbumButton2 = document.getElementById('editAlbumButton2');
+const editAlbumButton3 = document.getElementById('editAlbumButton3');
+
+// écouteurs d'événements pour les onglets
 
 deletePhoto.addEventListener('click', function () {
     addPhotoContent.classList.add('d-none');
+    addPhoto.classList.remove('active-tab');
+
+    editAlbumContent.classList.add('d-none');
+    editAlbum.classList.remove('active-tab');
+
     deletePhotoContent.classList.remove('d-none');
+    deletePhoto.classList.add('active-tab');
+
 });
-
-deletePhotoButton.addEventListener('click', function () {
-    // On ajoute dans le localstorage l'onglet actif pour le recharger après
-    localStorage.setItem('ongletActif', 'deletePhoto');
-})
-
-if (localStorage.getItem('ongletActif') == 'deletePhoto') {
-    deletePhotoContent.classList.remove('d-none');
-    addPhotoContent.classList.add('d-none');
-    localStorage.setItem('ongletActif', '');
-}
 
 addPhoto.addEventListener('click', function () {
     deletePhotoContent.classList.add('d-none');
+    deletePhoto.classList.remove('active-tab');
+
+    editAlbumContent.classList.add('d-none');
+    editAlbum.classList.remove('active-tab');
+
     addPhotoContent.classList.remove('d-none');
-    localStorage.setItem('ongletActif', 'addPhoto');
+    addPhoto.classList.add('active-tab');
+
 });
+
+editAlbum.addEventListener('click', function () {
+    deletePhotoContent.classList.add('d-none');
+    deletePhoto.classList.remove('active-tab');
+
+    addPhotoContent.classList.add('d-none');
+    addPhoto.classList.remove('active-tab');
+
+    editAlbumContent.classList.remove('d-none');
+    editAlbum.classList.add('active-tab');
+});
+
+// Gestion des localStorage et des onglets actifs pour les recharger après un refresh
+
+deletePhotoButton.addEventListener('click', function () {
+    localStorage.setItem('ongletActif', 'deletePhoto');
+})
+
+if (deletePhotoButton2) {
+    deletePhotoButton2.addEventListener('click', function () {
+        localStorage.setItem('ongletActif', 'deletePhoto');
+    })
+}
+
+editAlbumButton.addEventListener('click', function () {
+    localStorage.setItem('ongletActif', 'editAlbum');
+})
+
+editAlbumButton2.addEventListener('click', function () {
+    localStorage.setItem('ongletActif', 'editAlbum');
+})
+
+editAlbumButton3.addEventListener('click', function () {
+    localStorage.setItem('ongletActif', 'editAlbum');
+})
+
+if (localStorage.getItem('ongletActif') == 'deletePhoto') {
+    addPhotoContent.classList.add('d-none');
+    addPhoto.classList.remove('active-tab');
+
+    editAlbumContent.classList.add('d-none');
+    editAlbum.classList.remove('active-tab');
+
+    deletePhotoContent.classList.remove('d-none');
+    deletePhoto.classList.add('active-tab');
+
+    localStorage.setItem('ongletActif', '');
+}
+
+if (localStorage.getItem('ongletActif') == 'editAlbum') {
+    deletePhotoContent.classList.add('d-none');
+    deletePhoto.classList.remove('active-tab');
+
+    addPhotoContent.classList.add('d-none');
+    addPhoto.classList.remove('active-tab');
+
+    editAlbumContent.classList.remove('d-none');
+    editAlbum.classList.add('active-tab');
+
+    localStorage.setItem('ongletActif', '');
+}
