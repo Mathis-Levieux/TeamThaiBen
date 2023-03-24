@@ -41,7 +41,7 @@
         <?php endif; ?>
         <!-- Formulaire de connexion -->
 
-        <form id="my-form" method="POST" class="mt-5 w-25 m-auto">
+        <form action="controller-login.php" id="my-form" method="POST" class="mt-5 w-25 m-auto">
             <div class="mb-3">
                 <label for="login" class="form-label col-lg-6">Login</label>
                 <input name="login" type="login" class="form-control" id="login" aria-describedby="emailHelp">

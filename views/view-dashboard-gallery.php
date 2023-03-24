@@ -25,6 +25,7 @@
             <!-- Fin du top dashboard -->
 
             <!-- Début du contenu du dashboard -->
+
             <!-- Ajout de photos -->
 
             <div id="addPhotoContent" class="container">
@@ -202,7 +203,6 @@
             <!-- Fin du contenu du dashboard -->
         </div>
     </main>
-
 
 
 

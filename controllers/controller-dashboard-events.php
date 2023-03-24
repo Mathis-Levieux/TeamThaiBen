@@ -14,22 +14,23 @@ $title = 'Administration - Calendrier des événements';
 
 class EventsController // Création d'une classe newEventTypeController pour gérer l'ajout d'un nouveau type d'événement
 {
+    public array $errors = [];
+    public string $success = '';
+
     public function addEventType()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (empty($_POST['NewEventType'])) {
-                echo 'Veuillez remplir le champ';
-                $errors['NewEventType'] = 'Veuillez remplir le champ';
+                $this->errors[] = 'Veuillez remplir le champ';
             } else { // vérifier si le type n'existe pas déjà
                 $newEventType = new Events();
                 $newEventType = $newEventType->getEventTypes();
                 foreach ($newEventType as $eventType) {
                     if ($_POST['NewEventType'] == $eventType['events_type']) {
-                        echo 'Ce type d\'événement existe déjà';
-                        $errors['NewEventType'] = 'Ce type d\'événement existe déjà';
+                        $this->errors[] = 'Ce type d\'événement existe déjà';
                     }
                 }
-                if (!isset($errors)) {
+                if (empty($this->errors)) {
                     $newEventType = new Events();
                     $newEventType->addEventType($_POST['NewEventType']);
                 }
@@ -55,31 +56,26 @@ class EventsController // Création d'une classe newEventTypeController pour gé
     public function addNewEvent()
     {
         if (isset($_POST['submitNewEvent'])) {
-            if (empty($_POST['newEventTitle'])) {
-                echo 'Veuillez remplir le champ';
-                $errors['NewEventTitle'] = 'Veuillez remplir le champ';
-            }
-            if (empty($_POST['newEventDesc'])) {
-                echo 'Veuillez remplir le champ';
-                $errors['newEventDesc'] = 'Veuillez remplir le champ';
-            }
-            if (empty($_POST['newEventDate'])) {
-                echo 'Veuillez remplir le champ';
-                $errors['newEventDate'] = 'Veuillez remplir le champ';
-            }
-            if (empty($_POST['newEventHour'])) {
-                echo 'Veuillez remplir le champ';
-                $errors['newEventHour'] = 'Veuillez remplir le champ';
-            }
-            if (empty($_POST['newEventType'])) {
-                echo 'Veuillez remplir le champ';
-                $errors['newEventType'] = 'Veuillez remplir le champ';
+            if (empty($_POST['newEventTitle']) || empty($_POST['newEventDesc'])  || empty($_POST['newEventDate']) || empty($_POST['newEventHour']) || empty($_POST['newEventType'])) {
+                $this->errors[] = 'Veuillez remplir tous les champs';
+            } else if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $_POST['newEventDate'])) {
+                $this->errors[] = 'Le format de la date est incorrect';
             }
 
-            if (!isset($errors)) {
+            // On vérifie que la date n'est pas passée
+            $date = new DateTime($_POST['newEventDate']);
+            $date = $date->format('Y-m-d');
+            $today = new DateTime();
+            $today = $today->format('Y-m-d');
+            if ($date < $today) {
+                $this->errors[] = 'La date de l\'événement ne peut pas être passée';
+            }
+
+
+            if (empty($this->errors)) {
                 $newEvent = new Events();
                 $newEvent->addNewEvent($_POST['newEventTitle'], $_POST['newEventDesc'], $_POST['newEventDate'], $_POST['newEventHour'], $_POST['newEventType']);
-                $message = 'L\'événement a bien été ajouté';
+                $this->success = 'L\'événement a bien été ajouté';
             }
         }
     }
@@ -90,6 +86,14 @@ class EventsController // Création d'une classe newEventTypeController pour gé
         $displayEventList = $displayEventList->getEvents();
         echo '<form action="controller-dashboard-events.php" method="post">';
         echo '<table class="table table-striped table-hover table-bordered">';
+        echo '<tbody class="align-middle">';
+        echo '<tr>';
+        echo '<th scope="col">Titre</th>';
+        echo '<th scope="col">Date</th>';
+        echo '<th scope="col">Heure</th>';
+        echo '<th scope="col">Type</th>';
+        echo '<th scope="col">Supprimer</th>';
+        echo '</tr>';
         foreach ($displayEventList as $event) {
             // obtenir le nom du type d'événement
             $eventType = new Events();
@@ -101,15 +105,14 @@ class EventsController // Création d'une classe newEventTypeController pour gé
             echo '<td>' . $eventType[0]['events_type'] . '</td>';
             echo '<td>';
             echo '<div class="btn-group">';
-            echo '<input type="checkbox" name="eventsToDelete[]" value="' . $event['events_id'] . '" id="' . $event['events_id'] . '" class="btn btn-sm btn-outline-secondary">';
-            echo '<label for="' . $event['events_id'] . '" class="ms-2 btn btn-primary">Cocher</label>';
+            echo '<input type="checkbox" name="eventsToDelete[]" value="' . $event['events_id'] . '" id="' . $event['events_id'] . '" class="p-2 form-check-input m-auto">';
             echo '</div>';
             echo '</td>';
             echo '</tr>';
         }
-
+        echo '</tbody>';
         echo '</table>';
-        echo '<input type="submit" name="submitDeleteEvents" class="col-lg-3 m-auto btn btn-primary" value="Supprimer">';
+        echo '<input id="deleteEventButton" type="submit" name="submitDeleteEvents" class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Supprimer">';
         echo '</form>';
     }
 
@@ -117,16 +120,28 @@ class EventsController // Création d'une classe newEventTypeController pour gé
     {
         if (isset($_POST['submitDeleteEvents'])) {
             if (empty($_POST['eventsToDelete'])) {
-                echo 'Veuillez sélectionner au moins un événement';
-                $errors['eventsToDelete'] = 'Veuillez sélectionner au moins un événement';
+                $this->errors[] = 'Veuillez sélectionner au moins un événement à supprimer';
             }
-            if (!isset($errors)) {
+            if (empty($this->errors)) {
                 foreach ($_POST['eventsToDelete'] as $eventToDelete) {
                     $deleteEvent = new Events();
                     $deleteEvent->deleteEvent($eventToDelete);
+                    $this->success = 'Les événements ont bien été supprimés';
                 }
             }
+        } else {
+            $this->errors[] = 'Veuillez sélectionner au moins un événement à supprimer';
         }
+    }
+
+    public function getErrorsMessages()
+    {
+        return $this->errors;
+    }
+
+    public function getSuccessMessage()
+    {
+        return $this->success;
     }
 }
 
@@ -137,13 +152,11 @@ if (isset($_POST['submitNewEventType']) && (isset($_POST['NewEventType']))) {
     $newEventType->addEventType();
 }
 
-
 // Utilisation de la méthode pour supprimer un type d'événement
 
 if (isset($_POST['deleteEventType']) && isset($_POST['submitDeleteEventType'])) {
     $deleteEventType = new EventsController();
     $deleteEventType->deleteEventType($_POST['deleteEventType']);
-    $message = 'Le type d\'événement a bien été supprimé';
 }
 
 // Utilisation de la méthode pour ajouter un nouvel événement

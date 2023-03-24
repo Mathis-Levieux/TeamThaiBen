@@ -17,6 +17,7 @@
 body,
 html {
     margin: 0;
+    overflow-x: hidden;
 }
 
 /* Début landing page */
@@ -161,6 +162,11 @@ h1 {
     color: #f8f9fa;
 }
 
+.navbar-active-link {
+    background-color: #000000;
+    color: #f8f9fa;
+}
+
 /* FIN DASHBOARD TEMPLATE */
 
 /* DASHBOARD */
@@ -170,6 +176,11 @@ h1 {
     min-height: 85vh;
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
     max-height: fit-content;
+    overflow-x: hidden;
+}
+
+.main-dashboard {
+    width: 100vw;
 }
 
 .fs-7 {
