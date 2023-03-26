@@ -128,7 +128,7 @@
                             <!-- Fin affichage du select -->
 
                             <h3 class="mt-3">Titre</h3>
-                            <input class="col-lg-3" type="text" name="newsTitle" id="newsTitle"></input>
+                            <input placeholder="Titre de l'article" class="col-lg-3" type="text" name="newsTitle" id="newsTitle"></input>
                             <h3 class="mt-3">Contenu</h3>
                             <textarea name="newsContent" id="newsContent"></textarea>
                             <input id="addNewsButton" type="submit" name="submitNews" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
