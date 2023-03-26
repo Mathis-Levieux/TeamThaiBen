@@ -197,6 +197,11 @@ h1 {
     cursor: pointer;
 }
 
+.dashboard-return {
+    text-decoration: none;
+    color: #f8f9fa;
+}
+
 @media screen and (max-width: 400px) {
     .dashboard-tabs {
         padding: 0.5rem 0rem;

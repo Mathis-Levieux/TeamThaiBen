@@ -79,13 +79,13 @@
             <!-- Top dashboard -->
             <div class="div-top-dashboard mt-1 border-bottom border-1 border-dark">
                 <div class="col-lg-12 fs-1 text-center position-relative">
-                    <span class="border-bottom border-2 border-warning-subtle thai-font">GALERIE</span>
+                    <span class="border-bottom border-2 border-warning-subtle thai-font">ARTICLES</span>
                     <a href="controller-login.php?logout"><img src="../assets/img/icon-logout.png" alt="logo" class="position-absolute top-0 end-0 logout-button"></a>
                 </div>
                 <div class="col-lg-12">
                     <ul class="nav-item d-flex p-0 mt-2 gap-5 fw-bold text-center justify-content-center fs-7">
                         <li id="addNews" class="dashboard-tabs active-tab d-flex align-items-center">CRÉER UN ARTICLE</li>
-                        <li id="deleteNews" class="dashboard-tabs d-flex align-items-center">SUPPRESSION D'ARTICLES</li>
+                        <li id="deleteNews" class="dashboard-tabs d-flex align-items-center">SUPPRESSION ET ÉDITION D'ARTICLES</li>
                         <li id="editNewsTypes" class="dashboard-tabs d-flex align-items-center">GÉRER LES TYPES D'ARTICLES</li>
                     </ul>
                 </div>
@@ -250,8 +250,8 @@
                                     <tr>
                                         <td><?= $news['news_title'] ?></td>
                                         <td>
-                                            <a href="controller-dashboard-news.php?delete=<?= $news['news_id'] ?>" class="deleteNewsButton btn btn-danger">Supprimer</a>
                                             <a href="controller-dashboard-modify.php?id=<?= $news['news_id'] ?>" class="btn btn-success">Modifier</a>
+                                            <a href="controller-dashboard-news.php?delete=<?= $news['news_id'] ?>" class="deleteNewsButton btn btn-danger">Supprimer</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

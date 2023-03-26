@@ -8,7 +8,7 @@
             <!-- Top dashboard -->
             <div class="div-top-dashboard mt-1 border-bottom border-1 border-dark">
                 <div class="col-lg-12 fs-1 text-center position-relative">
-                    <span class="border-bottom border-2 border-warning-subtle thai-font">GALERIE</span>
+                    <span class="border-bottom border-2 border-warning-subtle thai-font">CALENDRIER</span>
                     <a href="controller-login.php?logout"><img src="../assets/img/icon-logout.png" alt="logo" class="position-absolute top-0 end-0 logout-button"></a>
                 </div>
                 <div class="col-lg-12">

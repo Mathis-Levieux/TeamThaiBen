@@ -63,7 +63,7 @@ class NewsController
             if (empty($this->_errors)) {
                 $news = new News();
                 $news->modifyNews($id, $title, $content, $type);
-                $this->_success = 'La news a bien été modifiée';
+                $this->_success = 'L\'article a bien été modifié';
             }
         } else {
             $this->_errors[] = 'Veuillez remplir tous les champs';
@@ -74,9 +74,9 @@ class NewsController
     {
         // On vérifie que le titre n'est pas vide
         if (empty($title)) {
-            $this->_errors[] = 'Le titre de la news ne peut pas être vide';
+            $this->_errors[] = 'Le titre de l\'article ne peut pas être vide';
         } else if (strlen($title) > 300) { // On vérifie que le titre n'est pas trop long
-            $this->_errors[] = 'Le titre de la news ne peut pas dépasser 100 caractères';
+            $this->_errors[] = 'Le titre de l\'article ne peut pas dépasser 100 caractères';
         } else {
             $title = htmlspecialchars(ucfirst(trim($title))); // On supprime les espaces en début et fin de chaîne, on met la première lettre en majuscule et on convertit les caractères spéciaux en entités HTML
         }
@@ -87,7 +87,7 @@ class NewsController
     {
         // On vérifie que le contenu n'est pas vide
         if (empty($content)) {
-            $this->_errors[] = 'Le contenu de la news ne peut pas être vide';
+            $this->_errors[] = 'Le contenu de l\'article ne peut pas être vide';
         } else {
             $content = trim($content); // On supprime les espaces en début et fin de chaîne
         }
@@ -104,7 +104,7 @@ class NewsController
             $newsTypesArray[] = $newsType['news_type_id'];
         }
         if (!in_array($type, $newsTypesArray)) {
-            $this->_errors[] = 'Le type de news n\'existe pas';
+            $this->_errors[] = 'Le type d\'article n\'existe pas';
         }
         return $this->_errors;
     }
@@ -115,11 +115,11 @@ class NewsController
         $news = new News();
         $news = $news->getNewsById($id);
         if (empty($news)) {
-            $this->_errors[] = 'La news n\'existe pas';
+            $this->_errors[] = 'L\'article n\'existe pas';
         } else {
             $news = new News();
             $news->deleteNews($id);
-            $this->_success = 'La news a bien été supprimée';
+            $this->_success = 'L\'article a bien été supprimée';
         }
     }
 }
