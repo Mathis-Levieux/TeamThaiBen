@@ -37,8 +37,8 @@
                             <select name="newEventType" class="mt-2 form-select" aria-label="Default select example">
                                 <option selected disabled value="">Sélectionne un album</option>
                                 <?php
-                                $newEventType = new EventsController(); // Création d'un nouvel objet
-                                $newEventType->showSelectEventType(); // Affichage du select des albums
+                                $newEventSelect = new EventsController(); // Création d'un nouvel objet
+                                $newEventSelect->showSelectEventType(); // Affichage du select des albums
                                 ?>
                                 <input type="submit" name="submitNewEvent" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
                         </form>
@@ -68,13 +68,29 @@
                 <div>
                     <div class="row">
                         <div class="col-12 justify-content-center">
-
                             <h3 class="mt-3">Ajout d'un type d'event</h3 class="mt-3">
                             <form method="post">
                                 <input type="text" name="NewEventType" class="form-control" placeholder="Type d'évènement">
                                 <input id="editEventTypesButton" type="submit" name="submitNewEventType" class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
                                 <div class="preview-container d-flex flex-wrap gap-2"></div>
                             </form>
+
+                            <!-- Affichage des erreurs -->
+                            <?php if (!empty($_POST) && isset($_POST['submitNewEventType']) && !empty($newEventType->getErrorsMessages())) : ?>
+                                <div class="alert alert-danger mt-3" role="alert">
+                                    <?php foreach ($newEventType->getErrorsMessages() as $error) : ?>
+                                        <?= $error . ' <br> ' ?>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                            <!-- Fin affichage des erreurs -->
+
+                            <!-- Affichage des messages de succès -->
+                            <?php if (!empty($_POST) && isset($_POST['submitNewEventType']) && !empty($newEventType->getSuccessMessage())) : ?>
+                                <div class="alert alert-success mt-3"><?php echo $newEventType->getSuccessMessage(); ?></div>
+                            <?php endif; ?>
+                            <!-- Fin affichage des messages de succès -->
+
                         </div>
                     </div>
                 </div>
@@ -82,16 +98,35 @@
                 <div>
                     <div class="row">
                         <div class="col-12 justify-content-center">
+                            <h3 class="mt-3">Suppression d'un type d'event</h3 class="mt-3">
+
                             <form action="controller-dashboard-events.php" method="post">
-                                <select name="deleteEventType" class="form-select" aria-label="Default select example">
+                                <select name="deleteEventType" class="form-select mt-3" aria-label="Default select example">
                                     <option selected disabled value="">Sélectionne un type</option>
                                     <?php
-                                    $newEventType = new EventsController(); // Création d'un nouvel objet
-                                    $newEventType->showSelectEventType(); // Affichage du select des albums
+                                    $eventTypeSelect = new EventsController(); // Création d'un nouvel objet
+                                    $eventTypeSelect->showSelectEventType(); // Affichage du select des albums
                                     ?>
                                 </select>
                                 <input id="editEventTypesButton2" type="submit" name="submitDeleteEventType" class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
                             </form>
+
+                            <!-- Affichage des erreurs -->
+                            <?php if (!empty($_POST) && isset($_POST['submitDeleteEventType']) && !empty($deleteEventType->getErrorsMessages())) : ?>
+                                <div class="alert alert-danger mt-3" role="alert">
+                                    <?php foreach ($deleteEventType->getErrorsMessages() as $error) : ?>
+                                        <?= $error . ' <br> ' ?>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                            <!-- Fin affichage des erreurs -->
+
+                            <!-- Affichage des messages de succès -->
+                            <?php if (!empty($_POST) && isset($_POST['submitDeleteEventType']) && !empty($deleteEventType->getSuccessMessage())) : ?>
+                                <div class="alert alert-success mt-3"><?php echo $deleteEventType->getSuccessMessage(); ?></div>
+                            <?php endif; ?>
+                            <!-- Fin affichage des messages de succès -->
+
                         </div>
                     </div>
                 </div>

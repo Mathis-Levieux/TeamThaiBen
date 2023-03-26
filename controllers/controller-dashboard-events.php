@@ -23,9 +23,9 @@ class EventsController // Création d'une classe newEventTypeController pour gé
             if (empty($_POST['NewEventType'])) {
                 $this->errors[] = 'Veuillez remplir le champ';
             } else { // vérifier si le type n'existe pas déjà
-                $newEventType = new Events();
-                $newEventType = $newEventType->getEventTypes();
-                foreach ($newEventType as $eventType) {
+                $newEventCheck = new Events();
+                $newEventCheck = $newEventCheck->getEventTypes();
+                foreach ($newEventCheck as $eventType) {
                     if ($_POST['NewEventType'] == $eventType['events_type']) {
                         $this->errors[] = 'Ce type d\'événement existe déjà';
                     }
@@ -33,6 +33,7 @@ class EventsController // Création d'une classe newEventTypeController pour gé
                 if (empty($this->errors)) {
                     $newEventType = new Events();
                     $newEventType->addEventType($_POST['NewEventType']);
+                    $this->success = 'Le type d\'événement a bien été ajouté';
                 }
             }
         }
@@ -47,10 +48,15 @@ class EventsController // Création d'une classe newEventTypeController pour gé
         }
     }
 
-    public function deleteEventType($id)
+    public function deleteEventType()
     {
-        $deleteEventType = new Events();
-        $deleteEventType->deleteEventType($id);
+        if (empty($_POST['deleteEventType'])) {
+            $this->errors[] = 'Veuillez sélectionner un type d\'événement à supprimer';
+        } else {
+            $deleteEventType = new Events();
+            $deleteEventType->deleteEventType($_POST['deleteEventType']);
+            $this->success = 'Le type d\'événement a bien été supprimé';
+        }
     }
 
     public function addNewEvent()
@@ -134,19 +140,17 @@ class EventsController // Création d'une classe newEventTypeController pour gé
         }
     }
 
-    public function getErrorsMessages()
+    public function getErrorsMessages(): array
     {
         return $this->errors;
     }
 
-    public function getSuccessMessage()
+    public function getSuccessMessage(): string
     {
         return $this->success;
     }
 }
-
 // Utilisation de la méthode pour ajouter un nouveau type d'événement
-
 if (isset($_POST['submitNewEventType']) && (isset($_POST['NewEventType']))) {
     $newEventType = new EventsController();
     $newEventType->addEventType();
@@ -154,9 +158,9 @@ if (isset($_POST['submitNewEventType']) && (isset($_POST['NewEventType']))) {
 
 // Utilisation de la méthode pour supprimer un type d'événement
 
-if (isset($_POST['deleteEventType']) && isset($_POST['submitDeleteEventType'])) {
+if (isset($_POST['submitDeleteEventType'])) {
     $deleteEventType = new EventsController();
-    $deleteEventType->deleteEventType($_POST['deleteEventType']);
+    $deleteEventType->deleteEventType();
 }
 
 // Utilisation de la méthode pour ajouter un nouvel événement
@@ -172,7 +176,6 @@ if (isset($_POST['submitDeleteEvents'])) {
     $deleteEvents = new EventsController();
     $deleteEvents->deleteEvents();
 }
-
 
 
 

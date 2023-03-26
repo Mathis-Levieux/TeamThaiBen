@@ -21,11 +21,11 @@ class NewsController
     {
 
         if (empty($name)) { // On vérifie que le nom n'est pas vide
-            $this->_errors[] = 'Le nom du type de news ne peut pas être vide';
+            $this->_errors[] = 'Le nom du type d\'article ne peut pas être vide';
         } else if (strlen($name) > 50) {  // On vérifie que le nom n'est pas trop long et ne contient pas de caractères spéciaux
-            $this->_errors[] = 'Le nom du type de news ne peut pas dépasser 50 caractères';
+            $this->_errors[] = 'Le nom du type d\'article ne peut pas dépasser 50 caractères';
         } else if (!preg_match('/^[a-zA-Z0-9_ ]+$/', $name)) { // On vérifie que le nom ne contient que des lettres, des chiffres, des underscores et des espaces
-            $this->_errors[] = 'Le nom du type de news ne peut contenir que des lettres, des chiffres et des underscores';
+            $this->_errors[] = 'Le nom du type d\'article ne peut contenir que des lettres, des chiffres et des underscores';
         }
 
         // Si il n'y a pas d'erreurs, on vérifie que le type de news n'existe pas déjà
@@ -35,7 +35,7 @@ class NewsController
             $news = $news->getNewsTypes();
             foreach ($news as $newsType) {
                 if ($newsType['news_type'] == $name) {
-                    $this->_errors[] = 'Ce type de news existe déjà';
+                    $this->_errors[] = 'Ce type d\'article existe déjà';
                 }
             }
         }
@@ -46,7 +46,7 @@ class NewsController
             $name = trim($name); // On supprime les espaces en début et fin de chaîne
             $news = new News();
             $news->addNewsType($name);
-            $this->_success = 'Le type de news a bien été créé';
+            $this->_success = 'Le type d\'article a bien été créé';
         }
     }
 
@@ -64,11 +64,18 @@ class NewsController
         return $news;
     }
 
-    public function deleteNewsType(int $id): void
+    public function deleteNewsType(): void
     {
-        $deleteNews = new News();
-        $deleteNews->deleteNewsType($id);
-        $this->_success = 'Le type de news a bien été supprimé';
+        if (isset($_POST['selectNewsType'])) {
+            $id = $_POST['selectNewsType'];
+        } else {
+            $this->_errors[] = 'Aucun type d\'article n\'a été sélectionné';
+        }
+        if (empty($this->_errors)) {
+            $deleteNews = new News();
+            $deleteNews->deleteNewsType($id);
+            $this->_success = 'Le type d\'article a bien été supprimé';
+        }
     }
 
     public function getErrorsMessages(): array
@@ -99,7 +106,7 @@ class NewsController
             if (empty($this->_errors)) {
                 $news = new News();
                 $news->addNews($title, $content, $type, $date);
-                $this->_success = 'La news a bien été créée';
+                $this->_success = 'L\'article a bien été créée';
             }
         } else {
             $this->_errors[] = 'Veuillez remplir tous les champs';
@@ -110,9 +117,9 @@ class NewsController
     {
         // On vérifie que le titre n'est pas vide
         if (empty($title)) {
-            $this->_errors[] = 'Le titre de la news ne peut pas être vide';
+            $this->_errors[] = 'Le titre de l\'article ne peut pas être vide';
         } else if (strlen($title) > 300) { // On vérifie que le titre n'est pas trop long
-            $this->_errors[] = 'Le titre de la news ne peut pas dépasser 100 caractères';
+            $this->_errors[] = 'Le titre de l\'article ne peut pas dépasser 100 caractères';
         } else {
             $title = htmlspecialchars(ucfirst(trim($title))); // On supprime les espaces en début et fin de chaîne, on met la première lettre en majuscule et on convertit les caractères spéciaux en entités HTML
         }
@@ -123,9 +130,9 @@ class NewsController
     {
         // On vérifie que le contenu n'est pas vide
         if (empty($content)) {
-            $this->_errors[] = 'Le contenu de la news ne peut pas être vide';
+            $this->_errors[] = 'Le contenu de l\'article ne peut pas être vide';
         } else if (strlen($content) > 3000) { // On vérifie que le contenu n'est pas trop long
-            $this->_errors[] = 'Le contenu de la news ne peut pas dépasser 3000 caractères';
+            $this->_errors[] = 'Le contenu de l\'article ne peut pas dépasser 3000 caractères';
         } else {
             $content = trim($content); // On supprime les espaces en début et fin de chaîne
         }
@@ -142,7 +149,7 @@ class NewsController
             $newsTypesArray[] = $newsType['news_type_id'];
         }
         if (!in_array($type, $newsTypesArray)) {
-            $this->_errors[] = 'Le type de news n\'existe pas';
+            $this->_errors[] = 'Le type d\'article n\'existe pas';
         }
         return $this->_errors;
     }
@@ -153,11 +160,11 @@ class NewsController
         $news = new News();
         $news = $news->getNewsById($id);
         if (empty($news)) {
-            $this->_errors[] = 'La news n\'existe pas';
+            $this->_errors[] = 'L\'article n\'existe pas';
         } else {
             $news = new News();
             $news->deleteNews($id);
-            $this->_success = 'La news a bien été supprimée';
+            $this->_success = 'L\'article a bien été supprimée';
         }
     }
 }
@@ -180,7 +187,7 @@ if (isset($_POST['submitNews'])) {
 
 if (isset($_POST['submitDeleteNewsType'])) {
     $deleteNews = new NewsController();
-    $deleteNews->deleteNewsType($_POST['selectNewsType']);
+    $deleteNews->deleteNewsType();
 }
 
 // Suppression d'une news

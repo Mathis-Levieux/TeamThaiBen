@@ -72,172 +72,204 @@
 </head>
 
 <body>
-    <main>
+    <main class="main-dashboard bg-dark d-lg-flex">
+        <?php include('templates/dashboard.php'); ?>
 
-
-        <div class="container">
-            <div class="row h-100">
-                <div class="col-12 justify-content-center">
-
-                    <h1>Dashboard - News</h1>
-
-                    <!-- Formulaire d'article -->
-                    <h2>Ajouter une news</h2>
-                    <!-- Affichage des erreurs -->
-                    <?php if (!empty($_POST) && isset($newNews) && !empty($newNews->getErrorsMessages())) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?php foreach ($newNews->getErrorsMessages() as $error) : ?>
-                                <?= $error . ' <br> ' ?>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                    <!-- Fin affichage des erreurs -->
-
-                    <!-- Affichage des messages de succès -->
-                    <?php if (!empty($_POST) && isset($newNews) && !empty($newNews->getSuccessMessage())) : ?>
-                        <div class="alert alert-success"><?php echo $newNews->getSuccessMessage(); ?></div>
-                    <?php endif; ?>
-                    <!-- Fin affichage des messages de succès -->
-                    <form method="post">
-                        <h3>Type de news</h3>
-
-                        <!-- Affichage du select -->
-                        <select class="col-lg-3" name="newsType" id="newsType">
-                            <option selected disabled>Choisissez un type de news</option>
-                            <?php foreach ($newsTypes as $newsType) : ?>
-                                <option value="<?= $newsType['news_type_id'] ?>"><?= $newsType['news_type'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <!-- Fin affichage du select -->
-
-                        <h3>Titre</h3>
-                        <input class="col-lg-3" type="text" name="newsTitle" id="newsTitle"></input>
-                        <h3>Contenu</h3>
-                        <textarea name="newsContent" id="newsContent"></textarea>
-                        <input type="submit" name="submitNews" class="btn btn-primary" value="Envoyer">
-                    </form>
-
+        <div class="container rounded-3 div-dashboard col-lg-8 mt-5 mb-5 m-auto bg-light">
+            <!-- Top dashboard -->
+            <div class="div-top-dashboard mt-1 border-bottom border-1 border-dark">
+                <div class="col-lg-12 fs-1 text-center position-relative">
+                    <span class="border-bottom border-2 border-warning-subtle thai-font">GALERIE</span>
+                    <a href="controller-login.php?logout"><img src="../assets/img/icon-logout.png" alt="logo" class="position-absolute top-0 end-0 logout-button"></a>
+                </div>
+                <div class="col-lg-12">
+                    <ul class="nav-item d-flex p-0 mt-2 gap-5 fw-bold text-center justify-content-center fs-7">
+                        <li id="addNews" class="dashboard-tabs active-tab d-flex align-items-center">CRÉER UN ARTICLE</li>
+                        <li id="deleteNews" class="dashboard-tabs d-flex align-items-center">SUPPRESSION D'ARTICLES</li>
+                        <li id="editNewsTypes" class="dashboard-tabs d-flex align-items-center">GÉRER LES TYPES D'ARTICLES</li>
+                    </ul>
                 </div>
             </div>
-        </div>
+            <!-- Fin du top dashboard -->
 
-        <div class="container">
-            <div class="row h-100">
-                <div class="col-12 justify-content-center">
+            <!-- Début du contenu du dashboard -->
+            <!-- Ajout d'un article -->
+            <div class="container" id="addNewsContent">
+                <div class="row h-100">
+                    <div class="col-12 justify-content-center">
 
-                    <h2>Dashboard - Ajouter un type de news</h2>
-                    <!-- Affichage des erreurs -->
-                    <?php if (!empty($_POST) && isset($newNewsType) && !empty($newNewsType->getErrorsMessages())) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?php foreach ($newNewsType->getErrorsMessages() as $error) : ?>
-                                <?= $error ?>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                    <!-- Fin affichage des erreurs -->
+                        <!-- Formulaire d'article -->
 
-                    <!-- Affichage des messages de succès -->
-                    <?php if (!empty($_POST) && isset($newNewsType) && !empty($newNewsType->getSuccessMessage())) : ?>
-                        <div class="alert alert-success"><?php echo $newNewsType->getSuccessMessage(); ?></div>
-                    <?php endif; ?>
-                    <!-- Fin affichage des messages de succès -->
+                        <!-- Affichage des erreurs -->
+                        <?php if (!empty($_POST) && isset($newNews) && !empty($newNews->getErrorsMessages())) : ?>
+                            <div class="alert alert-danger mt-3" role="alert">
+                                <?php foreach ($newNews->getErrorsMessages() as $error) : ?>
+                                    <?= $error . ' <br> ' ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        <!-- Fin affichage des erreurs -->
 
-                    <!-- Formulaire de type de news -->
-                    <form method="post">
-                        <input type="text" name="inputNewsType" id="inputNewsType" placeholder="Nom du type de news">
-                        <input type="submit" name="submitNewsType" class="btn btn-primary" value="Envoyer">
-                    </form>
+                        <!-- Affichage des messages de succès -->
+                        <?php if (!empty($_POST) && isset($newNews) && !empty($newNews->getSuccessMessage())) : ?>
+                            <div class="alert alert-success mt-3"><?php echo $newNews->getSuccessMessage(); ?></div>
+                        <?php endif; ?>
+                        <!-- Fin affichage des messages de succès -->
+                        <form method="post">
+                            <h3 class="mt-3">Type d'article</h3>
 
+                            <!-- Affichage du select -->
+                            <select class="col-lg-3" name="newsType" id="newsType">
+                                <option selected disabled>Choisissez un type d'article</option>
+                                <?php foreach ($newsTypes as $newsType) : ?>
+                                    <option value="<?= $newsType['news_type_id'] ?>"><?= $newsType['news_type'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <!-- Fin affichage du select -->
+
+                            <h3 class="mt-3">Titre</h3>
+                            <input class="col-lg-3" type="text" name="newsTitle" id="newsTitle"></input>
+                            <h3 class="mt-3">Contenu</h3>
+                            <textarea name="newsContent" id="newsContent"></textarea>
+                            <input id="addNewsButton" type="submit" name="submitNews" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
+                        </form>
+
+                    </div>
                 </div>
             </div>
-        </div>
+            <!-- Fin ajout d'un article -->
 
-        <div class="container">
-            <div class="row h-100">
-                <div class="col-12 justify-content-center">
-                    <h2>Dashboard - Supprimer un type de news</h2>
+            <!-- Modification des types d'articles -->
 
-                    <!-- Affichage des erreurs -->
-                    <?php if (!empty($_POST) && isset($deleteNews) && !empty($deleteNews->getErrorsMessages())) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?php foreach ($deleteNews->getErrorsMessages() as $error) : ?>
-                                <?= $error ?>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                    <!-- Fin affichage des erreurs -->
+            <div class="container d-none" id="editNewsTypesContent">
+                <div class="row">
+                    <div class="col-12 justify-content-center">
+                        <h3 class="mt-3">Ajouter un type d'article</h3>
+                        <!-- Affichage des erreurs -->
+                        <?php if (!empty($_POST) && isset($newNewsType) && !empty($newNewsType->getErrorsMessages())) : ?>
+                            <div class="alert alert-danger mt-3 mb-0" role="alert">
+                                <?php foreach ($newNewsType->getErrorsMessages() as $error) : ?>
+                                    <?= $error ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        <!-- Fin affichage des erreurs -->
 
-                    <!-- Affichage des messages de succès -->
-                    <?php if (!empty($_POST) && isset($deleteNews) && !empty($deleteNews->getSuccessMessage())) : ?>
-                        <div class="alert alert-success"><?php echo $deleteNews->getSuccessMessage(); ?></div>
-                    <?php endif; ?>
-                    <!-- Fin affichage des messages de succès -->
+                        <!-- Affichage des messages de succès -->
+                        <?php if (!empty($_POST) && isset($newNewsType) && !empty($newNewsType->getSuccessMessage())) : ?>
+                            <div class="alert alert-success mt-3 mb-0"><?php echo $newNewsType->getSuccessMessage(); ?></div>
+                        <?php endif; ?>
+                        <!-- Fin affichage des messages de succès -->
 
-                    <!-- Liste des types de news dans un select -->
-                    <form method="post">
-                        <select name="selectNewsType" id="selectNewsType">
-                            <?php if (empty($newsTypes)) : ?>
-                                <option value="">Aucun type de news</option>
-                            <?php endif; ?>
+                        <!-- Formulaire de type de news -->
+                        <form action="controller-dashboard-news.php" method="post">
+                            <input type="text" name="inputNewsType" id="inputNewsType" placeholder="Nom du type d'article" class="col-lg-3">
+                            <input type="submit" name="submitNewsType" id="editNewsTypesButton" class="ms-2 mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
+                        </form>
 
-                            <?php foreach ($newsTypes as $newsType) : ?>
-                                <option value="<?= $newsType['news_type_id'] ?>"><?= $newsType['news_type'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <input type="submit" name="submitDeleteNewsType" class="btn btn-danger" value="Supprimer">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 justify-content-center">
+                        <h3>Supprimer un type d'article</h3>
 
+                        <!-- Affichage des erreurs -->
+                        <?php if (!empty($_POST) && isset($deleteNews) && !empty($deleteNews->getErrorsMessages())) : ?>
+                            <div class="alert alert-danger mt-3" role="alert">
+                                <?php foreach ($deleteNews->getErrorsMessages() as $error) : ?>
+                                    <?= $error ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        <!-- Fin affichage des erreurs -->
+
+                        <!-- Affichage des messages de succès -->
+                        <?php if (!empty($_POST) && isset($deleteNews) && !empty($deleteNews->getSuccessMessage())) : ?>
+                            <div class="alert alert-success mt-3"><?php echo $deleteNews->getSuccessMessage(); ?></div>
+                        <?php endif; ?>
+                        <!-- Fin affichage des messages de succès -->
+
+                        <!-- Liste des types de news dans un select -->
+                        <form method="post">
+                            <select class="col-lg-3" name="selectNewsType" id="selectNewsType">
+                                <option selected disabled>Choisissez un type d'article</option>
+                                <?php if (empty($newsTypes)) : ?>
+                                    <option value="">Aucun type d'article</option>
+                                <?php endif; ?>
+
+                                <?php foreach ($newsTypes as $newsType) : ?>
+                                    <option value="<?= $newsType['news_type_id'] ?>"><?= $newsType['news_type'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <input type="submit" name="submitDeleteNewsType" id="editNewsTypesButton2" class="ms-2 btn btn-danger" value="Supprimer">
+
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row h-100">
-                <div class="col-12 justify-content-center">
-                    <h2>Modifier ou supprimer un article</h2>
 
-                    <!-- Affichage des erreurs -->
-                    <?php if (!empty($_GET) && isset($deleteNews) && !empty($deleteNews->getErrorsMessages())) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?php foreach ($deleteNews->getErrorsMessages() as $error) : ?>
-                                <?= $error . ' <br> ' ?>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                    <!-- Fin affichage des erreurs -->
+            <!-- Fin modification des types d'articles -->
 
-                    <!-- Affichage des messages de succès -->
-                    <?php if (!empty($_GET) && isset($deleteNews) && !empty($deleteNews->getSuccessMessage())) : ?>
-                        <div class="alert alert-success"><?php echo $deleteNews->getSuccessMessage(); ?></div>
-                    <?php endif; ?>
-                    <!-- Fin affichage des messages de succès -->
+            <!-- Modification ou suppression d'un article -->
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nom de l'article</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+            <div class="container d-none" id="deleteNewsContent">
+                <div class="row h-100">
+                    <div class="col-12 justify-content-center">
 
-                            <!-- Affichage des fichiers -->
-                            <?php foreach ($newsList as $news) : ?>
+                        <!-- Affichage des erreurs -->
+                        <?php if (!empty($_GET) && isset($deleteNews) && !empty($deleteNews->getErrorsMessages())) : ?>
+                            <div class="alert alert-danger mt-3" role="alert">
+                                <?php foreach ($deleteNews->getErrorsMessages() as $error) : ?>
+                                    <?= $error . ' <br> ' ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        <!-- Fin affichage des erreurs -->
+
+                        <!-- Affichage des messages de succès -->
+                        <?php if (!empty($_GET) && isset($deleteNews) && !empty($deleteNews->getSuccessMessage())) : ?>
+                            <div class="alert alert-success mt-3"><?php echo $deleteNews->getSuccessMessage(); ?></div>
+                        <?php endif; ?>
+                        <!-- Fin affichage des messages de succès -->
+
+                        <table class="table align-middle">
+                            <thead>
                                 <tr>
-                                    <td><?= $news['news_title'] ?></td>
-                                    <td>
-                                        <a href="controller-dashboard-news.php?delete=<?= $news['news_id'] ?>" class="btn btn-danger">Supprimer</a>
-                                        <a href="controller-dashboard-modify.php?id=<?= $news['news_id'] ?>" class="btn btn-success">Modifier</a>
-                                    </td>
+                                    <th scope="col">Nom de l'article</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
-                            <?php endforeach; ?>
-                            <!-- Fin affichage des fichiers -->
+                            </thead>
+                            <tbody>
+                                <?php if (empty($newsList)) : ?>
+                                    <tr>
+                                        <td colspan="2">Aucun article à afficher !</td>
+                                    </tr>
+                                <?php endif; ?>
 
-                        </tbody>
-                    </table>
+                                <!-- Affichage des fichiers -->
+                                <?php foreach ($newsList as $news) : ?>
+                                    <tr>
+                                        <td><?= $news['news_title'] ?></td>
+                                        <td>
+                                            <a href="controller-dashboard-news.php?delete=<?= $news['news_id'] ?>" class="deleteNewsButton btn btn-danger">Supprimer</a>
+                                            <a href="controller-dashboard-modify.php?id=<?= $news['news_id'] ?>" class="btn btn-success">Modifier</a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                <!-- Fin affichage des fichiers -->
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-
+        <!-- Fin modification ou suppression d'un article -->
+        <!-- Fin du contenu du dashboard -->
     </main>
+
+
+
+
 
 
 

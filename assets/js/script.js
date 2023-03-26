@@ -309,3 +309,116 @@ if (document.getElementById('editEventTypes')) {
         localStorage.setItem('ongletActif', '');
     }
 }
+
+////// ARTICLES //////
+
+if (document.getElementById('addNews')) {
+    const addNews = document.getElementById('addNews');
+    const addNewsContent = document.getElementById('addNewsContent');
+    const addNewsButton = document.getElementById('addNewsButton');
+
+    const editNewsTypes = document.getElementById('editNewsTypes');
+    const editNewsTypesContent = document.getElementById('editNewsTypesContent');
+    const editNewsTypesButton = document.getElementById('editNewsTypesButton');
+    const editNewsTypesButton2 = document.getElementById('editNewsTypesButton2');
+
+    const deleteNews = document.getElementById('deleteNews');
+    const deleteNewsContent = document.getElementById('deleteNewsContent');
+    const deleteNewsButton = document.querySelector('.deleteNewsButton');
+
+    // écouteurs d'événements pour les onglets
+
+    addNews.addEventListener('click', function () {
+        editNewsTypesContent.classList.add('d-none');
+        editNewsTypes.classList.remove('active-tab');
+
+        deleteNewsContent.classList.add('d-none');
+        deleteNews.classList.remove('active-tab');
+
+        addNewsContent.classList.remove('d-none');
+        addNews.classList.add('active-tab');
+    });
+
+    editNewsTypes.addEventListener('click', function () {
+        addNewsContent.classList.add('d-none');
+        addNews.classList.remove('active-tab');
+
+        deleteNewsContent.classList.add('d-none');
+        deleteNews.classList.remove('active-tab');
+
+        editNewsTypesContent.classList.remove('d-none');
+        editNewsTypes.classList.add('active-tab');
+    });
+
+    deleteNews.addEventListener('click', function () {
+        editNewsTypesContent.classList.add('d-none');
+        editNewsTypes.classList.remove('active-tab');
+
+        addNewsContent.classList.add('d-none');
+        addNews.classList.remove('active-tab');
+
+        deleteNewsContent.classList.remove('d-none');
+        deleteNews.classList.add('active-tab');
+    });
+
+    // Gestion des localStorage et des onglets actifs pour les recharger après un refresh
+
+    addNewsButton.addEventListener('click', function () {
+        localStorage.setItem('ongletActif', 'addNews');
+    })
+
+    if (localStorage.getItem('ongletActif') == 'addNews') {
+        editNewsTypesContent.classList.add('d-none');
+        editNewsTypes.classList.remove('active-tab');
+
+        deleteNewsContent.classList.add('d-none');
+        deleteNews.classList.remove('active-tab');
+
+        addNewsContent.classList.remove('d-none');
+        addNews.classList.add('active-tab');
+
+        localStorage.setItem('ongletActif', '');
+    }
+
+    editNewsTypesButton.addEventListener('click', function () {
+        localStorage.setItem('ongletActif', 'editNewsTypes');
+    })
+
+    editNewsTypesButton2.addEventListener('click', function () {
+        localStorage.setItem('ongletActif', 'editNewsTypes');
+    })
+
+    if (localStorage.getItem('ongletActif') == 'editNewsTypes') {
+        addNewsContent.classList.add('d-none');
+        addNews.classList.remove('active-tab');
+
+        deleteNewsContent.classList.add('d-none');
+        deleteNews.classList.remove('active-tab');
+
+        editNewsTypesContent.classList.remove('d-none');
+        editNewsTypes.classList.add('active-tab');
+
+        localStorage.setItem('ongletActif', '');
+    }
+    if (document.querySelector('.deleteNewsButton')) {
+        console.log('ok');
+        deleteNewsButton.addEventListener('click', function () {
+            localStorage.setItem('ongletActif', 'deleteNews');
+        })
+    }
+
+    if (localStorage.getItem('ongletActif') == 'deleteNews') {
+        editNewsTypesContent.classList.add('d-none');
+        editNewsTypes.classList.remove('active-tab');
+
+        addNewsContent.classList.add('d-none');
+        addNews.classList.remove('active-tab');
+
+        deleteNewsContent.classList.remove('d-none');
+        deleteNews.classList.add('active-tab');
+
+        localStorage.setItem('ongletActif', '');
+    }
+
+
+}
