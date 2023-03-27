@@ -24,7 +24,7 @@ class File
     {
         $file = $_FILES['inputFile'] ?? null; // récupère le fichier envoyé par le formulaire (s'il existe)
 
-        if (!$file) { // si le fichier n'existe pas
+        if ($file['size'] === 0) { // si le fichier n'a pas été sélectionné
             $this->_errors[] = 'Aucun fichier sélectionné';
             return $this->_errors; // on arrête la fonction et on retourne les erreurs
         }

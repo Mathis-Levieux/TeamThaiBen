@@ -79,7 +79,7 @@ class PdfPreviewer { // Classe qui permet de prévisualiser les images dans le d
         let html = ""; // On initialise la variable qui contiendra les images
         this.pdf.forEach((pdf, index) => { // Pour chaque image
             const id = `pdf_${index}`; // On génère un id
-            html += `<div class="preview-pdf col-lg-12">
+            html += `<div class="preview-pdf mb-3 col-lg-12">
                     <iframe class="h-100 col-lg-12" src="${URL.createObjectURL(pdf)}"> </iframe>
                   </div>`;
 
@@ -421,4 +421,59 @@ if (document.getElementById('addNews')) {
     }
 
 
+}
+
+////// FICHIERS //////
+
+if (document.getElementById('addFile')) {
+
+    const addFile = document.getElementById('addFile');
+    const addFileContent = document.getElementById('addFileContent');
+
+    const editFile = document.getElementById('editFile');
+    const editFileContent = document.getElementById('editFileContent');
+    const editFileButton = document.querySelector('.editFileButton');
+    const editFileButton2 = document.querySelector('.editFileButton2');
+
+    // écouteurs d'événements pour les onglets
+
+    addFile.addEventListener('click', function () {
+        editFileContent.classList.add('d-none');
+        editFile.classList.remove('active-tab');
+
+        addFileContent.classList.remove('d-none');
+        addFile.classList.add('active-tab');
+    });
+
+    editFile.addEventListener('click', function () {
+        addFileContent.classList.add('d-none');
+        addFile.classList.remove('active-tab');
+
+        editFileContent.classList.remove('d-none');
+        editFile.classList.add('active-tab');
+    });
+
+    // Gestion des localStorage et des onglets actifs pour les recharger après un refresh
+
+    if (document.querySelector('.editFileButton')) {
+        editFileButton.addEventListener('click', function () {
+            localStorage.setItem('ongletActif', 'editFile');
+        })
+    }
+
+    if (document.querySelector('.editFileButton2')) {
+        editFileButton2.addEventListener('click', function () {
+            localStorage.setItem('ongletActif', 'editFile');
+        })
+    }
+
+    if (localStorage.getItem('ongletActif') == 'editFile') {
+        addFileContent.classList.add('d-none');
+        addFile.classList.remove('active-tab');
+
+        editFileContent.classList.remove('d-none');
+        editFile.classList.add('active-tab');
+
+        localStorage.setItem('ongletActif', '');
+    }
 }

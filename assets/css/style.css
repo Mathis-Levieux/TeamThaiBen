@@ -212,3 +212,7 @@ h1 {
     position: absolute;
     left: 86%;
 } */
+
+.preview-pdf {
+height: 100vh!important;
+}

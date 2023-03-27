@@ -85,7 +85,7 @@
                 <div class="col-lg-12">
                     <ul class="nav-item d-flex p-0 mt-2 gap-5 fw-bold text-center justify-content-center fs-7">
                         <li id="addNews" class="dashboard-tabs active-tab d-flex align-items-center">CRÉER UN ARTICLE</li>
-                        <li id="deleteNews" class="dashboard-tabs d-flex align-items-center">SUPPRESSION ET ÉDITION D'ARTICLES</li>
+                        <li id="deleteNews" class="dashboard-tabs d-flex align-items-center">GESTION DES ARTICLES</li>
                         <li id="editNewsTypes" class="dashboard-tabs d-flex align-items-center">GÉRER LES TYPES D'ARTICLES</li>
                     </ul>
                 </div>
