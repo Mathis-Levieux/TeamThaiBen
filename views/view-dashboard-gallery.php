@@ -142,7 +142,29 @@
                                 <?php
                                 showSelectAlbums(); // Affichage du select des albums
                                 ?>
-                                <input id="editAlbumButton2" type="submit" name="submitDeleteAlbum" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Supprimer">
+                                <input type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Supprimer">
+
+                                <!-- Modal de confirmation -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title fs-5" id="exampleModalLabel">Suppression d'un album</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Êtes-vous sûr de vouloir supprimer l'album ? Cela supprimera définitivement toutes les photos qu'il contient !
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <input id="editAlbumButton2" type="submit" name="submitDeleteAlbum" data-bs-toggle="modal" data-bs-target="#exampleModal" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Supprimer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Fin modal de confirmation -->
+
+
                             </form>
 
                             <!-- Affichage des erreurs -->
@@ -203,7 +225,6 @@
             <!-- Fin du contenu du dashboard -->
         </div>
     </main>
-
 
 
 

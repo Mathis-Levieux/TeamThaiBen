@@ -71,6 +71,23 @@ class NewsController
         } else {
             $this->_errors[] = 'Aucun type d\'article n\'a été sélectionné';
         }
+
+        // On vérifie qu'il n'y a pas de news de ce type
+
+        if (empty($this->_errors)) {
+            $news = new News();
+            $news = $news->getNews();
+            foreach ($news as $newsType) {
+                if ($newsType['news_type_id'] == $id) {
+                    $exist = true;
+                }
+            }
+            if (isset($exist)) {
+                $this->_errors[] = 'Il existe des articles de ce type, vous ne pouvez pas le supprimer';
+            }
+        }
+
+
         if (empty($this->_errors)) {
             $deleteNews = new News();
             $deleteNews->deleteNewsType($id);
@@ -159,6 +176,7 @@ class NewsController
         // On vérifie que la news existe
         $news = new News();
         $news = $news->getNewsById($id);
+
         if (empty($news)) {
             $this->_errors[] = 'L\'article n\'existe pas';
         } else {
