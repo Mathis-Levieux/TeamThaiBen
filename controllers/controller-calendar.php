@@ -54,13 +54,13 @@ function displayWeekWithEvents($date)
     $week_start = date('N', strtotime($date)) === 1 ? $date : date('Y-m-d', strtotime('last Monday', strtotime($date))); // Récupère la date du lundi de la semaine
     $week_end = date('Y-m-d', strtotime('+6 days', strtotime($week_start))); // Récupère la date du dimanche de la semaine
 
-    echo "<div class='calendar container col-lg col-sm-12 w-auto h-auto'>"; // Début container    
+    echo "<div class='calendar container container-calendar col-lg col-sm-12 w-auto h-auto'>"; // Début container    
 
     // Affiche la date sélectionnée au format "Semaine du 01 au 07 Janvier 2023"
     echo "<h2 class='text-center'>";
-    echo "<a class='button' href='?date=" . date('Y-m-d', strtotime('-7 days', strtotime($date))) . "'> < </a>";
+    echo "<a class='button' href='view-calendar.php?date=" . date('Y-m-d', strtotime('-7 days', strtotime($date))) . "'> < </a>";
     echo "Semaine du " . $formatter2->format(strtotime($week_start)) . " au " . $formatter3->format(strtotime($week_end)) . "";
-    echo "<a class='button' href='?date=" . date('Y-m-d', strtotime('+7 days', strtotime($date))) . "'> > </a>";
+    echo "<a class='button' href='view-calendar.php?date=" . date('Y-m-d', strtotime('+7 days', strtotime($date))) . "'> > </a>";
     echo "</h2>";
 
     echo "<div class='row gap-1'>"; // Début row
@@ -133,5 +133,3 @@ function createEventModals($event)
     </div>
     </div>';
 }
-
-include('../views/view-calendar.php');

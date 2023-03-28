@@ -1,3 +1,6 @@
+<?php require('../controllers/controller-calendar.php'); ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 

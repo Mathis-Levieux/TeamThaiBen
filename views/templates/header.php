@@ -3,7 +3,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-dark navbar-expand-lg bg-black py-4 border-bottom">
         <div class="container-fluid">
-            <h2 class="mb-0 navbar-brand text-light header-title">TEAM THAI BEN</h2>
+            <a class="header-title-link" href="view-home.php"><h2 class="mb-0 navbar-brand text-light header-title">TEAM THAI BEN</h2></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>

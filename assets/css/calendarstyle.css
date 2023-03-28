@@ -1,24 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-html,
-body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  /* background: linear-gradient(#BB2649, #FFF); */
-  background-repeat: no-repeat;
-  /* background-color: #BB2649; */
-}
-
-table {
-  /* background-image: url('https://studycli.org/wp-content/uploads/2021/11/year-of-the-rabbit-article-feature-image.jpg'); */
-  background-size: auto;
-  background-position: center;
-  margin: 0 auto;
-  width: 40%;
-  border-collapse: collapse;
-  /* border: 2px solid black; */
-  /* ajout d'un cadre noir */
-}
 
 th,
 td {
@@ -108,7 +89,7 @@ form input {
   width: 300px;
 }
 
-.container {
+.container-calendar {
   background-size: auto;
   background-position: center;
   margin: 0 auto;
@@ -133,15 +114,6 @@ form input {
   transition: 0.5s;
 }
 
-/* .margin-right {
-  margin-right: 2rem;
-} */
-
-form a {
-  text-decoration: none;
-  color: black;
-}
-
 .day {
   height: 3rem;
   background-color: #000000;
@@ -160,6 +132,7 @@ form a {
 .bdaycell {
   flex-direction: column;
 }
+
 .table {
   width: 85% !important;
 }
@@ -169,9 +142,6 @@ form a {
 }
 
 .punchbutton {
-width: 6rem;
+  width: 6rem;
+}
 
-}
-p {
-  margin: 0 !important;
-}
