@@ -53,6 +53,14 @@ class News
         return $news;
     }
 
+    public function getLastFiveNews(): array
+    {
+        $query = $this->_db->prepare('SELECT * FROM sk_news ORDER BY news_date DESC LIMIT 5');
+        $query->execute();
+        $news = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $news;
+    }
+
 
     /**
      * fonction permettant de récupérer une news grâce à son id

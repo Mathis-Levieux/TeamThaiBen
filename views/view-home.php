@@ -46,7 +46,7 @@
             <?php displayWeekWithEvents(date('Y-m-d')); ?>
         </section>
 
-        
+
 
     </main>
 
