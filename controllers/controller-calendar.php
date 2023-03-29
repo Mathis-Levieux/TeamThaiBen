@@ -5,8 +5,6 @@ require('../models/events.php');
 
 
 
-
-
 date_default_timezone_set('Europe/Paris');
 
 // Fonction qui récupère les events dans la base de données
@@ -46,6 +44,7 @@ function displayWeekWithEvents($date)
     $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::NONE, 'Europe/Paris', IntlDateFormatter::GREGORIAN, "EEEE dd MMMM"); // Formate la date format "Lundi 20 Janvier"
     $formatter2 = new IntlDateFormatter('fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::NONE, 'Europe/Paris', IntlDateFormatter::GREGORIAN, "dd"); // Formate la date format "20"
     $formatter3 = new IntlDateFormatter('fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::NONE, 'Europe/Paris', IntlDateFormatter::GREGORIAN, "dd MMMM YYYY"); // Formate la date format "20 janvier 2023"
+    $formatter4 = new IntlDateFormatter('fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::NONE, 'Europe/Paris', IntlDateFormatter::GREGORIAN, "EEEE"); // Formate la date format "Lundi"
     // $birthdaysArray = getBirthdaysArray();  // Récupère les anniversaires
     // $otherEventsArray = getOtherEventsArray(); // Récupère les autres évènements 
     $events = getAllEvents(); // Récupère les évènements
@@ -54,13 +53,13 @@ function displayWeekWithEvents($date)
     $week_start = date('N', strtotime($date)) === 1 ? $date : date('Y-m-d', strtotime('last Monday', strtotime($date))); // Récupère la date du lundi de la semaine
     $week_end = date('Y-m-d', strtotime('+6 days', strtotime($week_start))); // Récupère la date du dimanche de la semaine
 
-    echo "<div class='calendar container container-calendar col-lg col-sm-12 w-auto h-auto'>"; // Début container    
+    echo "<div class='mt-5 rounded calendar container container-calendar col-lg col-sm-12'>"; // Début container    
 
     // Affiche la date sélectionnée au format "Semaine du 01 au 07 Janvier 2023"
-    echo "<h2 class='text-center'>";
-    echo "<a class='button' href='view-calendar.php?date=" . date('Y-m-d', strtotime('-7 days', strtotime($date))) . "'> < </a>";
-    echo "Semaine du " . $formatter2->format(strtotime($week_start)) . " au " . $formatter3->format(strtotime($week_end)) . "";
-    echo "<a class='button' href='view-calendar.php?date=" . date('Y-m-d', strtotime('+7 days', strtotime($date))) . "'> > </a>";
+    echo "<h2 class='text-light text-center'>";
+    echo "<a class='arrows button' href='calendrier.php?date=" . date('Y-m-d', strtotime('-7 days', strtotime($date))) . "'> <i class='text-light arrows bi bi-arrow-left-short'></i> </a>";
+    echo "<span class='thai-font'>Semaine du " . $formatter2->format(strtotime($week_start)) . " au " . $formatter3->format(strtotime($week_end)) . "</span>";
+    echo "<a class='arrows button' href='calendrier.php?date=" . date('Y-m-d', strtotime('+7 days', strtotime($date))) . "'> <i class='text-light bi bi-arrow-right-short'></i> </a>";
     echo "</h2>";
 
     echo "<div class='row gap-1'>"; // Début row
@@ -69,8 +68,18 @@ function displayWeekWithEvents($date)
 
     for ($i = $week_start; $i <= $week_end; $i = date("Y-m-d", strtotime("+1 day", strtotime($i)))) {
         $dateToCheck = $i;
-        echo "<div class='p-0 daywrapper col-lg col-sm-12'>";
-        echo "<div class='day text-center'>" . ucwords($formatter->format(strtotime($i))) . "</div>";
+        echo "<div class='mt-4 m-2 p-0 daywrapper col-lg col-sm-12'>";
+        echo "<div class='m-2 thai-font fs-5 bg-light text-black border-3 rounded-top-3 day justify-content-center d-flex align-items-center'>" . ucwords($formatter4->format(strtotime($i))) . "</div>";
+
+
+        // Vérifie si c'est un lundi ou un jeudi pour afficher l'entraînement
+        if (date('N', strtotime($i)) == 1 || date('N', strtotime($i)) == 4) {
+            echo "<p class='cell trainingday mt-4 p-3'>Entraînement de 19h00 à 21h00<img class='punchbutton' src='../assets/img/punchbutton-removebg-preview.png'></p>";
+        }
+        // Vérifie si c'est un mardi pour afficher l'entraînement
+        if (date('N', strtotime($i)) == 2) {
+            echo "<p class='cell trainingday mt-4 p-3'>Entraînement de 18h30 à 20h30<img class='punchbutton' src='../assets/img/punchbutton-removebg-preview.png'></p>";
+        }
 
 
         // Vérifie si une date correspond à un évènement
@@ -81,14 +90,7 @@ function displayWeekWithEvents($date)
                 createEventModals($event);
             }
         }
-        // Vérifie si c'est un lundi ou un jeudi pour afficher l'entraînement
-        if (date('N', strtotime($i)) == 1 || date('N', strtotime($i)) == 4) {
-            echo "<p class='cell trainingday'>Entraînement de 19h00 à 21h00<img class='punchbutton' src='../assets/img/punchbutton-removebg-preview.png'></p>";
-        }
-        // Vérifie si c'est un mardi pour afficher l'entraînement
-        if (date('N', strtotime($i)) == 2) {
-            echo "<p class='cell trainingday'>Entraînement de 18h30 à 20h30<img class='punchbutton' src='../assets/img/punchbutton-removebg-preview.png'></p>";
-        }
+
         // Vérifie si une date correspond à un jour férié
         if (array_key_exists($dateToCheck, $publicHolidaysArray)) {
             echo "<p class='cell'>Jour férié : " . $publicHolidaysArray[$dateToCheck] . "</p>";
