@@ -1,3 +1,13 @@
+<?php
+$current_page = basename($_SERVER['PHP_SELF']);
+function isCurrentPage($page)
+{
+    global $current_page;
+    return ($current_page == $page) ? 'nav-active-link' : '';
+}
+?>
+
+
 <header>
 
     <!-- Navbar -->
@@ -17,22 +27,22 @@
                 <div class="offcanvas-body me-0 pe-0 pe-xl-5 me-xl-5">
                     <ul class="gap-lg-5 navbar-nav justify-content-center flex-grow-1 me-0 pe-0 pe-xl-5 me-xl-5 ul-text-light">
                         <li class="nav-item">
-                            <a class="nav-link" href="/accueil.php">Accueil</a>
+                            <a class="nav-link text-uppercase <?= isCurrentPage('view-home.php') ?>" href="/accueil.php">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/notre-histoire.php">À propos de nous</a>
+                            <a class="nav-link text-uppercase <?= isCurrentPage('view-aboutus.php') ?>" href="/notre-histoire.php">À propos du club</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/galerie.php">Galerie</a>
+                            <a class="nav-link text-uppercase <?= isCurrentPage('view-gallery.php') ?>" href="/galerie.php">Galerie</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/calendrier.php">Calendrier</a>
+                            <a class="nav-link text-uppercase <?= isCurrentPage('view-calendar.php') ?>" href="/calendrier.php">Calendrier</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/tarifs-et-infos.php">Tarifs & Infos</a>
+                            <a class="nav-link text-uppercase <?= isCurrentPage('controller-news.php') ?>" href="/actualites.php">Actualités</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/nous-rejoindre.php">Adhérer au club</a>
+                            <a class="nav-link text-uppercase <?= isCurrentPage('view-joinus.php') ?>" href="/nous-rejoindre.php">Adhérer au club</a>
                         </li>
                     </ul>
                 </div>

@@ -3,9 +3,12 @@ include('templates/head.php');
 include('templates/header.php');
 ?>
 
-<main>
+<body>
+    <main>
 
-</main>
+    </main>
+
+</body>
 
 
 <?php include('templates/footer.php'); ?>

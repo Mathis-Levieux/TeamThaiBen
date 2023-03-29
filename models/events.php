@@ -86,4 +86,5 @@ class Events
             'id' => $id
         ]);
     }
+
 }

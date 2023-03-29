@@ -134,8 +134,9 @@ form input {
   border-top-left-radius: 10px;
 }
 
-.bdaycell {
+.eventcell {
   flex-direction: column;
+  cursor: pointer;
 }
 
 .table {
@@ -153,4 +154,10 @@ form input {
 .arrows {
   text-decoration: none;
   color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .daywrapper {
+    margin: 0 !important;
+  }
 }

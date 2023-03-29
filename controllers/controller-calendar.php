@@ -86,14 +86,14 @@ function displayWeekWithEvents($date)
         foreach ($events as $event) {
             // Si les dates correspondent, affiche l'évènement et appelle la fonction qui génère la modale
             if ($event['events_date'] == $dateToCheck) {
-                echo "<p class='cell eventcell' data-bs-toggle='modal' data-bs-target='#" . str_replace(' ', "", $event['events_name']) . "'>" . $event['events_name'] . "</p>";
+                echo "<p class='cell eventcell mt-4 p-3' data-bs-toggle='modal' data-bs-target='#" . str_replace(' ', "", $event['events_name']) . "'>" . $event['events_name'] . "</p>";
                 createEventModals($event);
             }
         }
 
         // Vérifie si une date correspond à un jour férié
         if (array_key_exists($dateToCheck, $publicHolidaysArray)) {
-            echo "<p class='cell'>Jour férié : " . $publicHolidaysArray[$dateToCheck] . "</p>";
+            echo "<p class='cell mt-4 p-3'>Jour férié : " . $publicHolidaysArray[$dateToCheck] . "</p>";
         }
         echo "</div>"; // Fin jour
     }
@@ -118,7 +118,7 @@ function createEventModals($event)
 {
     $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL, 'Europe/Paris', IntlDateFormatter::GREGORIAN, "EEEE dd MMMM yyyy"); // Formate la date format "vendredi 20 janvier 2023"
     echo '<div class="modal fade" id=' . str_replace(' ', "", $event['events_name']) . ' tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h2 class="text-center modal-title fs-5" id="exampleModalLabel">' . $event['events_name'] . '</h2>

@@ -18,6 +18,10 @@ body,
 html {
     margin: 0;
     overflow-x: hidden;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Début landing page */
@@ -83,6 +87,16 @@ html {
 .header-title-link:hover {
     text-decoration: none;
 }
+
+.nav-active-link {
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    text-decoration: none !important;
+}
+
+
 
 @media screen and (max-width: 450px) {
     .header-title {

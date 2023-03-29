@@ -3,7 +3,7 @@ RewriteRule ^accueil.php$ views/view-home.php
 RewriteRule ^galerie.php$ views/view-gallery.php
 RewriteRule ^notre-histoire.php$ views/view-aboutus.php
 RewriteRule ^calendrier.php$ views/view-calendar.php
-RewriteRule ^tarifs-et-infos.php$ views/view-infos.php
+RewriteRule ^actualites.php$ controllers/controller-news.php
 RewriteRule ^nous-rejoindre.php$ views/view-joinus.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -10,7 +10,7 @@ if (!isset($_SESSION['login'])) {
     header('Location: controller-login.php');
 }
 
-$title = 'Administration - Calendrier des événements';
+$title = 'Administration - Calendrier';
 
 class EventsController // Création d'une classe newEventTypeController pour gérer l'ajout d'un nouveau type d'événement
 {
@@ -53,9 +53,24 @@ class EventsController // Création d'une classe newEventTypeController pour gé
         if (empty($_POST['deleteEventType'])) {
             $this->errors[] = 'Veuillez sélectionner un type d\'événement à supprimer';
         } else {
-            $deleteEventType = new Events();
-            $deleteEventType->deleteEventType($_POST['deleteEventType']);
-            $this->success = 'Le type d\'événement a bien été supprimé';
+
+            // On vérifie qu'il n'y a pas d'événements de ce type
+            $checkEvents = new Events();
+            $checkEvents = $checkEvents->getEvents();
+            foreach ($checkEvents as $event) {
+                if ($_POST['deleteEventType'] == $event['events_type_id']) {
+                    $exist = true;
+                }
+            }
+            if (isset($exist)) {
+                $this->errors[] = 'Il y a des événements de ce type, veuillez les supprimer avant de supprimer le type';
+            }
+
+            if (empty($this->errors)) {
+                $deleteEventType = new Events();
+                $deleteEventType->deleteEventType($_POST['deleteEventType']);
+                $this->success = 'Le type d\'événement a bien été supprimé';
+            }
         }
     }
 

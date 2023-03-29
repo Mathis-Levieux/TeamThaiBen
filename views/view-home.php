@@ -34,7 +34,7 @@
                 <div class="col-md-7">
                     <h2 class="thai-font fs-1 text-center text-md-start mb-4">LE CLUB</h2>
                     <p class="text-center text-md-start mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam ligula euismod mauris dignissim, a commodo purus consequat. Donec euismod enim quis augue maximus, sed sodales lectus fermentum. Aliquam ornare turpis sed euismod hendrerit.</p>
-                    <a href="view-aboutus.php"><button class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" type="button">En savoir plus</button></a>
+                    <a href="view-aboutus.php"><button class="my-3 btn btn-outline-dark rounded-pill border-2 fw-bold" type="button">En savoir plus</button></a>
                 </div>
             </div>
         </section>
@@ -46,7 +46,7 @@
             <?php displayWeekWithEvents(date('Y-m-d')); ?>
         </section>
 
-
+        
 
     </main>
 
