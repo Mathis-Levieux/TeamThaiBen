@@ -61,7 +61,6 @@ class UploadController // Création d'une classe UploadController pour gérer l'
                     // Obtention du chemin de destination en utilisant la fonction getAlbumNameById de la classe Albums pour héberger le fichier dans le bon dossier
                     $obj = new Albums();
                     $_AlbumName = $obj->getAlbumNameById($albumId);
-                    $_AlbumName = $_AlbumName['albums_name'];
                     $this->_destination = '../uploads/albums/' . $_AlbumName . '/';
                     // Hébergement du fichier
                     $newFileName = uniqid() . '.' . $fileExtension;
