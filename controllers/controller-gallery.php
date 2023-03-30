@@ -8,9 +8,14 @@ $AlbumList = new Albums();
 $albums = $AlbumList->getAlbums();
 
 $somePhotos = new Photos();
-$photos = $somePhotos->getSomePhotos(5);
+$somePhotos = $somePhotos->getSomePhotos(5);
 
-
+if (isset($_POST['album'])) {
+    $albumId = $_POST['album'];
+    $albumPhotos = new Albums();
+    $photos = $albumPhotos->showPhotosFromAlbum($albumId);
+    $albumName = $albumPhotos->getAlbumNameById($albumId);
+}
 
 
 include('../views/view-gallery.php');

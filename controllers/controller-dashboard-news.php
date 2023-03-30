@@ -178,11 +178,11 @@ class NewsController
         $news = $news->getNewsById($id);
 
         if (empty($news)) {
-            $this->_errors[] = 'L\'article n\'existe pas';
+            $this->_errors[] = 'L\'article que vous tentez de supprimer n\'existe pas';
         } else {
             $news = new News();
             $news->deleteNews($id);
-            $this->_success = 'L\'article a bien été supprimée';
+            $this->_success = 'L\'article a bien été supprimé';
         }
     }
 }

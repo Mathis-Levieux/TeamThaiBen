@@ -21,7 +21,4 @@ $user = $_SESSION['login']; // On récupère le login de l'utilisateur connecté
 
 
 
-
-
-
 include '../views/view-dashboard.php';

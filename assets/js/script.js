@@ -324,7 +324,7 @@ if (document.getElementById('addNews')) {
 
     const deleteNews = document.getElementById('deleteNews');
     const deleteNewsContent = document.getElementById('deleteNewsContent');
-    const deleteNewsButton = document.querySelector('.deleteNewsButton');
+    const deleteNewsButton = document.querySelectorAll('.deleteNewsButton');
 
     // écouteurs d'événements pour les onglets
 
@@ -402,8 +402,10 @@ if (document.getElementById('addNews')) {
     }
     if (document.querySelector('.deleteNewsButton')) {
         console.log('ok');
-        deleteNewsButton.addEventListener('click', function () {
-            localStorage.setItem('ongletActif', 'deleteNews');
+        deleteNewsButton.forEach(function (element) {
+            element.addEventListener('click', function () {
+                localStorage.setItem('ongletActif', 'deleteNews');
+            })
         })
     }
 
@@ -477,17 +479,3 @@ if (document.getElementById('addFile')) {
         localStorage.setItem('ongletActif', '');
     }
 }
-
-// Cache les jours vides dans le calendrier
-
-// const containerCalendar = document.querySelector('.container-calendar');
-// const dayWrapper = document.querySelectorAll('.daywrapper');
-
-// if (containerCalendar) {
-//     dayWrapper.forEach(day => {
-//         // On vérifie si il contient un p nommé "cell"
-//         if (!day.querySelector('p.cell')) {
-//             day.classList.add('d-none');
-//         }
-//     });
-// }

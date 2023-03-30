@@ -115,7 +115,7 @@
                             <div class="alert alert-success mt-3"><?php echo $newNews->getSuccessMessage(); ?></div>
                         <?php endif; ?>
                         <!-- Fin affichage des messages de succès -->
-                        <form method="post">
+                        <form action="controller-dashboard-news.php" method="post">
                             <h3 class="mt-3">Type d'article</h3>
 
                             <!-- Affichage du select -->

@@ -29,14 +29,14 @@ class Albums
     }
 
 
-    public function getAlbumNameById($id) // On crée une méthode qui prend en paramètre $id et qui retourne un tableau associatif
+    public function getAlbumNameById(int $id) // On crée une méthode qui prend en paramètre $id et qui retourne un tableau associatif
     {
         $sql = "SELECT albums_name FROM sk_albums WHERE albums_id = :id";
         $query = $this->_db->prepare($sql);
         $query->execute([
             'id' => $id
         ]);
-        $albumName = $query->fetch(PDO::FETCH_ASSOC); // On stocke le résultat dans la variable $albumName
+        $albumName = $query->fetch(PDO::FETCH_COLUMN); // On stocke le résultat dans la variable $albumName
         return $albumName; // On retourne le résultat
     }
 
@@ -92,7 +92,7 @@ class Albums
 
     public function showPhotosFromAlbum($id)
     {
-        $sql = "SELECT sk_photos.photos_id, sk_photos.photos_name, sk_albums.albums_name, sk_albums.albums_id FROM sk_photos INNER JOIN sk_albums_contains_photos ON sk_albums_contains_photos.photos_id = sk_photos.photos_id INNER JOIN sk_albums ON sk_albums_contains_photos.albums_id = sk_albums.albums_id WHERE sk_photos.photos_id IN (SELECT sk_photos.photos_id FROM sk_albums_contains_photos WHERE albums_id = :id);";
+        $sql = "SELECT sk_photos.photos_id, sk_photos.photos_path, sk_photos.photos_name, sk_albums.albums_name, sk_albums.albums_id FROM sk_photos INNER JOIN sk_albums_contains_photos ON sk_albums_contains_photos.photos_id = sk_photos.photos_id INNER JOIN sk_albums ON sk_albums_contains_photos.albums_id = sk_albums.albums_id WHERE sk_photos.photos_id IN (SELECT sk_photos.photos_id FROM sk_albums_contains_photos WHERE albums_id = :id);";
         $query = $this->_db->prepare($sql);
         $query->execute([
             'id' => $id
