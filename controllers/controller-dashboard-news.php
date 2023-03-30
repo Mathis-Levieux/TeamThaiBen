@@ -24,7 +24,7 @@ class NewsController
             $this->_errors[] = 'Le nom du type d\'article ne peut pas être vide';
         } else if (strlen($name) > 50) {  // On vérifie que le nom n'est pas trop long et ne contient pas de caractères spéciaux
             $this->_errors[] = 'Le nom du type d\'article ne peut pas dépasser 50 caractères';
-        } else if (!preg_match('/^[a-zA-Z0-9_ ]+$/', $name)) { // On vérifie que le nom ne contient que des lettres, des chiffres, des underscores et des espaces
+        } else if (!preg_match('/^[a-zéèàâêA-Z0-9_ ]+$/', $name)) { // On vérifie que le nom ne contient que des lettres, des chiffres, des underscores et des espaces
             $this->_errors[] = 'Le nom du type d\'article ne peut contenir que des lettres, des chiffres et des underscores';
         }
 

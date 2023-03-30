@@ -181,22 +181,18 @@ class UploadController // Création d'une classe UploadController pour gérer l'
         // On vérifie que l'album ne contient pas de caractères spéciaux
         if (empty($this->errors)) {
 
-            if (!preg_match('/^[a-zA-Z0-9_ ]+$/', $_POST['NewAlbum'])) {
-                $this->errors[] = 'Le nom d\'album ne doit pas contenir de caractères spéciaux';
+            $album = new Albums(); // Vérification de si le nom d'album existe déjà
+            $album = $album->getAlbumsByName($_POST['NewAlbum']);
+            if ($album) {
+                $this->errors[] = 'Le nom d\'album est déjà utilisé';
             } else {
-                $album = new Albums(); // Vérification de si le nom d'album existe déjà
-                $album = $album->getAlbumsByName($_POST['NewAlbum']);
-                if ($album) {
-                    $this->errors[] = 'Le nom d\'album est déjà utilisé';
-                } else {
-                    // Création du dossier de l'album
-                    if (!file_exists('../uploads/albums/' . $_POST['NewAlbum'])) { // Si le dossier n'existe pas
-                        mkdir('../uploads/albums/' . $_POST['NewAlbum']); // On le crée
-                    }
-                    $album = new Albums();
-                    $album->createNewAlbum($_POST['NewAlbum']);
-                    $this->success = 'Album créé';
+                // Création du dossier de l'album
+                if (!file_exists('../uploads/albums/' . $_POST['NewAlbum'])) { // Si le dossier n'existe pas
+                    mkdir('../uploads/albums/' . $_POST['NewAlbum']); // On le crée
                 }
+                $album = new Albums();
+                $album->createNewAlbum($_POST['NewAlbum']);
+                $this->success = 'Album créé';
             }
         }
     }

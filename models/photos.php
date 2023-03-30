@@ -81,7 +81,7 @@ class Photos
         $query->execute([
             ':id' => $id
         ]);
-        
+
         // nous préparons la requête
         $query = $this->_pdo->prepare('DELETE FROM sk_photos WHERE photos_id = :id');
 
@@ -89,6 +89,21 @@ class Photos
         $query->execute([
             ':id' => $id
         ]);
+    }
 
+    public function getSomePhotos(int $max): array
+    {
+        // nous préparons la requête
+        $test = 'SELECT * FROM sk_photos ORDER BY photos_id DESC LIMIT :max';
+        $query = $this->_pdo->prepare($test);
+
+        // nous executons la requête
+        // bindvalue
+        $query->bindValue(':max', $max, PDO::PARAM_INT);
+        $query->execute();
+
+        // nous retournons le résultat
+        $photos = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $photos;
     }
 }

@@ -97,4 +97,12 @@ class News
             'type' => $type
         ]);
     }
+
+    public function getNewsSortedByDateAndId(): array | bool
+    {
+        $query = $this->_db->prepare('SELECT * FROM sk_news ORDER BY news_date DESC, news_id DESC');
+        $query->execute();
+        $news = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $news;
+    }
 }

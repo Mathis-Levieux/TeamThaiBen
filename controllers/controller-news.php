@@ -5,7 +5,7 @@ require('../models/news.php');
 
 // On récupère toutes les news
 $getAllNews = new News();
-$news = $getAllNews->getNews();
+$news = $getAllNews->getNewsSortedByDateAndId();
 
 
 

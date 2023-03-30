@@ -1,6 +1,6 @@
 RewriteEngine On
 RewriteRule ^accueil.php$ views/view-home.php
-RewriteRule ^galerie.php$ views/view-gallery.php
+RewriteRule ^galerie.php$ controllers/controller-gallery.php
 RewriteRule ^notre-histoire.php$ views/view-aboutus.php
 RewriteRule ^calendrier.php$ views/view-calendar.php
 RewriteRule ^actualites.php$ controllers/controller-news.php
