@@ -5,16 +5,15 @@ include('templates/header.php');
 ?>
 
 <body class="bg-dark inter-font">
-    <main>
+    <main class="mb-5">
         <div class="container">
             <h1 class="mt-5 text-center">Galerie</h1>
             <p class="mb-5 text-center text-light">Vous pouvez retrouver ici les photos de nos entrainements, de nos évènements et de nos sorties.</p>
         </div>
 
         <div class="container">
-            <h2> <!-- Album name --> </h2>
             <!-- formulaire pour choisir l'album -->
-            <form class="col-3" action="" method="post">
+            <form class="col-md-4 col-12" action="" method="post">
                 <select class="form-select" name="album" id="album">
 
                     <option selected disabled>Choisissez un album</option>
@@ -32,7 +31,7 @@ include('templates/header.php');
                     <?php
                     echo '<h3 class="my-3 text-light">Les dernières photos ajoutées</h3>';
                     foreach ($somePhotos as $photo) {
-                        echo '<div class="col-2 my-2">
+                        echo '<div class="col-md-2 col-6 my-2">
                         <img src="' . $photo['photos_path'] . '" alt="' . $photo['photos_name'] . '" class="img-fluid">
                         </div>';
                     }
@@ -49,7 +48,7 @@ include('templates/header.php');
                         echo '<p class="text-light">Aucune photo dans cet album</p>';
                     }
                     foreach ($photos as $photo) {
-                        echo '<div class="col-2 my-2">
+                        echo '<div class="col-md-2 col-6 my-2">
                         <img src="' . $photo['photos_path'] . '" alt="' . $photo['photos_name'] . '" class="img-fluid">
                         </div>';
                     }
@@ -58,13 +57,15 @@ include('templates/header.php');
             <?php endif; ?>
 
 
-
-
-
     </main>
+    <?php include('templates/footer.php'); ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="../assets/js/script.js"></script>
+
+
 </body>
 
 
-<?php include('templates/footer.php'); ?>
 
 </html>

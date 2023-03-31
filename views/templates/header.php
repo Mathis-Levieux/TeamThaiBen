@@ -33,7 +33,7 @@ function isCurrentPage($page)
                             <a class="nav-link text-uppercase <?= isCurrentPage('view-aboutus.php') ?>" href="/notre-histoire.php">À propos du club</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-uppercase <?= isCurrentPage('view-gallery.php') ?>" href="/galerie.php">Galerie</a>
+                            <a class="nav-link text-uppercase <?= isCurrentPage('controller-gallery.php') ?>" href="/galerie.php">Galerie</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-uppercase <?= isCurrentPage('view-calendar.php') ?>" href="/calendrier.php">Calendrier</a>

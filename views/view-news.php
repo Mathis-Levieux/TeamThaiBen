@@ -5,7 +5,7 @@ include('templates/header.php');
 ?>
 
 <body class="bg bg-dark">
-  <main>
+  <main class="mb-5">
 
     <div class="container">
       <h1 class="my-5 text-center text-light">Actualités</h1>
@@ -35,6 +35,7 @@ include('templates/header.php');
       ?>
     </div>
   </main>
+  <?php include('templates/footer.php'); ?>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -42,7 +43,6 @@ include('templates/header.php');
 </body>
 
 
-<?php include('templates/footer.php'); ?>
 
 
 

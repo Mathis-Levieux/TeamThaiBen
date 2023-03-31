@@ -101,9 +101,13 @@ html {
     color: #f8f9fa;
 }
 
-/* .news-container {
+@media screen and (max-width: 768px) {
 
-} */
+    .news-container div {
+        padding: 0 !important;
+    }
+}
+
 
 
 
@@ -284,4 +288,8 @@ h1 {
 .card-text {
     font-size: 18px;
     line-height: 1.5;
+}
+
+.infos-link {
+    cursor: pointer;
 }
