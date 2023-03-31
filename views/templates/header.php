@@ -42,7 +42,7 @@ function isCurrentPage($page)
                             <a class="nav-link text-uppercase <?= isCurrentPage('controller-news.php') ?>" href="/actualites.php">Actualités</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-uppercase <?= isCurrentPage('view-joinus.php') ?>" href="/nous-rejoindre.php">Adhérer au club</a>
+                            <a class="nav-link text-uppercase <?= isCurrentPage('controller-joinus.php') ?>" href="/nous-rejoindre.php">Adhérer au club</a>
                         </li>
                     </ul>
                 </div>
