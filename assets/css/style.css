@@ -293,3 +293,8 @@ h1 {
 .infos-link {
     cursor: pointer;
 }
+
+.link-light {
+    text-decoration: none;
+    color: #f8f9fa;
+}

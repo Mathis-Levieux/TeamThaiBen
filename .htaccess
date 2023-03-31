@@ -4,7 +4,7 @@ RewriteRule ^galerie.php$ controllers/controller-gallery.php
 RewriteRule ^notre-histoire.php$ views/view-aboutus.php
 RewriteRule ^calendrier.php$ views/view-calendar.php
 RewriteRule ^actualites.php$ controllers/controller-news.php
-RewriteRule ^nous-rejoindre.php$ views/view-joinus.php
+RewriteRule ^nous-rejoindre.php$ controllers/controller-joinus.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /404.php [L,QSA]

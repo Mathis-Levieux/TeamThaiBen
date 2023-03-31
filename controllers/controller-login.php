@@ -60,7 +60,8 @@ class UserController
     {
         if (isset($_POST['g-recaptcha-response'])) {
             $captcha = $_POST['g-recaptcha-response'];
-            $secretKey = "6Ld8vxglAAAAAM02yGCAhm-242S7BGd3k1CKSFyx";
+            // récupère $secretKey dans le fichier env.php
+            global $secretKey;
             $ip = $_SERVER['REMOTE_ADDR'];
             $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $captcha . "&remoteip=" . $ip);
             $responseKeys = json_decode($response, true);

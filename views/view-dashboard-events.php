@@ -12,7 +12,7 @@
                     <a href="controller-login.php?logout"><img src="../assets/img/icon-logout.png" alt="logo" class="position-absolute top-0 end-0 logout-button"></a>
                 </div>
                 <div class="col-lg-12">
-                    <ul class="nav-item d-flex p-0 mt-2 gap-5 fw-bold text-center justify-content-center fs-7">
+                    <ul class="nav-item d-flex p-0 mt-2 gap-lg-5 fw-bold text-center justify-content-center fs-7">
                         <li id="addEvent" class="dashboard-tabs active-tab d-flex align-items-center">AJOUT D'ÉVÈNEMENTS</li>
                         <li id="deleteEvent" class="dashboard-tabs d-flex align-items-center">SUPPRESSION D'ÉVÈNEMENTS</li>
                         <li id="editEventTypes" class="dashboard-tabs d-flex align-items-center">GÉRER LES TYPES D'ÉVÈNEMENTS</li>

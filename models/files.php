@@ -69,4 +69,13 @@ class Files
         $query->bindValue(':id', $id, PDO::PARAM_INT);
         $query->execute();
     }
+
+    public function getFilesToShow(): array | bool
+    {
+        $sql = "SELECT * FROM sk_files WHERE files_show = 1";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $files = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $files;
+    }
 }

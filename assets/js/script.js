@@ -1,4 +1,3 @@
-console.log("script.js chargé");
 // GESTION DES IMAGES PREVIEW DANS LE DASHBOARD GALERIE
 
 

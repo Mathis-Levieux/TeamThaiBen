@@ -33,6 +33,7 @@
             <div class="container" id="addFileContent">
                 <div class="row h-100">
                     <div class="col-12 justify-content-center">
+                        <p class="mt-3 text-center">Vous pouvez ajouter ici des fichiers à télécharger sur la page "Rejoindre la Team Thai Ben".</p>
                         <form action='controller-dashboard-files.php' method="post" enctype="multipart/form-data">
 
                             <!-- affichage des erreurs -->
@@ -62,6 +63,10 @@
             <div class="container d-none" id="editFileContent">
                 <div class="row h-100">
                     <div class="col-12 justify-content-center">
+                        <p class="mt-3 text-center">Vous pouvez ici supprimer, télécharger et décider d'afficher ou non les fichiers sur la page "Rejoindre la Team Thai Ben".</p>
+
+
+
                         <!-- Affichage des erreurs -->
                         <?php if (!empty($_GET) && isset($file) && !empty($file->getErrorsMessage())) : ?>
                             <div class="alert alert-danger mt-3" role="alert">
@@ -77,44 +82,45 @@
                             <div class="alert alert-success mt-3"><?php echo $file->getSuccessMessage(); ?></div>
                         <?php endif; ?>
                         <!-- Fin affichage des messages de succès -->
-
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nom du fichier</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <!-- Affichage des fichiers -->
-                                <?php $displayFiles = new File();
-                                if ($displayFiles->showFiles() == false) : ?>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
                                     <tr>
-                                        <td colspan="2" class="text-center">Aucun fichier n'a été ajouté</td>
+                                        <th scope="col">Nom du fichier</th>
+                                        <th scope="col">Actions</th>
                                     </tr>
-                                <?php endif; ?>
-                                <?php
-                                foreach ($displayFiles->showFiles() as $file) : ?>
-                                    <tr>
-                                        <td><?= $file['files_name'] ?></td>
-                                        <td>
-                                            <a href="controller-dashboard-files.php?delete=<?= $file['files_id'] ?>" class="editFileButton btn btn-danger">Supprimer</a>
-                                            <a href="controller-dashboard-files.php?download=<?= $file['files_id'] ?>" class="btn btn-success">Télécharger</a>
-                                            <?php if ($file['files_show'] == 0) : ?>
-                                                <a href="controller-dashboard-files.php?show=<?= $file['files_id'] ?>" class="editFileButton2 btn btn-primary">Afficher</a>
-                                            <?php else : ?>
-                                                <a href="controller-dashboard-files.php?hide=<?= $file['files_id'] ?>" class="editFileButton2 btn btn-secondary">Masquer</a>
-                                            <?php endif; ?>
-                                        </td>
+                                </thead>
+                                <tbody>
+
+                                    <!-- Affichage des fichiers -->
+                                    <?php $displayFiles = new File();
+                                    if ($displayFiles->showFiles() == false) : ?>
+                                        <tr>
+                                            <td colspan="2" class="text-center">Aucun fichier n'a été ajouté</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                    <?php
+                                    foreach ($displayFiles->showFiles() as $file) : ?>
+                                        <tr>
+                                            <td><?= $file['files_name'] ?></td>
+                                            <td>
+                                                <a href="controller-dashboard-files.php?delete=<?= $file['files_id'] ?>" class="editFileButton btn btn-danger">Supprimer</a>
+                                                <a href="controller-dashboard-files.php?download=<?= $file['files_id'] ?>" class="btn btn-success">Télécharger</a>
+                                                <?php if ($file['files_show'] == 0) : ?>
+                                                    <a href="controller-dashboard-files.php?show=<?= $file['files_id'] ?>" class="editFileButton2 btn btn-primary">Afficher</a>
+                                                <?php else : ?>
+                                                    <a href="controller-dashboard-files.php?hide=<?= $file['files_id'] ?>" class="editFileButton2 btn btn-secondary">Masquer</a>
+                                                <?php endif; ?>
+                                            </td>
 
 
-                                    </tr>
-                                <?php endforeach; ?>
-                                <!-- Fin affichage des fichiers -->
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    <!-- Fin affichage des fichiers -->
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

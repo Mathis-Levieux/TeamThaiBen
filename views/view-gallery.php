@@ -32,7 +32,7 @@ include('templates/header.php');
                     echo '<h3 class="my-3 text-light">Les dernières photos ajoutées</h3>';
                     foreach ($somePhotos as $photo) {
                         echo '<div class="col-md-2 col-6 my-2">
-                        <img src="' . $photo['photos_path'] . '" alt="' . $photo['photos_name'] . '" class="img-fluid">
+                        <img src="' . $photo['photos_path'] . '" alt="Photo Team Thai Ben ' . $photo['photos_name'] . '" class="img-fluid">
                         </div>';
                     }
                     ?>
@@ -49,7 +49,7 @@ include('templates/header.php');
                     }
                     foreach ($photos as $photo) {
                         echo '<div class="col-md-2 col-6 my-2">
-                        <img src="' . $photo['photos_path'] . '" alt="' . $photo['photos_name'] . '" class="img-fluid">
+                        <img src="' . $photo['photos_path'] . '" alt="Photo Team Thai Ben de l\'Album ' . $photo['albums_name'] . '" class="img-fluid">
                         </div>';
                     }
                     ?>

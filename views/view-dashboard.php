@@ -6,9 +6,9 @@
 
         <div class="container rounded-3 div-dashboard col-lg-8 mt-5 mb-5 m-auto bg-light">
             <!-- Top dashboard -->
-            <div class="div-top-dashboard mt-1 border-bottom border-1 border-dark">
+            <div class="div-top-dashboard mt-1">
                 <div class="col-lg-12 fs-1 text-center position-relative">
-                    <span class="">Bienvenue <?= $user ?></span>
+                <span class="border-bottom border-2 border-warning-subtle thai-font">DASHBOARD</span>
                     <a href="controller-login.php?logout"><img src="../assets/img/icon-logout.png" alt="logo" class="position-absolute top-0 end-0 logout-button"></a>
                 </div>
             </div>
