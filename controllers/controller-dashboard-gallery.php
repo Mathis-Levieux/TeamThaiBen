@@ -123,7 +123,6 @@ class UploadController // Création d'une classe UploadController pour gérer l'
             $albumName = new Albums();
             $albumId = $_POST['AlbumSelect']; // Récupération de l'id de l'album
             $albumName = $albumName->getAlbumNameById($albumId); // Récupération du nom de l'album grâce à l'id
-            $albumName = $albumName['albums_name']; // Récupération du nom de l'album dans le tableau
             $deleteAlbum = new Albums();
             $deleteAlbum->deleteAlbum($albumId); // Suppression de l'album en base de données
             if (file_exists('../uploads/albums/' . $albumName)) { // Si le dossier existe

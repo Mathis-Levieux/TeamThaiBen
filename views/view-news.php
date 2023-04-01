@@ -16,7 +16,7 @@ include('templates/header.php');
       <?php
       if (empty($news)) {
         echo '<div class="container">';
-        echo '<h2 class="my-5 text-center">Aucune actualité pour le moment</h2>';
+        echo '<h2 class="my-5 text-center text-light">Aucune actualité pour le moment</h2>';
         echo '</div>';
       }
       $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
