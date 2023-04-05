@@ -156,7 +156,7 @@
                                                 Êtes-vous sûr de vouloir supprimer l'album ? Cela supprimera définitivement toutes les photos qu'il contient !
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" data-bs-dismiss="modal">Fermer</button>
                                                 <input id="editAlbumButton2" type="submit" name="submitDeleteAlbum" data-bs-toggle="modal" data-bs-target="#exampleModal" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Supprimer">
                                             </div>
                                         </div>

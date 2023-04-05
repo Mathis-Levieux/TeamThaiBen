@@ -14,13 +14,9 @@ include('templates/header.php');
                 <div class="col-md-6">
                     <h1 class="my-5">LE CLUB TEAM THAI BEN</h1>
                     <h2 class="mt-5 mb-4 thai-font text-center">L'HISTOIRE</h2>
-                    <p> Issu de la boxe anglaise, française, américaine et thaï, Ben enseigne toute
-                        Diplômé de Boxe Thaï en 2014, entraîneur dans de nombreux clubs.
-                        Dans un esprit loisir, familial, proche des élèves pour répondre à la personnalisation et perfectionnement,
-                        Ben met un point d'honneur à prendre soin de chacun, et de faire pratiquer avec patience et pédagogie.
-                        Le président tient au lien de sympathie qui règne entre les membres du club et n'hésite pas à organiser des sorties ou des voyages.
-                        La bonne humeur est de mise, le plaisir est partagé.
-                    </p>
+                    <p>Team Thai Ben est un club de boxe fondé en 2014 par Ben, un entraîneur diplômé en boxe thaïlandaise. Le club propose des cours pour tous les niveaux, du débutant au confirmé. Les cours sont dispensés dans une ambiance conviviale et familiale, où chacun peut progresser à son rythme tout en bénéficiant d'un encadrement de qualité.</p>
+                    <p>Au-delà de la pratique sportive, Team Thai Ben est avant tout un club où la bonne humeur et l'entraide règnent en maître. Le président met un point d'honneur à créer un lien de sympathie entre les membres du club, en organisant régulièrement des sorties et des voyages pour renforcer les liens entre les membres.</p>
+                    <p>En rejoignant Team Thai Ben, vous pourrez ainsi pratiquer la boxe dans une ambiance chaleureuse et stimulante, tout en bénéficiant d'un encadrement de qualité et de la bienveillance de l'équipe. Alors n'hésitez plus et rejoignez-nous pour une expérience sportive et humaine inoubliable !</p>
                 </div>
             </div>
         </div>

@@ -27,13 +27,13 @@
                     <div class="col-12 justify-content-center">
                         <form action="controller-dashboard-events.php" method="post">
                             <label class="mt-3" for="newEventTitle">Titre de l'évènement</label>
-                            <input type="text" name="newEventTitle" id="newEventTitle" class="mt-2 form-control" placeholder="Titre de l'évènement">
+                            <input type="text" name="newEventTitle" id="newEventTitle" class="mt-2 form-control" placeholder="Titre de l'évènement" value="<?= $_POST['newEventTitle'] ?? '' ?>">
                             <label class="mt-3" for="newEventDate">Date de l'évènement</label>
-                            <input type="date" name="newEventDate" class="mt-2 form-control" id="newEventDate" placeholder="Date de l'évènement">
+                            <input type="date" name="newEventDate" class="mt-2 form-control" id="newEventDate" placeholder="Date de l'évènement" value="<?= $_POST['newEventDate'] ?? '' ?>">
                             <label class="mt-3" for="newEventHour">Heure de l'évènement</label>
-                            <input type="time" name="newEventHour" class="mt-2 form-control" id="newEventHour" placeholder="Heure de l'évènement">
+                            <input type="time" name="newEventHour" class="mt-2 form-control" id="newEventHour" placeholder="Heure de l'évènement" value="<?= $_POST['newEventHour'] ?? '' ?>">
                             <label class="mt-3" for="newEventDesc">Description de l'évènement</label>
-                            <textarea name="newEventDesc" class="mt-2 form-control" id="newEventDesc" placeholder="Description de l'évènement"></textarea>
+                            <textarea name="newEventDesc" class="mt-2 form-control" id="newEventDesc" placeholder="Description de l'évènement"><?= $_POST['newEventDesc'] ?? '' ?></textarea>
                             <select name="newEventType" class="mt-2 form-select" aria-label="Default select example">
                                 <option selected disabled value="">Sélectionne un album</option>
                                 <?php
@@ -108,7 +108,7 @@
                                     $eventTypeSelect->showSelectEventType(); // Affichage du select des albums
                                     ?>
                                 </select>
-                                <input id="editEventTypesButton2" type="submit" name="submitDeleteEventType" class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
+                                <input id="editEventTypesButton2" type="submit" name="submitDeleteEventType" class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Supprimer">
                             </form>
 
                             <!-- Affichage des erreurs -->

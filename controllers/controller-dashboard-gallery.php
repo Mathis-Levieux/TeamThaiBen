@@ -248,7 +248,7 @@ function showPhotosInAdminDashboard()
                 foreach ($photos as $photo) {
                     $photoPath = '../uploads/albums/' . $photo['albums_name'] . '/' . $photo['photos_name'] . '';
                     echo '<div class="col-lg-3 col-sm-6 col-12 mb-3">';
-                    echo '<div class="card lg-4 shadow-sm">';
+                    echo '<div class="card lg-4 border shadow-sm">';
                     echo '<img style="height: 200px" class="card-img-top" src="' . $photoPath . '" alt="Club de Boxe Thai de l\'Album ' . $photo['albums_name'] . '">';
                     echo '<div class="card-body">';
                     echo '<div class="d-flex justify-content-between align-items-center">';

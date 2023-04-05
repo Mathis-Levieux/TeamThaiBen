@@ -44,14 +44,14 @@
         <form action="controller-login.php" id="my-form" method="POST" class="mt-5 w-25 m-auto">
             <div class="mb-3">
                 <label for="login" class="form-label col-lg-6">Login</label>
-                <input name="login" type="login" class="form-control" id="login" aria-describedby="emailHelp">
+                <input name="login" type="login" class="form-control" id="login">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Mot de passe</label>
-                <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+                <input name="password" type="password" class="form-control" id="password">
             </div>
 
-            <button data-callback='onSubmit' data-action='submit' data-sitekey="6Ld8vxglAAAAAK6vmsqMrz4RDQnuIQi4CefZLoYb" class="g-recaptcha btn btn-primary">Se connecter</button>
+            <button data-callback='onSubmit' data-action='submit' data-sitekey="6Ld8vxglAAAAAK6vmsqMrz4RDQnuIQi4CefZLoYb" class="g-recaptcha mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold">Se connecter</button>
         </form>
     </main>
 

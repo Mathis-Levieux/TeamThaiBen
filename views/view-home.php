@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-md-7">
                     <h2 class="thai-font fs-1 text-center text-md-start mb-4">LE CLUB</h2>
-                    <p class="text-center text-md-start mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam ligula euismod mauris dignissim, a commodo purus consequat. Donec euismod enim quis augue maximus, sed sodales lectus fermentum. Aliquam ornare turpis sed euismod hendrerit.</p>
+                    <p class="text-center text-md-start mb-4">Team Thai Ben est un club de boxe fondé en 2014 par Ben, un entraîneur diplômé en boxe thaïlandaise. Le club propose des cours pour tous les niveaux, du débutant au confirmé. Les cours sont dispensés dans une ambiance conviviale et familiale, où chacun peut progresser à son rythme tout en bénéficiant d'un encadrement de qualité...</p>
                     <a href="notre-histoire.php"><button class="my-3 btn btn-outline-dark rounded-pill border-2 fw-bold" type="button">En savoir plus</button></a>
                 </div>
             </div>
