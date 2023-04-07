@@ -4,9 +4,6 @@
 class Files
 {
     private object $db;
-    private string $files_name;
-    private int $files_id;
-    private int $files_show;
 
     public function __construct()
     {
@@ -23,7 +20,11 @@ class Files
         $this->$name = $value;
     }
 
-    public function uploadFile($name): void
+    /** Upload un fichier dans la base de données
+     * @param string $name
+     * @return void
+     */
+    public function uploadFile(string $name): void
     {
         $sql = "INSERT INTO sk_files (files_name) VALUES (:name)";
         $query = $this->db->prepare($sql);

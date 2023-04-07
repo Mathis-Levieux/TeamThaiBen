@@ -255,6 +255,7 @@ h1 {
 @media screen and (max-width: 400px) {
     .dashboard-tabs {
         padding: 0.5rem 0rem;
+        font-size: 0.7rem;
     }
 }
 

@@ -9,6 +9,8 @@ class Events
         $this->db = Database::connect();
     }
 
+
+
     public function getEvents()
     {
         $sql = "SELECT * FROM sk_events";
@@ -86,5 +88,4 @@ class Events
             'id' => $id
         ]);
     }
-
 }
