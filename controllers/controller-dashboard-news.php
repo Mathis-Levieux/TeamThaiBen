@@ -132,26 +132,24 @@ class NewsController
 
     private function verifyTitle(string $title): array
     {
-        // On vérifie que le titre n'est pas vide
         if (empty($title)) {
             $this->_errors[] = 'Le titre de l\'article ne peut pas être vide';
-        } else if (strlen($title) > 300) { // On vérifie que le titre n'est pas trop long
+        } else if (strlen($title) > 300) {
             $this->_errors[] = 'Le titre de l\'article ne peut pas dépasser 100 caractères';
         } else {
-            $title = htmlspecialchars(ucfirst(trim($title))); // On supprime les espaces en début et fin de chaîne, on met la première lettre en majuscule et on convertit les caractères spéciaux en entités HTML
+            $title = htmlspecialchars(ucfirst(trim($title)));
         }
         return $this->_errors;
     }
 
     private function verifyContent(string $content): array
     {
-        // On vérifie que le contenu n'est pas vide
         if (empty($content)) {
             $this->_errors[] = 'Le contenu de l\'article ne peut pas être vide';
-        } else if (strlen($content) > 3000) { // On vérifie que le contenu n'est pas trop long
+        } else if (strlen($content) > 3000) {
             $this->_errors[] = 'Le contenu de l\'article ne peut pas dépasser 3000 caractères';
         } else {
-            $content = trim($content); // On supprime les espaces en début et fin de chaîne
+            $content = trim($content);
         }
         return $this->_errors;
     }
@@ -171,6 +169,13 @@ class NewsController
         return $this->_errors;
     }
 
+
+    /**
+     * Fonction permettant de supprimer un article
+     * @param int $id
+     * @return void
+     * 
+     */
     public function deleteNews(int $id): void
     {
         // On vérifie que la news existe

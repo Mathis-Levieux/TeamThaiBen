@@ -28,16 +28,20 @@ class Albums
         return $album; // On retourne le résultat
     }
 
-
-    public function getAlbumNameById(int $id) // On crée une méthode qui prend en paramètre $id et qui retourne un tableau associatif
+    /**
+     * Récupère le nom d'un album en fonction de son id
+     * @param int $id
+     * @return string
+     */
+    public function getAlbumNameById(int $id)
     {
         $sql = "SELECT albums_name FROM sk_albums WHERE albums_id = :id";
         $query = $this->_db->prepare($sql);
         $query->execute([
             'id' => $id
         ]);
-        $albumName = $query->fetch(PDO::FETCH_COLUMN); // On stocke le résultat dans la variable $albumName
-        return $albumName; // On retourne le résultat
+        $albumName = $query->fetch(PDO::FETCH_COLUMN);
+        return $albumName;
     }
 
     public function getAlbumsByName($name) // On crée une méthode qui prend en paramètre $name et qui retourne un tableau associatif
@@ -51,7 +55,12 @@ class Albums
         return $album; // On retourne le résultat
     }
 
-    public function getAlbums() // On crée une méthode qui retourne un tableau associatif
+
+    /**
+     * Récupère tous les albums
+     * @return array
+     */
+    public function getAlbums()
     {
         $sql = "SELECT * FROM sk_albums";
         $query = $this->_db->prepare($sql);

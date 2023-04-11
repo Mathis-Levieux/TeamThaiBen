@@ -45,6 +45,11 @@ class News
         ]);
     }
 
+    /**
+     * fonction permettant de récupérer toutes les news
+     * 
+     * @return array
+     */
     public function getNews(): array
     {
         $query = $this->_db->prepare('SELECT * FROM sk_news');
@@ -79,6 +84,14 @@ class News
         return $news;
     }
 
+
+    /**
+     * fonction permettant de supprimer un article
+     * 
+     * @param int $id
+     * @return void
+     * 
+     */
     public function deleteNews(int $id): void
     {
         $query = $this->_db->prepare('DELETE FROM sk_news WHERE news_id = :id');
@@ -87,6 +100,16 @@ class News
         ]);
     }
 
+    /**
+     * fonction permettant de modifier une news
+     * 
+     * @param int $id
+     * @param string $title
+     * @param string $content
+     * @param int $type
+     * 
+     * @return void
+     */
     public function modifyNews(int $id, string $title, string $content, int $type): void
     {
         $query = $this->_db->prepare('UPDATE sk_news SET news_title = :title, news_content = :content, news_type_id = :type WHERE news_id = :id');
@@ -98,6 +121,11 @@ class News
         ]);
     }
 
+    /**
+     * fonction permettant de récupérer les news triées par date et par id
+     * 
+     * @return array|bool
+     */
     public function getNewsSortedByDateAndId(): array | bool
     {
         $query = $this->_db->prepare('SELECT * FROM sk_news ORDER BY news_date DESC, news_id DESC');

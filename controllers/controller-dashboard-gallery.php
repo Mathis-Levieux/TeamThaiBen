@@ -210,7 +210,11 @@ if (isset($_POST['submitNewAlbum']) && isset($_POST['NewAlbum'])) { // Si le bou
 }
 
 
-// Affichage du select des albums
+/**
+ * Fonction pour afficher les albums dans un select
+ * 
+ * @return void
+ */
 function showSelectAlbums()
 {
     $albums = new Albums();

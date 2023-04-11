@@ -119,7 +119,7 @@
                             <h3 class="mt-3">Type d'article</h3>
 
                             <!-- Affichage du select -->
-                            <select class="col-lg-3" name="newsType" id="newsType">
+                            <select class="col-lg-6" name="newsType" id="newsType">
                                 <option selected disabled>Choisissez un type d'article</option>
                                 <?php foreach ($newsTypes as $newsType) : ?>
                                     <option value="<?= $newsType['news_type_id'] ?>"><?= $newsType['news_type'] ?></option>
@@ -128,7 +128,7 @@
                             <!-- Fin affichage du select -->
 
                             <h3 class="mt-3">Titre</h3>
-                            <input placeholder="Titre de l'article" class="col-lg-3" type="text" name="newsTitle" id="newsTitle" value="<?= $_POST['newsTitle'] ?? '' ?>"></input>
+                            <input placeholder="Titre de l'article" class="col-lg-6" type="text" name="newsTitle" id="newsTitle" value="<?= $_POST['newsTitle'] ?? '' ?>"></input>
                             <h3 class="mt-3">Contenu</h3>
                             <textarea name="newsContent" id="newsContent"><?= $_POST['newsContent'] ?? '' ?></textarea>
                             <input id="addNewsButton" type="submit" name="submitNews" class="mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">

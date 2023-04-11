@@ -37,7 +37,8 @@
                             <?php
                             showSelectAlbums(); // Affichage du select des albums
                             ?>
-                            <input type="submit" name="submitPhotos" class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
+                            <input type="submit" name="submitPhotos" class="mt-3 btn btn-outline-dark rounded-pill 
+                            border-2 fw-bold" value="Envoyer">
                             <div class="preview-container d-flex flex-wrap gap-2 mt-3"></div>
                         </form>
 
