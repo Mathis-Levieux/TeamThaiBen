@@ -110,7 +110,7 @@ class Albums
         return $photos;
     }
 
-    public function modifyAlbumName($name, $id)
+    public function modifyAlbumName(string $name, int $id): void
     {
         $sql = "UPDATE sk_albums SET albums_name = :name WHERE albums_id = :id";
         $query = $this->_db->prepare($sql);

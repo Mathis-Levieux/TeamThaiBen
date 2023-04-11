@@ -155,7 +155,6 @@ class UploadController // Création d'une classe UploadController pour gérer l'
                 $albumName = new Albums();
                 $albumId = $_POST['AlbumSelect']; // Récupération de l'id de l'album
                 $albumName = $albumName->getAlbumNameById($albumId); // Récupération du nom de l'album grâce à l'id
-                $albumName = $albumName['albums_name']; // Récupération du nom de l'album dans le tableau
                 $newAlbumName = $_POST['NewAlbumName']; // Récupération du nouveau nom de l'album
                 $modifyAlbumName = new Albums();
                 $modifyAlbumName->modifyAlbumName($newAlbumName, $albumId); // Modification du nom de l'album en base de données

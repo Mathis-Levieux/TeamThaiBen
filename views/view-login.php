@@ -17,7 +17,7 @@
     </script>
 </head>
 
-<body class="body-login">
+<body class="body-login bg bg-dark">
     <?php include('templates/header.php'); ?>
 
 
@@ -41,7 +41,7 @@
         <?php endif; ?>
         <!-- Formulaire de connexion -->
 
-        <form action="controller-login.php" id="my-form" method="POST" class="mt-5 w-25 m-auto">
+        <form action="controller-login.php" id="my-form" method="POST" class="text-light mt-5 w-25 m-auto">
             <div class="mb-3">
                 <label for="login" class="form-label col-lg-6">Login</label>
                 <input name="login" type="login" class="form-control" id="login">
@@ -51,7 +51,7 @@
                 <input name="password" type="password" class="form-control" id="password">
             </div>
 
-            <button data-callback='onSubmit' data-action='submit' data-sitekey="6Ld8vxglAAAAAK6vmsqMrz4RDQnuIQi4CefZLoYb" class="g-recaptcha mt-3 mb-3 btn btn-outline-dark rounded-pill border-2 fw-bold">Se connecter</button>
+            <button data-callback='onSubmit' data-action='submit' data-sitekey="6Ld8vxglAAAAAK6vmsqMrz4RDQnuIQi4CefZLoYb" class="g-recaptcha mt-3 mb-3 btn btn-outline-light rounded-pill border-2 fw-bold">Se connecter</button>
         </form>
     </main>
 

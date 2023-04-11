@@ -123,7 +123,7 @@ class NewsController
             if (empty($this->_errors)) {
                 $news = new News();
                 $news->addNews($title, $content, $type, $date);
-                $this->_success = 'L\'article a bien été créée';
+                $this->_success = 'L\'article a bien été créé';
             }
         } else {
             $this->_errors[] = 'Veuillez remplir tous les champs';
