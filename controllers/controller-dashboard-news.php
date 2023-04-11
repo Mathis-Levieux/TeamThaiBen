@@ -146,8 +146,6 @@ class NewsController
     {
         if (empty($content)) {
             $this->_errors[] = 'Le contenu de l\'article ne peut pas être vide';
-        } else if (strlen($content) > 3000) {
-            $this->_errors[] = 'Le contenu de l\'article ne peut pas dépasser 3000 caractères';
         } else {
             $content = trim($content);
         }
