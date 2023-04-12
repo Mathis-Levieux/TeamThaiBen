@@ -11,12 +11,10 @@ class Albums
 
     public function getAlbumsById($id) // On crée une méthode qui prend en paramètre $id et qui retourne un tableau associatif
     {
-        $sql = "SELECT * 
+        $sql = "SELECT *
         FROM sk_photos 
-        INNER JOIN sk_albums_contains_photos 
-        ON sk_photos.photos_id = sk_albums_contains_photos.photos_id 
-        INNER JOIN sk_albums 
-        ON sk_albums_contains_photos.albums_id = sk_albums.albums_id 
+        NATURAL JOIN sk_albums_contains_photos 
+        NATURAL JOIN sk_albums 
         WHERE sk_albums.albums_id = :id
         ";
         $query = $this->_db->prepare($sql);
