@@ -35,7 +35,7 @@
                             <label class="mt-3" for="newEventDesc">Description de l'évènement</label>
                             <textarea name="newEventDesc" class="mt-2 form-control" id="newEventDesc" placeholder="Description de l'évènement"><?= $_POST['newEventDesc'] ?? '' ?></textarea>
                             <select name="newEventType" class="mt-2 form-select" aria-label="Default select example">
-                                <option selected disabled value="">Sélectionne un album</option>
+                                <option selected disabled value="">Sélectionne un type d'évènement</option>
                                 <?php
                                 $newEventSelect = new EventsController(); // Création d'un nouvel objet
                                 $newEventSelect->showSelectEventType(); // Affichage du select des albums
@@ -68,7 +68,7 @@
                 <div>
                     <div class="row">
                         <div class="col-12 justify-content-center">
-                            <h3 class="mt-3">Ajout d'un type d'event</h3 class="mt-3">
+                            <h3 class="mt-3">Ajout d'un type d'évènement</h3 class="mt-3">
                             <form method="post">
                                 <input type="text" name="NewEventType" class="form-control" placeholder="Type d'évènement">
                                 <input id="editEventTypesButton" type="submit" name="submitNewEventType" class="mt-3 btn btn-outline-dark rounded-pill border-2 fw-bold" value="Envoyer">
@@ -98,7 +98,7 @@
                 <div>
                     <div class="row">
                         <div class="col-12 justify-content-center">
-                            <h3 class="mt-3">Suppression d'un type d'event</h3 class="mt-3">
+                            <h3 class="mt-3">Suppression d'un type d'évènement</h3 class="mt-3">
 
                             <form action="controller-dashboard-events.php" method="post">
                                 <select name="deleteEventType" class="form-select mt-3" aria-label="Default select example">

@@ -9,6 +9,9 @@ include('templates/header.php');
 
     <div class="container">
       <h1 class="my-5 text-center text-light">Actualités</h1>
+      <?php if (isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])) {
+        echo '<a class="inter-font dashboard-return" href="actualites.php"><span class="p-2 text-center bg bg-danger">RETOUR</span></a>';
+      } ?>
     </div>
 
     <!-- container pour intégrer les news -->

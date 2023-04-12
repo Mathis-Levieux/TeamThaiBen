@@ -1,4 +1,20 @@
-<?php require('../controllers/controller-calendar.php'); ?>
+<?php require('../controllers/controller-calendar.php');
+require('../models/news.php');
+// On récupère la dernière news
+$news = new News();
+$lastNews = $news->getLastNews();
+$formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+
+function reduceString(string $string): string
+{
+    $string = substr($string, 0, 600); // On coupe la chaîne à 600 caractères
+    $string = substr($string, 0, strrpos($string, ' ')); // On supprime les mots coupés
+    $string = $string . '...'; // On ajoute des points de suspension
+    return $string;
+}
+
+$lastNews['news_content'] = reduceString($lastNews['news_content']);
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -33,15 +49,42 @@
                 </div>
                 <div class="col-md-7">
                     <h2 class="thai-font fs-1 text-center text-md-start mb-4">LE CLUB</h2>
-                    <p class="text-center text-md-start mb-4">Team Thai Ben est un club de boxe fondé en 2014 par Ben, un entraîneur diplômé en boxe thaïlandaise. Le club propose des cours pour tous les niveaux, du débutant au confirmé. Les cours sont dispensés dans une ambiance conviviale et familiale, où chacun peut progresser à son rythme tout en bénéficiant d'un encadrement de qualité...</p>
+                    <p class="text-center text-md-start mb-4">Team Thai Ben est un club de boxe fondé en 2014 au Havre par Ben, un entraîneur diplômé en boxe thaïlandaise. Le club propose des cours pour tous les niveaux, du débutant au confirmé. Les cours sont dispensés dans une ambiance conviviale et familiale, où chacun peut progresser à son rythme tout en bénéficiant d'un encadrement de qualité...</p>
                     <a href="notre-histoire.php"><button class="my-3 btn btn-outline-dark rounded-pill border-2 fw-bold" type="button">En savoir plus</button></a>
                 </div>
             </div>
         </section>
 
+        <!-- Dernière actualité -->
+        <section class="container my-5 py-5">
+            <h3 class="thai-font fs-1 text-center mb-4 text-light">DERNIÈRE ACTUALITÉ</h3>
+            <div class="row">
+                <?php
+                if ($lastNews) {
+                    echo '<div class="container news-container mt-4">
+                        <div class="card p-4 bg bg-dark">
+                        <div class="card-body">
+                        <h2 class="card-title title-container">' . $lastNews['news_title'] . '</h2>
+                        <p class="card-subtitle text-light my-3">Publié le ' . $formatter->format(new DateTime($lastNews['news_date'])) . '</p>
+                        <div class="card-text content-container">' . $lastNews['news_content'] . '</div>
+                        <a href="actualites.php"><button class="mt-2 mb-2 btn btn-outline-light rounded-pill border-2 fw-bold">Aller aux actualités</button></a>
+                        </div>
+                        </div>
+                        </div>';
+                }
+                ?>
+            </div>
+        </section>
+
+
+
+
+
+
+
         <!-- Calendrier -->
 
-        <section class="">
+        <section class="my-5">
 
             <?php displayWeekWithEvents(date('Y-m-d')); ?>
         </section>

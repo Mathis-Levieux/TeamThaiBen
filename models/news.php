@@ -84,6 +84,14 @@ class News
         return $news;
     }
 
+    public function getLastNews(): array | bool
+    {
+        $query = $this->_db->prepare('SELECT * FROM sk_news ORDER BY news_date DESC LIMIT 1');
+        $query->execute();
+        $news = $query->fetch(PDO::FETCH_ASSOC);
+        return $news;
+    }
+
 
     /**
      * fonction permettant de supprimer un article
