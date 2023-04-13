@@ -28,7 +28,7 @@
     <div class="modal-dialog">
         <div class="modal-content bg bg-dark">
             <div class="modal-header">
-                <h3 class="modal-title fs-5" id="exampleModalLabel">MENTIONS LEGALES</h1>
+                <h3 class="modal-title fs-5 text-center text-light" id="exampleModalLabel">MENTIONS LEGALES</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-light">
