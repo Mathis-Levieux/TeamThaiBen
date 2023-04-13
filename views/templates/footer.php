@@ -26,12 +26,12 @@
 <!-- Modal -->
 <div class="modal modal-xl fade" id="mentionsLegales" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content bg bg-dark">
             <div class="modal-header">
                 <h3 class="modal-title fs-5" id="exampleModalLabel">MENTIONS LEGALES</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-light">
                 Le site est édité par Team Thai Ben, association loi 1901 enregistrée à la préfecture du Havre sous le numéro [XX-XXX-XX].<br><br>
                 Le siège social est situé au Gymnase Louis Blanc - Rue Louis Blanc, 76610 Le Havre, France.<br><br>
                 Téléphone : 06 09 44 57 96<br><br>
