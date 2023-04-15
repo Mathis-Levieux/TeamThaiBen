@@ -22,7 +22,7 @@ html {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 /* Début landing page */
@@ -290,6 +290,14 @@ h1 {
 .card-text {
     font-size: 18px;
     line-height: 1.5;
+    font-family: 'Inter', sans-serif;
+}
+
+@media screen and (max-width: 600px) {
+    .card-text {
+        font-size: 16px;
+        font-family: 'Inter', sans-serif;
+    }
 }
 
 .infos-link {
