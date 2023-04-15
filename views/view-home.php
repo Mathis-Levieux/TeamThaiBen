@@ -13,7 +13,9 @@ function reduceString(string $string): string
     return $string;
 }
 
-$lastNews['news_content'] = reduceString($lastNews['news_content']);
+if (!empty($lastNews)) {
+    $lastNews['news_content'] = reduceString($lastNews['news_content']);
+}
 ?>
 
 <!DOCTYPE html>
