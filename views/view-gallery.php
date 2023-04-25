@@ -25,6 +25,8 @@ include('templates/header.php');
                 </select>
                 <input class="my-3 btn btn-outline-light rounded-pill border-2 fw-bold" type="submit" value="Valider">
             </form>
+
+
             <!-- Affichage des 5 dernières photos -->
             <?php if (!isset($_POST['album'])) : ?>
                 <div class="row">
@@ -38,6 +40,8 @@ include('templates/header.php');
                     ?>
                 </div>
             <?php endif; ?>
+
+
 
             <!-- Affichage des photos de l'album choisi -->
             <?php if (isset($_POST['album'])) : ?>
@@ -60,6 +64,15 @@ include('templates/header.php');
     </main>
     <?php include('templates/footer.php'); ?>
 
+
+    <script>
+
+        // AJAX pour afficher les photos de l'album choisi
+        
+
+
+
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="../assets/js/script.js"></script>
 
