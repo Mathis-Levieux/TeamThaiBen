@@ -59,19 +59,46 @@ include('templates/header.php');
                     ?>
                 </div>
             <?php endif; ?>
-
+        </div>
+        <div id="photosContainer"></div>
 
     </main>
     <?php include('templates/footer.php'); ?>
 
 
     <script>
-
         // AJAX pour afficher les photos de l'album choisi
-        
 
+        const selectAlbum = document.getElementById('album');
+        selectAlbum.addEventListener('change', loadPhotos);
 
+        function loadPhotos() {
+            // Récupérer la valeur de l'album sélectionné dans le select
+            const albumId = selectAlbum.value;
 
+            // Configurer les options de la requête fetch
+            const requestOptions = {
+                method: 'POST',
+                body: JSON.stringify({
+                    albumId
+                }) // Envoyer l'albumId dans le corps de la requête
+            };
+
+            // Effectuer la requête fetch
+            fetch('../controllers/ajax.php', requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de la requête : ' + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(images => {
+                    document.getElementById('photosContainer').innerHTML = images;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="../assets/js/script.js"></script>
