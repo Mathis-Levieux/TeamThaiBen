@@ -23,13 +23,13 @@ include('templates/header.php');
                     }
                     ?>
                 </select>
-                <input class="my-3 btn btn-outline-light rounded-pill border-2 fw-bold" type="submit" value="Valider">
+                <!-- <input class="my-3 btn btn-outline-light rounded-pill border-2 fw-bold" type="submit" value="Valider"> -->
             </form>
 
 
             <!-- Affichage des 5 dernières photos -->
             <?php if (!isset($_POST['album'])) : ?>
-                <div class="row">
+                <div id="lastPhotos" class="row">
                     <?php
                     echo '<h3 class="my-3 text-light">Les dernières photos ajoutées</h3>';
                     foreach ($somePhotos as $photo) {
@@ -44,8 +44,8 @@ include('templates/header.php');
 
 
             <!-- Affichage des photos de l'album choisi -->
-            <?php if (isset($_POST['album'])) : ?>
-                <div class="row">
+            <div id="photosContainer" class="row">
+                <?php if (isset($_POST['album'])) : ?>
                     <?php
                     echo '<h3 class="my-3 text-light">Album ' . $albumName . '</h3>';
                     if (empty($photos)) {
@@ -57,10 +57,9 @@ include('templates/header.php');
                         </div>';
                     }
                     ?>
-                </div>
-            <?php endif; ?>
+            </div>
+        <?php endif; ?>
         </div>
-        <div id="photosContainer"></div>
 
     </main>
     <?php include('templates/footer.php'); ?>
@@ -80,9 +79,10 @@ include('templates/header.php');
             const requestOptions = {
                 method: 'POST',
                 body: JSON.stringify({
-                    albumId
-                }) // Envoyer l'albumId dans le corps de la requête
+                    albumId: albumId // Envoyer l'albumId dans le corps de la requête avec la clé "albumId"
+                })
             };
+
 
             // Effectuer la requête fetch
             fetch('../controllers/ajax.php', requestOptions)
@@ -93,6 +93,7 @@ include('templates/header.php');
                     return response.text();
                 })
                 .then(images => {
+                    document.getElementById('lastPhotos').style.display = 'none';
                     document.getElementById('photosContainer').innerHTML = images;
                 })
                 .catch(error => {

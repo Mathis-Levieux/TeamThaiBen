@@ -242,7 +242,7 @@ function showPhotosInAdminDashboard()
         } else {
             $albumId = $_POST['AlbumSelect']; // Récupération de l'id de l'album
             $photos = new Albums();
-            $photos = $photos->showPhotosFromAlbum($albumId); // Récupération des photos de l'album grâce à l'id
+            $photos = $photos->getAlbumsById($albumId); // Récupération des photos de l'album grâce à l'id
             echo '<form class="row" action="controller-dashboard-gallery.php" method="post">';
             $count = 1; // Compteur pour le nom de la photo
             if (empty($photos)) { // Si l'album est vide
