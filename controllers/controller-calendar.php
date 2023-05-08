@@ -71,13 +71,17 @@ function displayWeekWithEvents($date)
         echo "<div class='mt-4 m-2 p-0 daywrapper col-lg col-sm-12'>";
         echo "<div class='m-2 thai-font fs-5 bg-light text-black border-3 rounded-top-3 day justify-content-center d-flex align-items-center'>" . ucwords($formatter4->format(strtotime($i))) . "</div>";
 
-
-        // Vérifie si c'est un lundi ou un jeudi pour afficher l'entraînement
-        if (date('N', strtotime($i)) == 1 || date('N', strtotime($i)) == 4) {
-            echo "<p class='cell trainingday mt-4 p-3'>Entraînement de 19h00 à 21h00<img class='punchbutton' src='../assets/img/punchbutton-removebg-preview.png'></p>";
+        // Vérifie si une date correspond à un jour férié
+        if (array_key_exists($dateToCheck, $publicHolidaysArray)) {
+            echo "<p class='cell mt-4 p-3'>Jour férié : " . $publicHolidaysArray[$dateToCheck] . "</p>";
         }
-        // Vérifie si c'est un mardi pour afficher l'entraînement
-        if (date('N', strtotime($i)) == 2) {
+
+        // Vérifie si c'est un lundi ou un jeudi pour afficher l'entraînement et que le jour n'est pas un jour férié
+        if ((date('N', strtotime($i)) == 1 || date('N', strtotime($i)) == 4) && !array_key_exists($dateToCheck, $publicHolidaysArray)) {
+            echo "<p class='cell trainingday mt-4 p-3'>Entraînement de 19h à 21h<img class='punchbutton' src='../assets/img/punchbutton-removebg-preview.png'></p>";
+        }
+        // Vérifie si c'est un mardi pour afficher l'entraînement et que le jour n'est pas un jour férié
+        if ((date('N', strtotime($i)) == 2) && !array_key_exists($dateToCheck, $publicHolidaysArray)) {
             echo "<p class='cell trainingday mt-4 p-3'>Entraînement de 18h30 à 20h30<img class='punchbutton' src='../assets/img/punchbutton-removebg-preview.png'></p>";
         }
 
@@ -91,10 +95,6 @@ function displayWeekWithEvents($date)
             }
         }
 
-        // Vérifie si une date correspond à un jour férié
-        if (array_key_exists($dateToCheck, $publicHolidaysArray)) {
-            echo "<p class='cell mt-4 p-3'>Jour férié : " . $publicHolidaysArray[$dateToCheck] . "</p>";
-        }
         echo "</div>"; // Fin jour
     }
     echo "</div>"; // Fin row
