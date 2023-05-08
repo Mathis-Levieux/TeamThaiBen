@@ -2,15 +2,14 @@
 
 require('../config/env.php');
 require('../helpers/Database.php');
+require('../models/albums.php');
 require('../models/photos.php');
 
+$AlbumList = new Albums();
+$albums = $AlbumList->getAlbums();
+
+$somePhotos = new Photos();
+$somePhotos = $somePhotos->getSomePhotos(5);
 
 
-// Appeler la fonction pour récupérer les images
-$photo = new Photos(); // Instancier votre classe Photo
-$images = $photo->getSomePhotos(5); // Appeler la fonction avec le nombre de photos
-
-// Afficher les images
-foreach ($images as $image) {
-    echo '<img src="' . $image['photos_path'] . '" alt="' . $image['photos_name'] . '">';
-}
+include('../views/view-test.php');

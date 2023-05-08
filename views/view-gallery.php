@@ -1,6 +1,20 @@
 <?php
 $title = 'Galerie - Team Thai Ben';
-include('templates/head.php');
+?>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/bootstrap-5.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../node_modules/photoswipe/dist/photoswipe.css">
+    <title><?= $title ?></title>
+</head>
+<?php
 include('templates/header.php');
 ?>
 
@@ -33,9 +47,11 @@ include('templates/header.php');
                     <?php
                     echo '<h3 class="my-3 text-light">Les dernières photos ajoutées</h3>';
                     foreach ($somePhotos as $photo) {
-                        echo '<div class="col-md-2 col-6 my-2">
+                        echo '<span class="col-md-2 col-6 my-2">
+                        <a href="' . $photo['photos_path'] . '" data-pswp-width="800" data-pswp-height="800" target="_blank">
                         <img src="' . $photo['photos_path'] . '" alt="Photo Team Thai Ben ' . $photo['photos_name'] . '" class="img-fluid">
-                        </div>';
+                        </a>
+                        </span>';
                     }
                     ?>
                 </div>
@@ -64,7 +80,15 @@ include('templates/header.php');
     </main>
     <?php include('templates/footer.php'); ?>
 
-
+    <script type="module">
+        import PhotoSwipeLightbox from '../node_modules/photoswipe/dist/photoswipe-lightbox.esm.js';
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: '#lastPhotos',
+            children: 'a',
+            pswpModule: () => import('../node_modules/photoswipe/dist/photoswipe.esm.js')
+        });
+        lightbox.init();
+    </script>
     <script>
         // AJAX pour afficher les photos de l'album choisi
 
