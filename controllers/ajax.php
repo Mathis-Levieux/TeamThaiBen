@@ -27,9 +27,11 @@ if ($albumId !== null) {
         echo '<p class="text-light">Aucune photo dans cet album</p>';
     }
     foreach ($photos as $photo) {
-        echo '<div class="col-md-2 col-6 my-2">
-                        <img src="' . $photo['photos_path'] . '" alt="Photo Team Thai Ben de l\'Album ' . $photo['albums_name'] . '" class="img-fluid">
-             </div>';
+        echo '<span class="col-md-2 col-6 my-2">
+        <a href="' . $photo['photos_path'] . '" data-pswp-width="850" data-pswp-height="850" target="_blank">
+        <img src="' . $photo['photos_path'] . '" alt="Photo Team Thai Ben de l\'Album ' . $photo['albums_name'] . '" class="img-fluid">
+        </a>
+        </span>';
     }
 } else {
     // Gérer le cas où "albumId" n'est pas défini dans la requête

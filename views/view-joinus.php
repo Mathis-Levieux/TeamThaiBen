@@ -48,7 +48,7 @@ include('templates/header.php');
           <h3 class="mt-5">Tarifs :</h3>
           <ul>
             <li>Abonnement annuel adulte : 200 €</li>
-            <li>Abonnement annuel enfant : 150 €</li>
+            <li>Abonnement annuel étudiant : 170 €</li>
           </ul>
         </div>
       </div>

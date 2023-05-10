@@ -308,3 +308,8 @@ h1 {
     text-decoration: none;
     color: #f8f9fa;
 }
+
+.img-fluid-second {
+    max-width: 100%;
+    height: -webkit-fill-available;
+}

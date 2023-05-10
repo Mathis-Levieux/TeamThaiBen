@@ -48,10 +48,11 @@ include('templates/header.php');
                     echo '<h3 class="my-3 text-light">Les dernières photos ajoutées</h3>';
                     foreach ($somePhotos as $photo) {
                         echo '<span class="col-md-2 col-6 my-2">
-                        <a href="' . $photo['photos_path'] . '" data-pswp-width="800" data-pswp-height="800" target="_blank">
+                        <a href="' . $photo['photos_path'] . '" data-pswp-width="850" data-pswp-height="850" target="_blank">
                         <img src="' . $photo['photos_path'] . '" alt="Photo Team Thai Ben ' . $photo['photos_name'] . '" class="img-fluid">
                         </a>
-                        </span>';
+                        </span>
+                        ';
                     }
                     ?>
                 </div>
@@ -61,21 +62,8 @@ include('templates/header.php');
 
             <!-- Affichage des photos de l'album choisi -->
             <div id="photosContainer" class="row">
-                <?php if (isset($_POST['album'])) : ?>
-                    <?php
-                    echo '<h3 class="my-3 text-light">Album ' . $albumName . '</h3>';
-                    if (empty($photos)) {
-                        echo '<p class="text-light">Aucune photo dans cet album</p>';
-                    }
-                    foreach ($photos as $photo) {
-                        echo '<div class="col-md-2 col-6 my-2">
-                        <img src="' . $photo['photos_path'] . '" alt="Photo Team Thai Ben de l\'Album ' . $photo['albums_name'] . '" class="img-fluid">
-                        </div>';
-                    }
-                    ?>
+
             </div>
-        <?php endif; ?>
-        </div>
 
     </main>
     <?php include('templates/footer.php'); ?>
@@ -87,7 +75,13 @@ include('templates/header.php');
             children: 'a',
             pswpModule: () => import('../node_modules/photoswipe/dist/photoswipe.esm.js')
         });
+        const lightbox2 = new PhotoSwipeLightbox({
+            gallery: '#photosContainer',
+            children: 'a',
+            pswpModule: () => import('../node_modules/photoswipe/dist/photoswipe.esm.js')
+        });
         lightbox.init();
+        lightbox2.init();
     </script>
     <script>
         // AJAX pour afficher les photos de l'album choisi
